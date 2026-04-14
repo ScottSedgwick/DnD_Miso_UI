@@ -1,0 +1,17 @@
+packages:
+  .
+
+allow-newer:
+  all:base
+
+source-repository-package
+  type: git
+  location: https://github.com/dmjio/miso
+  tag: 1.9.0
+
+flags: +template-haskell
+
+source-repository-package
+  type: git
+  location: https://github.com/haskell-miso/miso-ui
+  tag: main
