@@ -7,9 +7,9 @@
 * Push the filter information from the Backgrounds app into the top level model. (DONE)
 * Load the filter information when the Backgrounds component is loaded. (DONE)
 
-* Push to Github and get it to publish.
+* Push to Github and get it to publish. (DONE)
+
+* Update the README
 
 * Build the other applications.
 * Take out the unneccesary application pages (counter, and maybe home)
-
-* Update the README
