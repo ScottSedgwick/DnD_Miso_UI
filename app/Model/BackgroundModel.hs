@@ -1,12 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE InstanceSigs #-}
-module Components.Backgrounds.Model where
+module Model.BackgroundModel where
 
-import           GHC.Generics       ( Generic )
 import           Miso               ( MisoString )
 import           Miso.Lens          ( Lens, lens )
-import           Miso.JSON          ( FromJSON, Parser, (.:), (.:?), (.!=), parseJSON, withObject )
+import           Miso.JSON          ( FromJSON, Parser, ToJSON, (.:), (.:?), (.!=), (.=), object, parseJSON, toJSON, withObject )
 import           Miso.JSON.Types    ( Value )
 
 import           Common.Structure   ( Structure )
@@ -15,15 +13,21 @@ data BackgroundProficiency = BackgroundProficiency
   { _skills :: [MisoString]
   , _tools :: [MisoString]
   , _languages :: [MisoString]
-  } deriving (Show, Eq, Generic)
+  } deriving (Show, Eq)
 
 instance FromJSON BackgroundProficiency where
   parseJSON :: Value -> Parser BackgroundProficiency
   parseJSON = withObject "BackgroundProficiency" $ \o -> do
-    s <- o .: "skills"
-    t <- o .: "tools"
-    l <- o .: "languages"
+    s <- o .:? "skills" .!= []
+    t <- o .:? "tools" .!= []
+    l <- o .:? "languages" .!= []
     pure $ BackgroundProficiency { _skills = s, _tools = t, _languages = l }
+instance ToJSON BackgroundProficiency where
+  toJSON b = 
+    object [ "skills" .= (_skills b)
+           , "tools" .= (_tools b)
+           , "toolanguagesls" .= (_languages b)
+    ]
 
 skills :: Lens BackgroundProficiency [MisoString]
 skills = lens _skills $ \m x -> m { _skills = x }
@@ -37,7 +41,7 @@ languages = lens _languages $ \m x -> m { _languages = x }
 data BackgroundFeature = BackgroundFeature
   { _featureTitle :: MisoString
   , _featureDescription :: [Structure]    
-  } deriving (Show, Eq, Generic)
+  } deriving (Show, Eq)
 
 instance FromJSON BackgroundFeature where
   parseJSON :: Value -> Parser BackgroundFeature
@@ -45,6 +49,11 @@ instance FromJSON BackgroundFeature where
     t <- o .: "title"
     d <- o .: "description"
     pure $ BackgroundFeature { _featureTitle = t, _featureDescription = d }
+instance ToJSON BackgroundFeature where
+  toJSON b = 
+    object [ "title" .= (_featureTitle b)
+           , "description" .= (_featureDescription b)
+    ]
 
 featureTitle :: Lens BackgroundFeature MisoString
 featureTitle = lens _featureTitle $ \m x -> m { _featureTitle = x }
@@ -57,7 +66,7 @@ data BackgroundTraits = BackgroundTraits
   , _ideals :: [MisoString]
   , _bonds :: [MisoString]
   , _flaws :: [MisoString]
-  } deriving (Show, Eq, Generic)
+  } deriving (Show, Eq)
 
 instance FromJSON BackgroundTraits where
   parseJSON :: Value -> Parser BackgroundTraits
@@ -67,6 +76,13 @@ instance FromJSON BackgroundTraits where
     b <- o .: "bonds"
     f <- o .: "flaws"
     pure $ BackgroundTraits { _personality = p, _ideals = i, _bonds = b, _flaws = f }
+instance ToJSON BackgroundTraits where
+  toJSON b = 
+    object [ "personality" .= (_personality b)
+           , "ideals" .= (_ideals b)
+           , "bonds" .= (_bonds b)
+           , "flaws" .= (_flaws b)
+    ]
 
 personality :: Lens BackgroundTraits [MisoString]
 personality = lens _personality $ \m x -> m { _personality = x }
@@ -90,7 +106,7 @@ data Background = Background
   , _features :: [BackgroundFeature]
   , _suggested :: [MisoString]
   , _traits :: Maybe BackgroundTraits
-  } deriving (Show, Eq, Generic)
+  } deriving (Show, Eq)
 instance FromJSON Background where
   parseJSON :: Value -> Parser Background
   parseJSON = withObject "Background" $ \o -> do
@@ -104,6 +120,18 @@ instance FromJSON Background where
     g <- o .:? "suggested" .!= []
     r <- o .:? "traits"
     pure $ Background { _title = t, _description = d, _source = s, _sourceurl = u, _proficiencies = p, _equipment = e, _features = f, _suggested = g, _traits = r }
+instance ToJSON Background where
+  toJSON b = 
+    object [ "title" .= (_title b)
+           , "description" .= (_description b)
+           , "source" .= (_source b)
+           , "sourceurl" .= (_sourceurl b)
+           , "proficiencies" .= (_proficiencies b)
+           , "equipment" .= (_equipment b)
+           , "features" .= (_features b)
+           , "suggested" .= (_suggested b)
+           , "traits" .= (_traits b)
+           ]
 
 title :: Lens Background MisoString
 title = lens _title $ \m x -> m { _title = x }

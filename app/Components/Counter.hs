@@ -6,13 +6,26 @@ module Components.Counter
   , initModel
   ) where
 
-import           Miso
+import Miso
+    ( Component(styles),
+      Effect,
+      View,
+      io_, 
+      issue,
+      ms,
+      text,
+      vcomp,
+      (=:),
+      CSS(Sheet),
+      get )
 import qualified Miso.CSS as CSS
 import           Miso.CSS (StyleSheet)
 import           Miso.Html.Element as H
 import           Miso.Html.Event as E
 import           Miso.Html.Property as P
 import           Miso.Lens
+import           Miso.PubSub (publish)
+import           Model.MailboxMessage
 -----------------------------------------------------------------------------
 data Action
   = AddOne
@@ -29,7 +42,7 @@ updateModel :: Action -> Effect parent Model Action
 updateModel = \case
   AddOne            -> this += 1 >> issue SendValueToParent
   SubtractOne       -> this -= 1 >> issue SendValueToParent
-  SendValueToParent -> get >>= mailParent
+  SendValueToParent -> get >>= io_ . publish counterTopic
 -----------------------------------------------------------------------------
 viewModel :: Model -> View Model Action
 viewModel mdl = H.div_ [ P.class_ "center-container" ]

@@ -7,9 +7,11 @@ module Common.Pages where
   
 import qualified Data.Map     as M
 import           GHC.Generics ( Generic )
-import           Miso         ( MisoString, fromMisoString, ms )
+import           Miso         ( View, fromMisoString, ms )
 import           Miso.Router  ( Router, RoutingError(..), URI(..), route, toURI )
 import           Text.Read    ( readMaybe )
+
+import           Common.SvgImages
 
 data Page
   = Home
@@ -35,16 +37,7 @@ instance Router Page where
 allPages :: [Page]
 allPages = [minBound .. maxBound]
 
-pageIcon :: Page -> MisoString
-pageIcon Home        = "home"
-pageIcon Counter     = "counter"
-pageIcon Backgrounds = "history"
--- pageIcon Ciphers     = "password"
--- pageIcon Crafting    = "construction"
--- pageIcon DiceRoller  = "casino"
--- pageIcon Feats       = "trophy"
--- pageIcon Insults     = "partner_reports"
--- pageIcon Lineages    = "group"
--- pageIcon MagicItems  = "star"
--- pageIcon PointBuy    = "calculate"
--- pageIcon Spells      = "explosion"
+pageImage :: Page -> View model action
+pageImage Home = homeImage
+pageImage Counter = counterImage
+pageImage Backgrounds = backgroundIcon

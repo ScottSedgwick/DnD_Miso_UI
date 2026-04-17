@@ -35,10 +35,11 @@ executable app
                   , Common.SvgImages
                   , Common.Structure
                   , Components.Backgrounds
-                  , Components.Backgrounds.Model
                   , Components.Counter
                   , Components.Home
                   , Components.Main
+                  , Model.BackgroundModel
+                  , Model.MailboxMessage
   build-depends:    base < 5
                   , containers
                   , data-default

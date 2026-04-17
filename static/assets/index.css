@@ -24,12 +24,64 @@ section {
 .nav-sidebar-item {
   margin: 0.5em;
   cursor: pointer;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+}
+
+.nav-sidebar-item:hover {
+  background-color: var(--color-sidebar-accent)
 }
 
 .nav-item-active {
   background-color: color var(--primary)
 }
+
+.banner {
+  display: flex;
+  height: 3em;
+  width: 100%;
+  margin: 5px;
+}
+
+.banner-item {
+  margin: 5px;
+}
+
+.h-4 {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.h-6 {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.5;
+  margin-bottom: 7px;
+}
+
+.header {
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+.description {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto
+}
+.s2 { grid-column: span 2; }
+.s3 { grid-column: span 3; }
+.s4 { grid-column: span 4; }
+.s5 { grid-column: span 5; }
+.s6 { grid-column: span 6; }
+.s7 { grid-column: span 7; }
+.s8 { grid-column: span 8; }
+.s9 { grid-column: span 9; }
+.s10 { grid-column: span 10; }
+.s11 { grid-column: span 11; }
+.s12 { grid-column: span 12; }

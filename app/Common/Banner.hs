@@ -8,14 +8,10 @@ import qualified Miso.Html          as H
 import qualified Miso.Html.Property as P
 import           Miso.Types         (View)
 
-import           Common.Pages ( Page, pageIcon )
+import           Common.Pages       ( Page(..) , pageImage )
 
-banner :: Page -> Miso.Types.View model action
-banner a = 
-  H.header_ [ P.class_ "primary-container" ]
-  [ H.nav_ [] 
-    [ H.button_ [ P.class_ "circle transparent" ] [ H.i_ [ P.class_ "responsive" ] [ text (pageIcon a) ] ]
-    , H.h6_ [ P.class_ "max center-align" ] [ text (ms $ show a) ]
-    , H.button_ [ P.class_ "circle transparent" ] [ H.i_ [ P.class_ "responsive" ] [ text (pageIcon a) ] ]
-    ]
+banner :: Page -> View model action
+banner a = H.div_ [ P.class_ "banner" ] 
+  [ H.div_ [ P.class_ "banner-item" ] [ pageImage a ]
+  , H.div_ [ P.class_ "banner-item"] [ H.h3_ [] [ text $ ms $ show a ] ]
   ]
