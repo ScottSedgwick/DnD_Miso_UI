@@ -10,10 +10,10 @@ update:
 js: update-js build-js
 
 build:
-	wasm32-wasi-cabal build app
 	rm -rf public
 	mkdir -p public
-	cp -R static/* public
+	cp -r static/* public
+	wasm32-wasi-cabal build
 	$(eval my_wasm=$(shell wasm32-wasi-cabal list-bin app | tail -n 1))
 	$(shell wasm32-wasi-ghc --print-libdir)/post-link.mjs --input $(my_wasm) --output public/ghc_wasm_jsffi.js
 	cp -v $(my_wasm) public/
