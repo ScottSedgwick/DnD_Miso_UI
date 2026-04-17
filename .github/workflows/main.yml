@@ -29,11 +29,11 @@ jobs:
       - name: Build WASM using Nix
         run: nix develop .#wasm --command bash -c "make"
 
-      - name: Clean and GC
-        run: nix develop .#wasm --command bash -c "make" && nix-collect-garbage -d
+      # - name: Clean and GC
+      #   run: nix develop .#wasm --command bash -c "make" && nix-collect-garbage -d
 
-      - name: Build JS using Nix
-        run: nix develop .#ghcjs --command bash -c "make js"
+      # - name: Build JS using Nix
+      #   run: nix develop .#ghcjs --command bash -c "make js"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
