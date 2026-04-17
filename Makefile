@@ -17,7 +17,6 @@ build:
 	$(eval my_wasm=$(shell wasm32-wasi-cabal list-bin app | tail -n 1))
 	$(shell wasm32-wasi-ghc --print-libdir)/post-link.mjs --input $(my_wasm) --output public/ghc_wasm_jsffi.js
 	cp -v $(my_wasm) public/
-# 	cp -rv assets public/
 
 prerender:
 	nix develop --command bash -c "cabal update && cabal run prerender"
@@ -40,5 +39,4 @@ build-js:
 	cp -v ./dist-newstyle/build/javascript-ghcjs/ghc-9.12.2/*/x/app/build/app/app.jsexe/all.js .
 	rm -rf public
 	cp -rv static public
-	cp -rv assets public/
 	bunx swc ./all.js -o public/index.js
