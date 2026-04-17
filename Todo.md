@@ -11,3 +11,5 @@
 
 * Build the other applications.
 * Take out the unneccesary application pages (counter, and maybe home)
+
+* Update the README
