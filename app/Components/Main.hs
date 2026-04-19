@@ -15,9 +15,9 @@ import qualified Miso.Html.Element as H
 import           Miso.Html.Event as E
 import qualified Miso.Html.Property as P
 import           Miso.Lens (Lens, (.=), (^.), lens)
-import           Miso.Router ( RoutingError, toURI )
+import           Miso.Router ( RoutingError, toURI, uriPath )
 import qualified Miso.Property as MP
-import           Miso.Subscription.History (pushURI)
+import           Miso.Subscription.History (getURI, pushURI)
 import           Miso.Types ( CSS ( Sheet ) )
 
 import           Common.Metadata
@@ -82,7 +82,7 @@ updateModel = \case
   SetBackgrounds x      -> backgrounds .= x
   SetBackgroundFilter s -> backgroundFilter .= s
   DisplayError e        -> err .= Just e
-  NavigateTo p          -> io_ (pushURI (toURI p ))
+  NavigateTo p          -> uriSetter p
   ToggleDarkMode        -> io_ [js| return document.dispatchEvent (new CustomEvent('basecoat:theme')); |]
   ToggleSidebar         -> io_ [js| document.dispatchEvent (new CustomEvent('basecoat:sidebar')); |]
   Subscribe             -> subscribe counterTopic SetCounter DisplayError
@@ -99,6 +99,16 @@ updateModel = \case
 uriHandler :: Either RoutingError Page -> Action
 uriHandler (Left  e) = DisplayError (ms $ show e)
 uriHandler (Right p) = SetPage p
+
+uriSetter :: Page -> Effect parent Model Action
+uriSetter p = io_ $ do
+  baseUri <- getURI
+  print baseUri
+  let pageUri = toURI p
+  print pageUri
+  let destUri = pageUri { uriPath = uriPath baseUri }
+  print destUri
+  pushURI destUri
 -----------------------------------------------------------------------------
 viewModel :: Model -> View Model Action
 viewModel m = H.body_ []
