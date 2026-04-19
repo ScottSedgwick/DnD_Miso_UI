@@ -34,7 +34,7 @@ namespace :wasm do
   end
 
   task :build => ['wasm:compile'] do
-	  mysys 'cp -r static public'
+	  mysys 'cp -R static/* public'
     postlink = "#{`wasm32-wasi-ghc --print-libdir`.strip}/post-link.mjs"
     mywasm = `wasm32-wasi-cabal list-bin app | tail -n 1`.strip
 	  mysys "#{postlink} --input #{mywasm} --output public/ghc_wasm_jsffi.js"
