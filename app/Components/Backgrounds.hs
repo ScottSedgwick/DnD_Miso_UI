@@ -56,7 +56,7 @@ selecteddata :: Lens Model (Maybe String)
 selecteddata = lens _selecteddata $ \m x -> m { _selecteddata = x}
 
 updateModel :: Action -> Effect a Model Action
-updateModel GetBackgrounds       = getText "data/backgrounds.json" [] SetBackgrounds ErrorHandler
+updateModel GetBackgrounds       = getText "./data/backgrounds.json" [] SetBackgrounds ErrorHandler
 updateModel (SetBackgrounds r)   = backgrounds .= (eitherDecode (body r)) >> issue PostBackgrounds
 updateModel PostBackgrounds      = get >>= \m -> either (const $ pure ()) (io_ . publish backgroundsTopic) (m ^. backgrounds)
 updateModel (ErrorHandler r)     = maybe (pure ()) mailParent (errorMessage r)
