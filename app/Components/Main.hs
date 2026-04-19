@@ -106,7 +106,7 @@ uriSetter p = io_ $ do
   print baseUri
   let pageUri = toURI p
   print pageUri
-  let destUri = pageUri { uriPath = uriPath baseUri }
+  let destUri = pageUri { uriPath = uriPath baseUri <> "/" }
   print destUri
   pushURI destUri
 -----------------------------------------------------------------------------
