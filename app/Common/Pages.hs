@@ -21,7 +21,7 @@ data Page
 
 instance Router Page where
   toURI :: Page -> URI
-  toURI p = URI { uriPath = "", uriFragment = "", uriQueryString = M.fromList [("page", Just (ms $ show p))]}
+  toURI p = URI { uriPath = "", uriFragment = "./", uriQueryString = M.fromList [("page", Just (ms $ show p))]}
   route :: URI -> Either RoutingError Page
   route uri = 
     case M.lookup "page" (uriQueryString uri) of
