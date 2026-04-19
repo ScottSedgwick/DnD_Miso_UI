@@ -17,6 +17,7 @@ import qualified Miso.Html.Property as P
 import           Miso.Lens (Lens, (.=), (^.), lens)
 import           Miso.Router ( RoutingError, toURI, uriPath )
 import qualified Miso.Property as MP
+import           Miso.String ( isSuffixOf )
 import           Miso.Subscription.History (getURI, pushURI)
 import           Miso.Types ( CSS ( Sheet ) )
 
@@ -103,10 +104,12 @@ uriHandler (Right p) = SetPage p
 uriSetter :: Page -> Effect parent Model Action
 uriSetter p = io_ $ do
   baseUri <- getURI
+  let basePath = uriPath baseUri
+  let destPath = if (isSuffixOf ".html" basePath) then basePath else basePath <> "/"
   print baseUri
   let pageUri = toURI p
   print pageUri
-  let destUri = pageUri { uriPath = uriPath baseUri <> "/" }
+  let destUri = pageUri { uriPath = destPath }
   print destUri
   pushURI destUri
 -----------------------------------------------------------------------------
