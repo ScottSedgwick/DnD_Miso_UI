@@ -8,8 +8,16 @@
 * Load the filter information when the Backgrounds component is loaded. (DONE)
 
 * Push to Github and get it to publish. (DONE)
+* Check what it looks like on a phone. (DONE, and pretty good!)
 
-* Update the README
+* Update the README (DONE)
 
 * Build the other applications.
+  * Spells
+  * Feats
+  * Items
+  * Crafting
+
+* Make a switch for version?
 * Take out the unneccesary application pages (counter, and maybe home)
+* Change the photo on the bottom right to me.

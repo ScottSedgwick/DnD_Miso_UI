@@ -1,12 +1,18 @@
-🍱 miso-sampler 
-====================
+🍱 DnD App
+==========
 
-This project contains a sample [miso](https://github.com/dmjio/miso) application with scripts to 
-develop against vanilla GHC and to compile to Web Assembly or JavaScript.
+This project contains a number of applications to assist with playing D&D.
+
+It is built in Haskell, using:
+
+* The [Miso](https://haskell-miso.org/) framework - and Elm application framework.
+* [Miso-UI](https://github.com/haskell-miso/miso-ui) - a UI tolkit using Miso and Tailwind.
+
+Infinite credit and chops to David Johnson (dmjio) who wrote both of these libraries.
 
 ### Source
 
-View [source](https://github.com/haskell-miso/miso-sampler/blob/main/app/Main.hs).
+View [source](https://github.com/ScottSedgwick/DnD_Miso_UI).
 
 ### Install Nix (w/ flakes enabled)
 
@@ -125,6 +131,3 @@ Ensure that the Haskell miso [cachix](cachix.org) is being used when building yo
     name: haskell-miso-cachix
 ```
 
-### Hosting
-
-To upload and host your project to Github Pages, please see [our Github workflow file](https://github.com/haskell-miso/miso-sampler/blob/main/.github/workflows/main.yml#L38-L56) and the necessary Github actions included.
