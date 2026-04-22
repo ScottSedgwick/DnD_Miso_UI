@@ -17,6 +17,7 @@ data Page
   = Home
   | Counter
   | Backgrounds
+  | Spells
   deriving stock (Show, Eq, Enum, Bounded, Generic, Read)
 
 instance Router Page where
@@ -41,3 +42,4 @@ pageImage :: Page -> View model action
 pageImage Home = homeImage
 pageImage Counter = counterImage
 pageImage Backgrounds = backgroundIcon
+pageImage Spells = spellIcon

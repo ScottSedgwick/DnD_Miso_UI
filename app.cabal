@@ -38,8 +38,10 @@ executable app
                   , Components.Counter
                   , Components.Home
                   , Components.Main
+                  , Components.Spells
                   , Model.BackgroundModel
                   , Model.MailboxMessage
+                  , Model.SpellsModel
   build-depends:    base < 5
                   , containers
                   , data-default

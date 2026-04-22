@@ -1,0 +1,200 @@
+{
+    "_defaultRacialBonuses":
+    {
+        "CustomRace"                   : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+
+        "Aarakocra"                    : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+
+        "AasimarDMG"                   : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 2 },
+        "AasimarProtector"             : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 2 },
+        "AasimarScourge"               : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "AasimarFallen"                : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+
+        "Bugbear"                      : { "_str" : 2, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+
+        "Centaur"                      : { "_str" : 2, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+
+        "ChangelingStr"                : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "ChangelingDex"                : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "ChangelingCon"                : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "ChangelingInt"                : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "ChangelingWis"                : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 2 },
+
+        "Dragonborn"                   : { "_str" : 2, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+
+        "DwarfHill"                    : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+        "DwarfMountain"                : { "_str" : 2, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "DwarfDuergar"                 : { "_str" : 1, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "DwarfWarding"                 : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+
+        "ElfHigh"                      : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "ElfWood"                      : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+        "ElfEladrin"                   : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "ElfEladrinMtof"               : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+        "ElfDrow"                      : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+        "ElfSea"                       : { "_str" : 0, "_dex" : 2, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "ElfShadarKai"                 : { "_str" : 0, "_dex" : 2, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "ElfShadow"                    : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+
+        "Firbolg"                      : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 2, "_cha" : 0 },
+
+        "GenasiAir"                    : { "_str" : 0, "_dex" : 1, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "GenasiEarth"                  : { "_str" : 1, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "GenasiFire"                   : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "GenasiWater"                  : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+
+        "Githyanki"                    : { "_str" : 2, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "Githzerai"                    : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 1, "_wis" : 2, "_cha" : 0 },
+
+        "GnomeForest"                  : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 2, "_wis" : 0, "_cha" : 0 },
+        "GnomeRock"                    : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 2, "_wis" : 0, "_cha" : 0 },
+        "GnomeDeep"                    : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 2, "_wis" : 0, "_cha" : 0 },
+        "GnomeScribing"                : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 2, "_wis" : 0, "_cha" : 1 },
+
+        "Goblin"                       : { "_str" : 0, "_dex" : 2, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+
+        "Goliath"                      : { "_str" : 2, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+
+        "Grung"                        : { "_str" : 0, "_dex" : 2, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+
+        "HalfElfDMGStrDex"             : { "_str" : 1, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "HalfElfDMGStrCon"             : { "_str" : 1, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "HalfElfDMGStrInt"             : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "HalfElfDMGStrWis"             : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 2 },
+        "HalfElfDMGDexCon"             : { "_str" : 0, "_dex" : 1, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "HalfElfDMGDexInt"             : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "HalfElfDMGDexWis"             : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 2 },
+        "HalfElfDMGConInt"             : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "HalfElfDMGConWis"             : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 1, "_cha" : 2 },
+        "HalfElfDMGIntWis"             : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 1, "_cha" : 2 },
+        "HalfElfVariantStrDex"         : { "_str" : 1, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "HalfElfVariantStrCon"         : { "_str" : 1, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "HalfElfVariantStrInt"         : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "HalfElfVariantStrWis"         : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 2 },
+        "HalfElfVariantDexCon"         : { "_str" : 0, "_dex" : 1, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "HalfElfVariantDexInt"         : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "HalfElfVariantDexWis"         : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 2 },
+        "HalfElfVariantConInt"         : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "HalfElfVariantConWis"         : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 1, "_cha" : 2 },
+        "HalfElfVariantIntWis"         : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 1, "_cha" : 2 },
+        "HalfElfDetectionStr"          : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 2, "_cha" : 0 },
+        "HalfElfDetectionDex"          : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 2, "_cha" : 0 },
+        "HalfElfDetectionCon"          : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 2, "_cha" : 0 },
+        "HalfElfDetectionInt"          : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 2, "_cha" : 0 },
+        "HalfElfDetectionCha"          : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 2, "_cha" : 1 },
+        "HalfElfStorm"                 : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+
+        "HalfOrcStandard"              : { "_str" : 2, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "HalfOrcFinding"               : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 2, "_cha" : 0 },
+
+        "HalflingLightfoot"            : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+        "HalflingStout"                : { "_str" : 0, "_dex" : 2, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "HalflingGhostwise"            : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+        "HalflingHealing"              : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+        "HalflingHospitality"          : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+
+        "Hobgoblin"                    : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+
+        "HumanStandard"                : { "_str" : 1, "_dex" : 1, "_con" : 1, "_int" : 1, "_wis" : 1, "_cha" : 1 },
+        "HumanVariantStrDex"           : { "_str" : 1, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "HumanVariantStrCon"           : { "_str" : 1, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "HumanVariantStrInt"           : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "HumanVariantStrWis"           : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+        "HumanVariantStrCha"           : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+        "HumanVariantDexCon"           : { "_str" : 0, "_dex" : 1, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "HumanVariantDexInt"           : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "HumanVariantDexWis"           : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+        "HumanVariantDexCha"           : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+        "HumanVariantConInt"           : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "HumanVariantConWis"           : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+        "HumanVariantConCha"           : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+        "HumanVariantIntWis"           : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 1, "_cha" : 0 },
+        "HumanVariantIntCha"           : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 1 },
+        "HumanVariantWisCha"           : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 1 },
+        "HumanFinding"                 : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 2, "_cha" : 0 },
+        "HumanHandlingStr"             : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 2, "_cha" : 0 },
+        "HumanHandlingDex"             : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 2, "_cha" : 0 },
+        "HumanHandlingCon"             : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 2, "_cha" : 0 },
+        "HumanHandlingInt"             : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 2, "_cha" : 0 },
+        "HumanHandlingCha"             : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 2, "_cha" : 1 },
+        "HumanMakingStr"               : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 2, "_wis" : 0, "_cha" : 0 },
+        "HumanMakingDex"               : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 2, "_wis" : 0, "_cha" : 0 },
+        "HumanMakingCon"               : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 2, "_wis" : 0, "_cha" : 0 },
+        "HumanMakingWis"               : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 2, "_wis" : 1, "_cha" : 0 },
+        "HumanMakingCha"               : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 2, "_wis" : 0, "_cha" : 1 },
+        "HumanPassageStr"              : { "_str" : 1, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "HumanPassageCon"              : { "_str" : 0, "_dex" : 2, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "HumanPassageInt"              : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "HumanPassageWis"              : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+        "HumanPassageCha"              : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+        "HumanSentinel"                : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+
+        "Kalashtar"                    : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 2, "_cha" : 1 },
+
+        "Kenku"                        : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+
+        "Kobold"                       : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+
+        "Leonin"                       : { "_str" : 1, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+
+        "Lizardfolk"                   : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+
+        "Locathah"                     : { "_str" : 2, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+
+        "Loxodon"                      : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+
+        "Minotaur"                     : { "_str" : 2, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+
+        "OrcStandard"                  : { "_str" : 2, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "OrcEberron"                   : { "_str" : 2, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+
+        "Satyr"                        : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+
+        "ShifterBeasthide"             : { "_str" : 1, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "ShifterLongtooth"             : { "_str" : 2, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "ShifterSwiftstride"           : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+        "ShifterWildhunt"              : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 2, "_cha" : 0 },
+
+        "SimicStr"                     : { "_str" : 1, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "SimicDex"                     : { "_str" : 0, "_dex" : 1, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "SimicInt"                     : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "SimicWis"                     : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+        "SimicCha"                     : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+
+        "Tabaxi"                       : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+
+        "Tiefling"                     : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "TieflingNormalDevilsTongue"   : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "TieflingNormalHellfire"       : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "TieflingNormalWinged"         : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "TieflingNormalAsmodeus"       : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "TieflingNormalBaalzebul"      : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "TieflingNormalDispater"       : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "TieflingNormalFierna"         : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 2 },
+        "TieflingNormalGlasya"         : { "_str" : 0, "_dex" : 1, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "TieflingNormalLevistus"       : { "_str" : 0, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+        "TieflingNormalMammon"         : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "TieflingNormalMephistopheles" : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 },
+        "TieflingNormalZariel"         : { "_str" : 1, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 0, "_cha" : 2 },
+
+        "TieflingFeral"                : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "TieflingFeralDevilsTongue"    : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "TieflingFeralHellfire"        : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "TieflingFeralWinged"          : { "_str" : 0, "_dex" : 2, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+
+        "Tortle"                       : { "_str" : 2, "_dex" : 0, "_con" : 0, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+
+        "Triton"                       : { "_str" : 1, "_dex" : 0, "_con" : 1, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+
+        "Vedalken"                     : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 2, "_wis" : 1, "_cha" : 0 },
+
+        "WarforgedStr"                 : { "_str" : 1, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "WarforgedDex"                 : { "_str" : 0, "_dex" : 1, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 0 },
+        "WarforgedInt"                 : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 1, "_wis" : 0, "_cha" : 0 },
+        "WarforgedWis"                 : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 1, "_cha" : 0 },
+        "WarforgedCha"                 : { "_str" : 0, "_dex" : 0, "_con" : 2, "_int" : 0, "_wis" : 0, "_cha" : 1 },
+
+        "YuanTiPureblood"              : { "_str" : 0, "_dex" : 0, "_con" : 0, "_int" : 1, "_wis" : 0, "_cha" : 2 }
+    },
+    "_defaultRacialDescriptions" : {}
+}

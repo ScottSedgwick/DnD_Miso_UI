@@ -41,6 +41,14 @@ viewModel _ =
     , H.li_ [] [ text "The Books page demonstrates downloading data using REST." ]
     ]
   , H.p_ [] [ text "Have fun writing awesome apps!" ]
+  , H.p_ [] [ "Attributions: " ]
+  , H.ul_ []
+    [ H.li_ [] 
+      [ H.a_ [ P.href_ "https://iconscout.com/icons/spellbook", P.target_ "_blank" ] [ text "Spellbook" ]
+      , text " icon by "
+      , H.a_ [ P.href_ "https://iconscout.com/contributors/thebeststarticon", P.target_ "_blank"] [ text "thebeststarticon" ]
+      ]
+    ]
   ]
 -----------------------------------------------------------------------------
 home :: Component parent Model Action

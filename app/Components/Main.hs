@@ -22,12 +22,14 @@ import           Miso.Subscription.History (getURI, pushURI)
 import           Miso.Types ( CSS ( Sheet ) )
 
 import           Common.Metadata
-import           Common.Pages ( Page(..) )
+import           Common.Pages ( Page(..), allPages, pageImage )
 import           Common.SvgImages
 import qualified Components.Backgrounds as CB
 import qualified Components.Counter as CC
 import qualified Components.Home as CH
+import qualified Components.Spells as CS
 import           Model.BackgroundModel ( Background )
+import           Model.SpellsModel ( Spell )
 import           Model.MailboxMessage
 
 -----------------------------------------------------------------------------
@@ -50,6 +52,8 @@ data Model = Model
   , _err :: Maybe MisoString
   , _backgrounds :: [Background]
   , _backgroundFilter :: MisoString
+  , _spells :: [Spell]
+  , _spellFilter :: MisoString
   } deriving (Show, Eq)
 
 cval :: Lens Model CC.Model
@@ -67,6 +71,12 @@ backgrounds = lens _backgrounds $ \m x -> m { _backgrounds = x }
 backgroundFilter :: Lens Model MisoString
 backgroundFilter = lens _backgroundFilter $ \m x -> m { _backgroundFilter = x }
 
+spells :: Lens Model [Spell]
+spells = lens _spells $ \m x -> m { _spells = x }
+
+spellFilter :: Lens Model MisoString
+spellFilter = lens _spellFilter $ \m x -> m { _spellFilter = x }
+
 initModel :: Model
 initModel = Model
   { _cval = CC.initModel
@@ -74,6 +84,8 @@ initModel = Model
   , _err  = Nothing
   , _backgrounds = []
   , _backgroundFilter = ""
+  , _spells = []
+  , _spellFilter = ""
   }
 -----------------------------------------------------------------------------
 updateModel :: Action -> Effect parent Model Action
@@ -104,9 +116,10 @@ uriHandler (Right p) = SetPage p
 uriSetter :: Page -> Effect parent Model Action
 uriSetter p = io_ $ do
   baseUri <- getURI
-  let basePath = uriPath baseUri
-  let destPath = if (isSuffixOf ".html" basePath) then basePath else basePath <> "/"
   print baseUri
+  let basePath = uriPath baseUri
+  let destPath = if (basePath == "" || isSuffixOf ".html" basePath) then basePath else basePath <> "/"
+  print destPath
   let pageUri = toURI p
   print pageUri
   let destUri = pageUri { uriPath = destPath }
@@ -125,6 +138,7 @@ viewModel m = H.body_ []
             Home        -> [ "home"    +> CH.home ]
             Counter     -> [ "counter" +> (CC.counter (m ^. cval))]
             Backgrounds -> [ "books"   +> CB.backgroundsComponent (m ^. backgrounds) (m ^. backgroundFilter)]
+            Spells      -> [ "spells"  +> CS.spellsComponent (m ^. spells) (m ^. spellFilter)]
           )
         ]
       ]
@@ -223,11 +237,7 @@ asideView _ =
       ]
       [ H.div_ [ P.aria_ "labelledby" "group-label-sidebar-content-1", P.role_ "group" ]
         [ H.h3_ [ P.id_ "group-label-sidebar-content-1" ] [ "Applications" ]
-        , H.ul_ []
-          [ H.li_ [] [ H.a_ [ E.onClick (NavigateTo Home) ] [ homeImage, H.span_ [] ["Home"] ] ]
-          , H.li_ [] [ H.a_ [ E.onClick (NavigateTo Counter)  ] [ counterImage, H.span_ [] ["Counter"] ] ]
-          , H.li_ [] [ H.a_ [ E.onClick (NavigateTo Backgrounds)  ] [ backgroundIcon, H.span_ [] ["Backgrounds"] ] ]
-          ]
+        , H.ul_ [] (map mkSideOption allPages)
         ]
       ]
       , H.footer_ []
@@ -277,6 +287,10 @@ asideView _ =
         ]
       ]
     ]
+
+mkSideOption :: Page -> View model Action
+mkSideOption p = H.li_ [] [ H.a_ [ E.onClick (NavigateTo p) ] [ pageImage p, H.span_ [] [ text (ms (show p)) ] ] ]
+
 -----------------------------------------------------------------------------
 app :: Component parent Model Action
 app = (vcomp initModel updateModel viewModel)

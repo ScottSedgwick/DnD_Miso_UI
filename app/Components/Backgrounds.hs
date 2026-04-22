@@ -5,23 +5,24 @@ module Components.Backgrounds
   ( backgroundsComponent
   ) where
 
-import           Data.Default       ( Default, def )
-import           GHC.Generics       ( Generic )
-import           Miso               ( Component (mount), Effect, MisoString, View, fromMisoString, get, io_, issue, mailParent, ms, publish, text, vcomp )
-import           Miso.Fetch         ( Response(body, errorMessage), getText )
-import qualified Miso.Html          as H
-import qualified Miso.Html.Event    as E
-import qualified Miso.Html.Property as P
-import           Miso.Lens          ( Lens, (.=), (^.), lens )
-import           Miso.JSON          ( eitherDecode )
-import           Miso.String        ( intercalate, isInfixOf, toLower )
-import           Miso.UI.Accordion  ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
+import           Data.Default          ( Default, def )
+import           GHC.Generics          ( Generic ) 
+import           Miso                  ( Component (mount), Effect, MisoString, View, fromMisoString, get, io_, issue, mailParent, ms, publish, text, vcomp )
+import           Miso.Fetch            ( Response(body, errorMessage), getText ) 
+import qualified Miso.Html             as H 
+import qualified Miso.Html.Event       as E 
+import qualified Miso.Html.Property    as P 
+import           Miso.Lens             ( Lens, (.=), (^.), lens ) 
+import           Miso.JSON             ( eitherDecode ) 
+import           Miso.String           ( intercalate, isInfixOf, toLower ) 
+import           Miso.UI.Accordion     ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
 
-import           Common.Banner      ( banner )
-import           Common.Pages       ( Page(..) )
-import           Common.Structure   ( Inline(..), renderStructure, rollTable )
-import           Model.BackgroundModel
-import           Model.MailboxMessage
+import           Common.Banner         ( banner )
+import           Common.Pages          ( Page(..) )
+import           Common.Structure      ( Inline(..), renderStructure, rollTable )
+import           Model.BackgroundModel ( Background(..), BackgroundTraits(..), BackgroundFeature(..), bonds, description, equipment, features, featureDescription, featureTitle, flaws, 
+                                         ideals, languages, personality, proficiencies, skills, source, sourceurl, suggested, title, tools, traits)
+import           Model.MailboxMessage  ( backgroundFilterTopic, backgroundsTopic )
 
 data Action
   = GetBackgrounds
