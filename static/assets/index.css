@@ -65,6 +65,11 @@ section {
   padding-left: 5px;
 }
 
+.italic {
+  font-size: 12px;
+  font-style: italic;
+}
+
 .description {
   font-weight: bold;
   font-style: italic;
@@ -85,3 +90,7 @@ section {
 .s10 { grid-column: span 10; }
 .s11 { grid-column: span 11; }
 .s12 { grid-column: span 12; }
+
+.pointer {
+  cursor: pointer;
+}

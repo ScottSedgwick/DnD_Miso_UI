@@ -70,27 +70,27 @@ instance Default Spell where
 instance FromJSON Spell where
   parseJSON :: Value -> Parser Spell
   parseJSON = withObject "Spell" $ \o -> do
-    title       <- o .:? "title" .!= ""
-    source      <- o .:? "source" .!= []
-    level       <- o .:? "level" .!= 0
-    school      <- o .:? "school" .!= ""
-    castingTime <- o .:? "castingTime" .!= ""
-    range       <- o .:? "range" .!= ""
-    components  <- o .:? "components" .!= ""
-    duration    <- o .:? "duration" .!= ""
-    description <- o .:? "description" .!= []
-    lists       <- o .:? "lists" .!= []
+    title_       <- o .:? "title" .!= ""
+    source_      <- o .:? "source" .!= []
+    level_       <- o .:? "level" .!= 0
+    school_      <- o .:? "school" .!= ""
+    castingTime_ <- o .:? "castingTime" .!= ""
+    range_       <- o .:? "range" .!= ""
+    components_  <- o .:? "components" .!= ""
+    duration_    <- o .:? "duration" .!= ""
+    description_ <- o .:? "description" .!= []
+    lists_       <- o .:? "lists" .!= []
     pure $ Spell 
-      { _title = title
-      , _source = source
-      , _level = level
-      , _school = school
-      , _castingTime = castingTime
-      , _range = range
-      , _components = components
-      , _duration = duration
-      , _description = description
-      , _lists = lists
+      { _title = title_
+      , _source = source_
+      , _level = level_
+      , _school = school_
+      , _castingTime = castingTime_
+      , _range = range_
+      , _components = components_
+      , _duration = duration_
+      , _description = description_
+      , _lists = lists_
       }
 
 instance ToJSON Spell where
@@ -107,3 +107,54 @@ instance ToJSON Spell where
     , "description" .= (_description s)
     , "lists" .= (_lists s)
     ]
+
+data SpellFilter = SpellFilter
+  { _flt_title :: MisoString
+  , _flt_level :: Maybe Int
+  , _flt_school :: MisoString
+  , _flt_list :: MisoString
+  } deriving (Show, Eq)
+
+instance Default SpellFilter where
+  def :: SpellFilter
+  def = SpellFilter
+    { _flt_title = ""
+    , _flt_level = Nothing
+    , _flt_school = ""
+    , _flt_list = ""
+    }
+
+instance FromJSON SpellFilter where
+  parseJSON :: Value -> Parser SpellFilter
+  parseJSON = withObject "Spell" $ \o -> do
+    title_  <- o .:? "title" .!= ""
+    level_  <- o .:? "level"
+    school_ <- o .:? "school" .!= ""
+    list_   <- o .:? "list" .!= ""
+    pure $ SpellFilter 
+      { _flt_title = title_
+      , _flt_level = level_
+      , _flt_school = school_
+      , _flt_list = list_
+      }
+
+instance ToJSON SpellFilter where
+  toJSON s = 
+    object 
+    [ "title" .= (_flt_title s)
+    , "level" .= (_flt_level s)
+    , "school" .= (_flt_school s)
+    , "list" .= (_flt_list s)
+    ]
+
+flt_title :: Lens SpellFilter  MisoString
+flt_title = lens _flt_title $ \m x -> m { _flt_title = x }
+
+flt_level :: Lens SpellFilter  (Maybe Int)
+flt_level = lens _flt_level $ \m x -> m { _flt_level = x }
+
+flt_school :: Lens SpellFilter  MisoString
+flt_school = lens _flt_school $ \m x -> m { _flt_school = x }
+
+flt_list :: Lens SpellFilter  MisoString
+flt_list = lens _flt_list $ \m x -> m { _flt_list = x }

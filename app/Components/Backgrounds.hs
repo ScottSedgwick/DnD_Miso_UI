@@ -30,6 +30,7 @@ data Action
   | PostBackgrounds
   | PostFilter
   | ErrorHandler (Response MisoString)
+  | ErrorUpdate MisoString
   | UpdateFilter MisoString
   | SetPage String
 
@@ -59,8 +60,9 @@ selecteddata = lens _selecteddata $ \m x -> m { _selecteddata = x}
 updateModel :: Action -> Effect a Model Action
 updateModel GetBackgrounds       = getText "./data/backgrounds.json" [] SetBackgrounds ErrorHandler
 updateModel (SetBackgrounds r)   = backgrounds .= (eitherDecode (body r)) >> issue PostBackgrounds
-updateModel PostBackgrounds      = get >>= \m -> either (const $ pure ()) (io_ . publish backgroundsTopic) (m ^. backgrounds)
-updateModel (ErrorHandler r)     = maybe (pure ()) mailParent (errorMessage r)
+updateModel PostBackgrounds      = get >>= \m -> either (issue . ErrorUpdate) (io_ . publish backgroundsTopic) (m ^. backgrounds)
+updateModel (ErrorHandler r)     = maybe (issue $ ErrorUpdate "") (issue . ErrorUpdate) (errorMessage r)
+updateModel (ErrorUpdate s)      = mailParent s
 updateModel (UpdateFilter s)     = filterTitle .= (fromMisoString s) >> issue PostFilter
 updateModel PostFilter           = get >>= \m -> io_ $ publish backgroundFilterTopic (m ^. filterTitle)
 updateModel (SetPage s)          = selecteddata .= Just s

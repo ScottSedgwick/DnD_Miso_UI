@@ -7,6 +7,7 @@
 {-# LANGUAGE DeriveGeneric      #-}
 module Components.Main ( app ) where
 
+import           Data.Default       ( def )
 import           Miso( Component, Effect, MisoString, View, (+>), io_, mount, ms, routerSub, styles, subs, subscribe, text, vcomp )
 import qualified Miso.CSS as CSS
 import           Miso.CSS (StyleSheet)
@@ -29,7 +30,7 @@ import qualified Components.Counter as CC
 import qualified Components.Home as CH
 import qualified Components.Spells as CS
 import           Model.BackgroundModel ( Background )
-import           Model.SpellsModel ( Spell )
+import           Model.SpellsModel ( Spell, SpellFilter )
 import           Model.MailboxMessage
 
 -----------------------------------------------------------------------------
@@ -38,7 +39,9 @@ data Action
   | SetCounter CC.Model
   | SetBackgrounds [Background]
   | SetBackgroundFilter MisoString
-  | DisplayError MisoString
+  | SetSpells [Spell]
+  | SetSpellFilter SpellFilter
+  | DisplayError MisoString MisoString
   | NavigateTo Page
   | ToggleDarkMode
   | ToggleSidebar
@@ -53,7 +56,7 @@ data Model = Model
   , _backgrounds :: [Background]
   , _backgroundFilter :: MisoString
   , _spells :: [Spell]
-  , _spellFilter :: MisoString
+  , _spellFilter :: SpellFilter
   } deriving (Show, Eq)
 
 cval :: Lens Model CC.Model
@@ -74,7 +77,7 @@ backgroundFilter = lens _backgroundFilter $ \m x -> m { _backgroundFilter = x }
 spells :: Lens Model [Spell]
 spells = lens _spells $ \m x -> m { _spells = x }
 
-spellFilter :: Lens Model MisoString
+spellFilter :: Lens Model SpellFilter
 spellFilter = lens _spellFilter $ \m x -> m { _spellFilter = x }
 
 initModel :: Model
@@ -85,7 +88,7 @@ initModel = Model
   , _backgrounds = []
   , _backgroundFilter = ""
   , _spells = []
-  , _spellFilter = ""
+  , _spellFilter = def
   }
 -----------------------------------------------------------------------------
 updateModel :: Action -> Effect parent Model Action
@@ -94,13 +97,17 @@ updateModel = \case
   SetCounter x          -> cval .= x
   SetBackgrounds x      -> backgrounds .= x
   SetBackgroundFilter s -> backgroundFilter .= s
-  DisplayError e        -> err .= Just e
+  SetSpells x           -> spells .= x
+  SetSpellFilter s      -> spellFilter .= s
+  DisplayError c e      -> err .= Just (c <> ": " <> e)
   NavigateTo p          -> uriSetter p
   ToggleDarkMode        -> io_ [js| return document.dispatchEvent (new CustomEvent('basecoat:theme')); |]
   ToggleSidebar         -> io_ [js| document.dispatchEvent (new CustomEvent('basecoat:sidebar')); |]
-  Subscribe             -> subscribe counterTopic SetCounter DisplayError
-                        >> subscribe backgroundsTopic SetBackgrounds DisplayError
-                        >> subscribe backgroundFilterTopic SetBackgroundFilter DisplayError
+  Subscribe             -> subscribe counterTopic SetCounter (DisplayError "counterTopic")
+                        >> subscribe backgroundsTopic SetBackgrounds (DisplayError "backgroundsTopic")
+                        >> subscribe backgroundFilterTopic SetBackgroundFilter (DisplayError "backgroundsFilterTopic")
+                        >> subscribe spellsTopic SetSpells (DisplayError "spellsTopic")
+                        >> subscribe spellFilterTopic SetSpellFilter (DisplayError "spellFilterTopic")
   ChangeTheme theme     -> 
     io_ [js| document.documentElement.classList.forEach(c => {
                    if (c.startsWith('theme-')) {
@@ -110,7 +117,7 @@ updateModel = \case
                  return document.documentElement.classList.add('theme-' + ${theme}); |]
 
 uriHandler :: Either RoutingError Page -> Action
-uriHandler (Left  e) = DisplayError (ms $ show e)
+uriHandler (Left  e) = DisplayError "uriHandler" (ms $ show e)
 uriHandler (Right p) = SetPage p
 
 uriSetter :: Page -> Effect parent Model Action
@@ -289,7 +296,7 @@ asideView _ =
     ]
 
 mkSideOption :: Page -> View model Action
-mkSideOption p = H.li_ [] [ H.a_ [ E.onClick (NavigateTo p) ] [ pageImage p, H.span_ [] [ text (ms (show p)) ] ] ]
+mkSideOption p = H.li_ [ P.class_ "pointer" ] [ H.a_ [ E.onClick (NavigateTo p) ] [ pageImage p, H.span_ [] [ text (ms (show p)) ] ] ]
 
 -----------------------------------------------------------------------------
 app :: Component parent Model Action

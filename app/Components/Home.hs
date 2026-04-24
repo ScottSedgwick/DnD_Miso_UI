@@ -47,6 +47,15 @@ viewModel _ =
       [ H.a_ [ P.href_ "https://iconscout.com/icons/spellbook", P.target_ "_blank" ] [ text "Spellbook" ]
       , text " icon by "
       , H.a_ [ P.href_ "https://iconscout.com/contributors/thebeststarticon", P.target_ "_blank"] [ text "thebeststarticon" ]
+      , text " on "
+      , H.a_ [ P.href_ "https://iconscout.com", P.target_ "_blank"] [ text "IconScout" ]
+      ]
+    , H.li_ [] 
+      [ H.a_ [ P.href_ "https://iconscout.com/icons/teddy-bear", P.target_ "_blank" ] [ text "Teddy Bear" ]
+      , text " icon by "
+      , H.a_ [ P.href_ "https://iconscout.com/contributors/icon-click", P.target_ "_blank"] [ text "Vector Place" ]
+      , text " on "
+      , H.a_ [ P.href_ "https://iconscout.com", P.target_ "_blank"] [ text "IconScout" ]
       ]
     ]
   ]
