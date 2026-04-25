@@ -61,14 +61,15 @@ updateModel (PostFilter s)   = io_ $ publish spellFilterTopic s
 
 viewModel :: Model -> View Model Action
 viewModel m = 
-  H.div_ [] 
+  H.div_ [ P.class_ "h-screen flex flex-col"] 
   [ banner Spells
-  , H.div_ [] (filterView m : (map spellsView (filteredSpells m)))
+  , filterView m 
+  , H.div_ [ P.class_ "overflow-y-auto flex-1"] (map spellsView (filteredSpells m))
   ]
 
 filterView :: Model -> View Model Action
 filterView m =
-  H.div_ [ P.class_ "gap-3", MC.style_ [ MC.width "100%" ] ]
+  H.div_ [ P.class_ "sticky top-0 z-10 bg-white border-b gap-3 p-4", MC.style_ [ MC.width "100%" ] ]
   [ H.table_ [ MC.style_ [ MC.width "100%" ] ]
     [ H.tr_ [MC.style_ [ MC.width "100%" ] ] 
       [ H.td_ [ MC.style_ [ MC.width "25%" ] ] 

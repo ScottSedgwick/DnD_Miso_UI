@@ -69,14 +69,15 @@ updateModel (SetPage s)          = selecteddata .= Just s
 
 viewModel :: Model -> View Model Action
 viewModel m = 
-  H.div_ [] 
+  H.div_ [ P.class_ "h-screen flex flex-col" ] 
   [ banner Backgrounds
-  , H.div_ [] (filterView m : (map backgroundView (filteredBackgrounds m)))
+  , filterView m
+  , H.div_ [ P.class_ "overflow-y-auto flex-1" ] (map backgroundView (filteredBackgrounds m))
   ]
 
 filterView :: Model -> View Model Action
 filterView m =
-  H.div_ [ P.class_ "gap-3" ]
+  H.div_ [ P.class_ "sticky top-0 z-10 bg-white border-b gap-3 p-4" ]
   [ H.input_ [ P.placeholder_ "Filter", P.class_ "input", P.type_ "text", P.value_ (m ^. filterTitle), E.onInput UpdateFilter ]
   ]
 
