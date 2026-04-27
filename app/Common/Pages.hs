@@ -17,6 +17,7 @@ data Page
   = Home
   | Counter
   | Backgrounds
+  | Insults
   | Spells
   deriving stock (Show, Eq, Enum, Bounded, Generic, Read)
 
@@ -42,4 +43,5 @@ pageImage :: Page -> View model action
 pageImage Home = homeImage
 pageImage Counter = counterImage
 pageImage Backgrounds = backgroundIcon
+pageImage Insults = insultIcon
 pageImage Spells = spellIcon

@@ -28,6 +28,7 @@ import           Common.SvgImages
 import qualified Components.Backgrounds as CB
 import qualified Components.Counter as CC
 import qualified Components.Home as CH
+import qualified Components.Insults as CI
 import qualified Components.Spells as CS
 import           Model.BackgroundModel ( Background )
 import           Model.SpellsModel ( Spell, SpellFilter )
@@ -57,6 +58,8 @@ data Model = Model
   , _backgroundFilter :: MisoString
   , _spells :: [Spell]
   , _spellFilter :: SpellFilter
+  , _insults :: [MisoString]
+  , _currentInsult :: MisoString
   } deriving (Show, Eq)
 
 cval :: Lens Model CC.Model
@@ -80,6 +83,12 @@ spells = lens _spells $ \m x -> m { _spells = x }
 spellFilter :: Lens Model SpellFilter
 spellFilter = lens _spellFilter $ \m x -> m { _spellFilter = x }
 
+insults :: Lens Model [MisoString]
+insults = lens _insults $ \m x -> m { _insults = x }
+
+currentInsult :: Lens Model MisoString
+currentInsult = lens _currentInsult $ \m x -> m { _currentInsult = x }
+
 initModel :: Model
 initModel = Model
   { _cval = CC.initModel
@@ -89,6 +98,8 @@ initModel = Model
   , _backgroundFilter = ""
   , _spells = []
   , _spellFilter = def
+  , _insults = []
+  , _currentInsult = ""
   }
 -----------------------------------------------------------------------------
 updateModel :: Action -> Effect parent Model Action
@@ -145,6 +156,7 @@ viewModel m = H.body_ []
             Home        -> [ "home"    +> CH.home ]
             Counter     -> [ "counter" +> (CC.counter (m ^. cval))]
             Backgrounds -> [ "books"   +> CB.backgroundsComponent (m ^. backgrounds) (m ^. backgroundFilter)]
+            Insults     -> [ "insults" +> CI.insultsComponent (m ^. insults) (m ^. currentInsult)]
             Spells      -> [ "spells"  +> CS.spellsComponent (m ^. spells) (m ^. spellFilter)]
           )
         ]

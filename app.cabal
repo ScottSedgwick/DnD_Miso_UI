@@ -37,9 +37,11 @@ executable app
                   , Components.Backgrounds
                   , Components.Counter
                   , Components.Home
+                  , Components.Insults
                   , Components.Main
                   , Components.Spells
                   , Model.BackgroundModel
+                  , Model.InsultsModel
                   , Model.MailboxMessage
                   , Model.SpellsModel
   build-depends:    base < 5
@@ -47,6 +49,7 @@ executable app
                   , data-default
                   , miso >= 1.9
                   , miso-ui
+                  , random
                   , text
   hs-source-dirs:   app
   default-language: Haskell2010

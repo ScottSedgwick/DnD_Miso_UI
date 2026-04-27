@@ -20,3 +20,9 @@ spellsTopic = topic "spells"
 
 spellFilterTopic :: Topic SpellFilter
 spellFilterTopic = topic "spellFilter"
+
+insultsTopic :: Topic [MisoString]
+insultsTopic = topic "insults"
+
+currentInsultTopic :: Topic MisoString
+currentInsultTopic = topic "currentInsult"

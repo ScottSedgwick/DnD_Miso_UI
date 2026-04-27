@@ -43,21 +43,23 @@ viewModel _ =
   , H.p_ [] [ text "Have fun writing awesome apps!" ]
   , H.p_ [] [ "Attributions: " ]
   , H.ul_ []
-    [ H.li_ [] 
-      [ H.a_ [ P.href_ "https://iconscout.com/icons/spellbook", P.target_ "_blank" ] [ text "Spellbook" ]
-      , text " icon by "
-      , H.a_ [ P.href_ "https://iconscout.com/contributors/thebeststarticon", P.target_ "_blank"] [ text "thebeststarticon" ]
-      , text " on "
-      , H.a_ [ P.href_ "https://iconscout.com", P.target_ "_blank"] [ text "IconScout" ]
-      ]
-    , H.li_ [] 
-      [ H.a_ [ P.href_ "https://iconscout.com/icons/teddy-bear", P.target_ "_blank" ] [ text "Teddy Bear" ]
-      , text " icon by "
-      , H.a_ [ P.href_ "https://iconscout.com/contributors/icon-click", P.target_ "_blank"] [ text "Vector Place" ]
-      , text " on "
-      , H.a_ [ P.href_ "https://iconscout.com", P.target_ "_blank"] [ text "IconScout" ]
-      ]
+    [ H.li_ [] (map mkAttribution attributions)
     ]
+  ]
+
+mkAttribution :: (MisoString, MisoString, MisoString, MisoString) -> View Model Action
+mkAttribution (a,b,c,d) =
+  H.li_ []
+  [ H.a_ [ P.href_ a, P.target_ "_blank"] [ text b ]
+  , text " icon by "
+  , H.a_ [ P.href_ c, P.target_ "_blank"] [ text d ]
+  ]
+
+attributions :: [(MisoString, MisoString, MisoString, MisoString)]
+attributions =
+  [ ("https://iconscout.com/icons/spellbook", "Spellbook", "https://iconscout.com/contributors/thebeststarticon", "thebeststarticon")
+  , ("https://iconscout.com/icons/swearing", "Swearing", "https://iconscout.com/contributors/surang", "Surangkana Jomjunyong")
+  , ("https://iconscout.com/icons/teddy-bear", "Teddy Bear", "https://iconscout.com/contributors/icon-click", "Vector Place")
   ]
 -----------------------------------------------------------------------------
 home :: Component parent Model Action
