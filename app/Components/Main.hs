@@ -42,6 +42,8 @@ data Action
   | SetBackgroundFilter MisoString
   | SetSpells [Spell]
   | SetSpellFilter SpellFilter
+  | SetInsults [MisoString]
+  | SetCurrentInsult MisoString
   | DisplayError MisoString MisoString
   | NavigateTo Page
   | ToggleDarkMode
@@ -110,6 +112,8 @@ updateModel = \case
   SetBackgroundFilter s -> backgroundFilter .= s
   SetSpells x           -> spells .= x
   SetSpellFilter s      -> spellFilter .= s
+  SetInsults x          -> insults .= x
+  SetCurrentInsult s    -> currentInsult .= s
   DisplayError c e      -> err .= Just (c <> ": " <> e)
   NavigateTo p          -> uriSetter p
   ToggleDarkMode        -> io_ [js| return document.dispatchEvent (new CustomEvent('basecoat:theme')); |]
@@ -119,6 +123,8 @@ updateModel = \case
                         >> subscribe backgroundFilterTopic SetBackgroundFilter (DisplayError "backgroundsFilterTopic")
                         >> subscribe spellsTopic SetSpells (DisplayError "spellsTopic")
                         >> subscribe spellFilterTopic SetSpellFilter (DisplayError "spellFilterTopic")
+                        >> subscribe insultsTopic SetInsults (DisplayError "insultsTopic")
+                        >> subscribe currentInsultTopic SetCurrentInsult (DisplayError "currentInsultTopic")
   ChangeTheme theme     -> 
     io_ [js| document.documentElement.classList.forEach(c => {
                    if (c.startsWith('theme-')) {
@@ -143,6 +149,7 @@ uriSetter p = io_ $ do
   let destUri = pageUri { uriPath = destPath }
   print destUri
   pushURI destUri
+
 -----------------------------------------------------------------------------
 viewModel :: Model -> View Model Action
 viewModel m = H.body_ []
