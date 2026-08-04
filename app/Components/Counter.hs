@@ -1,6 +1,6 @@
 {-# LANGUAGE LambdaCase        #-}
 {-# LANGUAGE OverloadedStrings #-}
-module Components.Counter 
+module Components.Counter
   ( Model
   , counter
   , initModel
@@ -10,7 +10,7 @@ import Miso
     ( Component(styles),
       Effect,
       View,
-      io_, 
+      io_,
       issue,
       ms,
       text,
@@ -38,25 +38,25 @@ type Model = Integer
 initModel :: Model
 initModel = 0
 -----------------------------------------------------------------------------
-updateModel :: Action -> Effect parent Model Action
+updateModel :: Action -> Effect parent props Model Action
 updateModel = \case
   AddOne            -> this += 1 >> issue SendValueToParent
   SubtractOne       -> this -= 1 >> issue SendValueToParent
   SendValueToParent -> get >>= io_ . publish counterTopic
 -----------------------------------------------------------------------------
-viewModel :: Model -> View Model Action
-viewModel mdl = H.div_ [ P.class_ "center-container" ]
+viewModel :: props -> Model -> View Model Action
+viewModel _ mdl = H.div_ [ P.class_ "center-container" ]
   [ H.div_ [ P.class_ "counter-container" ]
     [ H.h1_ [ P.class_ "counter-title" ] [ "🍜 Miso sampler" ]
     , H.div_ [ P.class_ "counter-display"   ] [ text (ms $ show mdl) ]
-    , H.div_ [ P.class_ "buttons-container" ] 
+    , H.div_ [ P.class_ "buttons-container" ]
       [ H.button_ [ E.onClick AddOne,      P.class_ "decrement-btn" ] [text "+"]
       , H.button_ [ E.onClick SubtractOne, P.class_ "increment-btn" ] [text "-"]
       ]
     ]
   ]
 -----------------------------------------------------------------------------
-counter :: Integer -> Component parent Model Action
+counter :: Integer -> Component parent props Model Action
 counter x = (vcomp x updateModel viewModel)
   { styles = [ Sheet counterSheet ]
   }
@@ -128,30 +128,16 @@ counterSheet =
     , CSS.transform "translateY(-2px)"
     ]
   , CSS.keyframes_ "pulse"
-    [ CSS.pct 0 =:
-      [ CSS.transform "scale(1)"
-      ]
-    , CSS.pct 50 =:
-      [ CSS.transform "scale(1.1)"
-      ]
-    , CSS.pct 100 =:
-      [ CSS.transform "scale(1)"
-      ]
+    [ CSS.at (CSS.pct 0) [ CSS.transform "scale(1)" ]
+    , CSS.at (CSS.pct 50) [ CSS.transform "scale(1.1)" ]
+    , CSS.at (CSS.pct 100) [ CSS.transform "scale(1)" ]
     ]
   , CSS.selector_ ".counter-display.animate"
     [ CSS.animation "pulse 0.3s ease"
     ]
-  , CSS.media_ "(max-width: 480px)"
-    [ ".counter-container" =:
-      [ CSS.padding (CSS.rem 1.5)
-      ]
-    , ".counter-display" =:
-      [ CSS.fontSize (CSS.rem 3)
-      ]
-    , "button" =:
-      [ CSS.fontSize (CSS.rem 1.2)
-      , CSS.width (CSS.rem 2.5)
-      , CSS.width (CSS.rem 2.5)
-      ]
+  , CSS.media_ (CSS.screen_ `CSS.and_` CSS.maxWidth_ (CSS.px 480))
+    [ CSS.rule_ ".counter-container" [ CSS.padding (CSS.rem 1.5) ]
+    , CSS.rule_ ".counter-display" [ CSS.fontSize (CSS.rem 3) ]
+    , CSS.rule_ "button" [ CSS.fontSize (CSS.rem 1.2), CSS.width (CSS.rem 2.5), CSS.width (CSS.rem 2.5) ]
     ]
   ]

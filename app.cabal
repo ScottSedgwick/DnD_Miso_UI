@@ -29,7 +29,8 @@ common options
 executable app
   import:           options, warnings
   main-is:          Main.hs
-  other-modules:    Common.Banner
+  other-modules:    Common.Accordion
+                  , Common.Banner
                   , Common.Metadata
                   , Common.Pages
                   , Common.SvgImages
@@ -47,8 +48,7 @@ executable app
   build-depends:    base < 5
                   , containers
                   , data-default
-                  , miso >= 1.9
-                  , miso-ui
+                  , miso == 1.12.0.0
                   , random
                   , text
   hs-source-dirs:   app

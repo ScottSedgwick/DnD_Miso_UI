@@ -46,12 +46,12 @@ currentInsult = lens _currentInsult $ \m x -> m { _currentInsult = x }
 
 instance Default Model where
   def :: Model
-  def = Model 
+  def = Model
       { _insults = Right []
       , _currentInsult = ""
       }
 
-updateModel :: Action -> Effect a Model Action
+updateModel :: Action -> Effect a props Model Action
 updateModel GetInsults            = getText "./data/insults.json" [] SetInsults ErrorHandler
 updateModel (SetInsults r)        = let x = parseInsultResponse r in insults .= x >> issue (PostInsults x)
 updateModel (PostInsults x)       = either (const $ pure ()) (io_ . publish insultsTopic) x >> issue GetNewInsult
@@ -62,9 +62,9 @@ updateModel GetNewInsult          = get >>= \m -> io $ do
   putStrLn "Getting New insult"
   case (m ^. insults) of
     Left _ -> pure (SetNewInsult "No Insults found")
-    Right xs -> do
+    Right ins -> do
       putStrLn "Randomizing Insult"
-      s <- pickRandom xs
+      s <- pickRandom ins
       putStrLn $ "Random Insult: " <> fromMisoString s
       pure (SetNewInsult s)
 
@@ -75,23 +75,23 @@ parseInsultResponse r =
     Right j -> Right (xs j)
 
 pickRandom :: [a] -> IO a
-pickRandom xs = do
-  i <- randomRIO (0, length xs - 1)
-  pure $ xs !! i
+pickRandom ins = do
+  i <- randomRIO (0, length ins - 1)
+  pure $ ins !! i
 
-viewModel :: Model -> View Model Action
-viewModel m = 
-  H.div_ [ P.class_ "h-screen flex flex-col"] 
+viewModel :: props -> Model -> View Model Action
+viewModel _ m =
+  H.div_ [ P.class_ "h-screen flex flex-col"]
   [ banner Insults
   , H.div_ [ P.class_ "overflow-y-auto flex-1" ]
-    [ H.textarea_ [ P.placeholder_ "Type your message here", P.class_ "textarea", E.onClick GetNewInsult, P.readonly_ True, P.value_ (m ^. currentInsult) ] []
+    [ H.textarea_ [ P.placeholder_ "Type your message here", P.class_ "textarea", E.onClick GetNewInsult, P.readonly_ True, P.value_ (m ^. currentInsult) ]
     ]
   ]
 
-insultsComponent :: [MisoString] -> MisoString -> Component parent Model Action
-insultsComponent xs curr = 
-  if xs == []
+insultsComponent :: [MisoString] -> MisoString -> Component parent props Model Action
+insultsComponent ins curr =
+  if ins == []
     then
       (vcomp def updateModel viewModel) { mount = Just GetInsults }
     else
-      (vcomp (def { _insults = Right xs, _currentInsult = curr }) updateModel viewModel)
+      (vcomp (def { _insults = Right ins, _currentInsult = curr }) updateModel viewModel)

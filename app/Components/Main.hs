@@ -11,7 +11,8 @@ import           Data.Default       ( def )
 import           Miso( Component, Effect, MisoString, View, (+>), io_, mount, ms, routerSub, styles, subs, subscribe, text, vcomp )
 import qualified Miso.CSS as CSS
 import           Miso.CSS (StyleSheet)
-import           Miso.FFI.QQ (js)
+import           Miso.DSL ( eval )
+import           Miso.FFI ( dispatchEvent, newEvent )
 import qualified Miso.Html.Element as H
 import           Miso.Html.Event as E
 import qualified Miso.Html.Property as P
@@ -104,7 +105,7 @@ initModel = Model
   , _currentInsult = ""
   }
 -----------------------------------------------------------------------------
-updateModel :: Action -> Effect parent Model Action
+updateModel :: Action -> Effect parent props Model Action
 updateModel = \case
   SetPage p             -> page .= p
   SetCounter x          -> cval .= x
@@ -116,8 +117,8 @@ updateModel = \case
   SetCurrentInsult s    -> currentInsult .= s
   DisplayError c e      -> err .= Just (c <> ": " <> e)
   NavigateTo p          -> uriSetter p
-  ToggleDarkMode        -> io_ [js| return document.dispatchEvent (new CustomEvent('basecoat:theme')); |]
-  ToggleSidebar         -> io_ [js| document.dispatchEvent (new CustomEvent('basecoat:sidebar')); |]
+  ToggleDarkMode        -> io_ $ newEvent ("basecoat:theme" :: MisoString) >>= dispatchEvent
+  ToggleSidebar         -> io_ $ newEvent ("basecoat:sidebar" :: MisoString) >>= dispatchEvent
   Subscribe             -> subscribe counterTopic SetCounter (DisplayError "counterTopic")
                         >> subscribe backgroundsTopic SetBackgrounds (DisplayError "backgroundsTopic")
                         >> subscribe backgroundFilterTopic SetBackgroundFilter (DisplayError "backgroundsFilterTopic")
@@ -125,19 +126,25 @@ updateModel = \case
                         >> subscribe spellFilterTopic SetSpellFilter (DisplayError "spellFilterTopic")
                         >> subscribe insultsTopic SetInsults (DisplayError "insultsTopic")
                         >> subscribe currentInsultTopic SetCurrentInsult (DisplayError "currentInsultTopic")
-  ChangeTheme theme     -> 
-    io_ [js| document.documentElement.classList.forEach(c => {
-                   if (c.startsWith('theme-')) {
-                     document.documentElement.classList.remove(c);
-                   }
-                 });
-                 return document.documentElement.classList.add('theme-' + ${theme}); |]
+  ChangeTheme theme     -> io_ $ changeTheme theme
+
+changeTheme :: MisoString -> IO ()
+changeTheme theme = do
+    let code = """
+                document.documentElement.classList.forEach(c => {" <>
+                if (c.startsWith('theme-')) {" <>
+                    document.documentElement.classList.remove(c);" <>
+                }" <>
+                }); " <>
+                document.documentElement.classList.add('theme-""" <> theme <> "');"
+    _ <- eval code
+    pure ()
 
 uriHandler :: Either RoutingError Page -> Action
 uriHandler (Left  e) = DisplayError "uriHandler" (ms $ show e)
 uriHandler (Right p) = SetPage p
 
-uriSetter :: Page -> Effect parent Model Action
+uriSetter :: Page -> Effect parent props Model Action
 uriSetter p = io_ $ do
   baseUri <- getURI
   print baseUri
@@ -151,8 +158,8 @@ uriSetter p = io_ $ do
   pushURI destUri
 
 -----------------------------------------------------------------------------
-viewModel :: Model -> View Model Action
-viewModel m = H.body_ []
+viewModel :: props -> Model -> View Model Action
+viewModel _ m = H.body_ []
   [ asideView m
   , H.div_ []
     [ topSection
@@ -169,14 +176,14 @@ viewModel m = H.body_ []
         ]
       ]
     , H.footer_ [ P.class_ "error-footer" ]
-      [ H.div_ [ P.class_ "error-footer-text" ] 
+      [ H.div_ [ P.class_ "error-footer-text" ]
         ( maybe [] (\e -> [ text e ]) (m ^. err) )
       ]
     ]
   ]
 
 topSection :: View Model Action
-topSection = 
+topSection =
   H.header_ []
   [ H.div_ [ P.class_ "flex h-14 w-full items-center gap-2 px-4" ]
     [ H.button_
@@ -239,7 +246,7 @@ topSection =
   ]
 
 asideView :: Model -> View Model Action
-asideView _ = 
+asideView _ =
   H.aside_
   [ P.aria_ "hidden" "true"
   , MP.boolProp "inert" True
@@ -318,7 +325,7 @@ mkSideOption :: Page -> View model Action
 mkSideOption p = H.li_ [ P.class_ "pointer" ] [ H.a_ [ E.onClick (NavigateTo p) ] [ pageImage p, H.span_ [] [ text (ms (show p)) ] ] ]
 
 -----------------------------------------------------------------------------
-app :: Component parent Model Action
+app :: Component parent props Model Action
 app = (vcomp initModel updateModel viewModel)
     { styles = [ Sheet maincss ]
     , subs = [ routerSub uriHandler ]

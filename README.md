@@ -6,7 +6,8 @@ This project contains a number of applications to assist with playing D&D.
 It is built in Haskell, using:
 
 * The [Miso](https://haskell-miso.org/) framework - and Elm application framework.
-* [Miso-UI](https://github.com/haskell-miso/miso-ui) - a UI tolkit using Miso and Tailwind.
+* [Miso-UI](https://github.com/haskell-miso/miso-ui) - a UI toolkit using Miso and Tailwind.
+  * Miso-UI has been removed (temporarily?) because it is not compatible with the latest version of Miso.
 
 Infinite credit and chops to David Johnson (dmjio) who wrote both of these libraries.
 
@@ -22,6 +23,9 @@ curl -L https://nixos.org/nix/install | sh
 
 # Enable flakes
 echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf
+
+# Install ghciwatch
+nix profile add nixpkgs#ghciwatch
 ```
 
 > [!TIP] 
@@ -130,4 +134,3 @@ Ensure that the Haskell miso [cachix](cachix.org) is being used when building yo
   with:
     name: haskell-miso-cachix
 ```
-

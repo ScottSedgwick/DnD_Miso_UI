@@ -35,7 +35,7 @@ namespace :wasm do
 
   task :build => ['wasm:compile'] do
     mysys 'mkdir -p public'
-	  mysys 'cp -R static/* public'
+    mysys 'cp -R static/* public'
     postlink = "#{`wasm32-wasi-ghc --print-libdir`.strip}/post-link.mjs"
     mywasm = `wasm32-wasi-cabal list-bin app | tail -n 1`.strip
 	  mysys "#{postlink} --input #{mywasm} --output public/ghc_wasm_jsffi.js"
@@ -50,9 +50,11 @@ namespace :wasm do
   task :all => ['wasm:update', 'wasm:build', 'wasm:optim']
 end
 
+desc "Build (WASM)"
 task :build => ['wasm:build']
 task :default => [:build]
 
+desc "Repl (WASM)"
 task :repl => ['wasm:update'] do
   mysys 'wasm32-wasi-cabal repl app -finteractive --repl-options=\'-fghci-browser -fghci-browser-port=8080\''
 end
@@ -61,6 +63,7 @@ task :watch do
   mysys 'ghciwatch --after-startup-ghci :main --after-reload-ghci :main --watch app/*.hs --debounce 50ms --command \'wasm32-wasi-cabal repl app -finteractive --repl-options="-fghci-browser -fghci-browser-port=8080"\''
 end
 
+desc "Serve"
 task :serve do
-	mysys 'http-server public'
+	mysys 'npx http-server -p 8080 public'
 end
