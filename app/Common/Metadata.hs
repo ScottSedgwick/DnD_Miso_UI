@@ -1,4 +1,3 @@
-{-# LANGUAGE OverloadedStrings  #-}
 module Common.Metadata where
 
 import           Miso ( MisoString )

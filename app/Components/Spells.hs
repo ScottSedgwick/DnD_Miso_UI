@@ -1,6 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE InstanceSigs #-}
 module Components.Spells
   ( spellsComponent
   ) where

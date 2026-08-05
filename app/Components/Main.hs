@@ -1,10 +1,4 @@
-{-# LANGUAGE LambdaCase         #-}
-{-# LANGUAGE QuasiQuotes        #-}
 {-# LANGUAGE MultilineStrings   #-}
-{-# LANGUAGE OverloadedStrings  #-}
-{-# LANGUAGE DerivingStrategies #-}
-{-# LANGUAGE DeriveAnyClass     #-}
-{-# LANGUAGE DeriveGeneric      #-}
 module Components.Main ( app ) where
 
 import           Data.Default              ( def )

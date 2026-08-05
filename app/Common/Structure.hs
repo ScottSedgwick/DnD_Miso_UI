@@ -1,4 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
 module Common.Structure where
 
 import           Control.Applicative ( empty )
@@ -146,7 +145,7 @@ stripeTable ts xs =
   ]
 
 mkStripeRow :: [[Inline]] -> View m a
-mkStripeRow xs = 
+mkStripeRow xs =
   H.tr_ [] (map (\x -> H.td_ [] (map renderInline x)) xs)
 
 table :: [[[Inline]]] -> View m a

@@ -1,4 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
 module Common.Accordion
   ( accordion_
   , accordionSection_

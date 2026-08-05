@@ -1,4 +1,3 @@
-{-# LANGUAGE OverloadedStrings  #-}
 module Common.SvgImages where
 
 import qualified Miso.Html.Element as H
@@ -9,7 +8,7 @@ import qualified Miso.Svg.Property as SP
 import           Miso.Types ( View )
 
 toggleSidebarImage :: View model action
-toggleSidebarImage = 
+toggleSidebarImage =
   H.svg_
   [ SP.strokeLinejoin_ "round"
   , SP.strokeLinecap_ "round"
@@ -52,7 +51,7 @@ githubImage =
   ]
 
 discordImage :: View model action
-discordImage = 
+discordImage =
   H.svg_
   [ P.xmlns_ "http://www.w3.org/2000/svg"
   , SP.viewBox_ "0 0 24 24"
@@ -64,7 +63,7 @@ discordImage =
   ]
 
 toggleDarkModeImage1 :: View model action
-toggleDarkModeImage1 = 
+toggleDarkModeImage1 =
   H.svg_
   [ SP.strokeLinejoin_ "round"
   , SP.strokeLinecap_ "round"
@@ -88,7 +87,7 @@ toggleDarkModeImage1 =
   ]
 
 toggleDarkModeImage2 :: View model action
-toggleDarkModeImage2 = 
+toggleDarkModeImage2 =
   H.svg_
   [ SP.strokeLinejoin_ "round"
   , SP.strokeLinecap_ "round"
@@ -105,7 +104,7 @@ toggleDarkModeImage2 =
   ]
 
 homeImage :: View model action
-homeImage = 
+homeImage =
   H.svg_
   [ SP.strokeLinejoin_ "round"
   , SP.strokeLinecap_ "round"
@@ -148,7 +147,7 @@ homeImage =
   ]
 
 githubSideImage :: View model action
-githubSideImage = 
+githubSideImage =
   H.svg_
   [ P.xmlns_ "http://www.w3.org/2000/svg"
   , SP.viewBox_ "0 0 24 24"
@@ -162,7 +161,7 @@ githubSideImage =
   ]
 
 discordSideImage :: View model action
-discordSideImage = 
+discordSideImage =
   H.svg_
   [ P.xmlns_ "http://www.w3.org/2000/svg"
   , SP.viewBox_ "0 0 24 24"
@@ -176,7 +175,7 @@ discordSideImage =
   ]
 
 upDownChevrons :: View model action
-upDownChevrons = 
+upDownChevrons =
   H.svg_
   [ SP.strokeLinejoin_ "round"
   , SP.strokeLinecap_ "round"

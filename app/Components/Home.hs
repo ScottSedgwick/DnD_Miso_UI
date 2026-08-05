@@ -1,5 +1,3 @@
-{-# LANGUAGE LambdaCase        #-}
-{-# LANGUAGE OverloadedStrings #-}
 module Components.Home
   ( home
   ) where
@@ -18,8 +16,7 @@ initModel :: Model
 initModel = 0
 -----------------------------------------------------------------------------
 updateModel :: Action -> Effect parent props Model Action
-updateModel = \case
-  Noop -> pure ()
+updateModel Noop = pure ()
 -----------------------------------------------------------------------------
 viewModel :: props -> Model -> View Model Action
 viewModel _ _ =

@@ -1,8 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DerivingStrategies #-}
-{-# LANGUAGE DeriveAnyClass     #-}
-{-# LANGUAGE DeriveGeneric      #-}
-{-# LANGUAGE InstanceSigs #-}
 module Common.Pages where
 
 import qualified Data.Map     as M

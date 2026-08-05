@@ -25,6 +25,11 @@ common options
 
   if arch(javascript)
      ld-options: -sEXPORTED_RUNTIME_METHODS=HEAP8
+  default-extensions:   DeriveGeneric
+                      , DerivingStrategies
+                      , InstanceSigs
+                      , LambdaCase
+                      , OverloadedStrings
 
 executable app
   import:           options, warnings

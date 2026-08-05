@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE InstanceSigs      #-}
 module Components.Insults where
 
 import           Data.Default        ( Default, def )
