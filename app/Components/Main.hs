@@ -7,27 +7,26 @@
 {-# LANGUAGE DeriveGeneric      #-}
 module Components.Main ( app ) where
 
-import           Data.Default       ( def )
-import           Miso( Component, Effect, MisoString, View, (+>), io_, mount, ms, routerSub, styles, subs, subscribe, text, vcomp )
-import qualified Miso.CSS as CSS
-import           Miso.CSS (StyleSheet)
-import           Miso.DSL ( eval )
-import           Miso.FFI ( dispatchEvent, newEvent )
-import qualified Miso.Html.Element as H
-import           Miso.Html.Event as E
-import qualified Miso.Html.Property as P
-import           Miso.Lens (Lens, (.=), (^.), lens)
-import           Miso.Router ( RoutingError, toURI, uriPath )
-import qualified Miso.Property as MP
-import           Miso.String ( isSuffixOf )
-import           Miso.Subscription.History (getURI, pushURI)
-import           Miso.Types ( CSS ( Sheet ) )
+import           Data.Default              ( def )
+import           Miso                      ( Component, Effect, MisoString, View, (+>), io_, mount, ms, routerSub, styles, subs, subscribe, text, vcomp )
+import qualified Miso.CSS                  as CSS
+import           Miso.CSS                  ( StyleSheet )
+import           Miso.DSL                  ( eval )
+import           Miso.FFI                  ( dispatchEvent, newEvent )
+import qualified Miso.Html.Element         as H
+import           Miso.Html.Event           as E
+import qualified Miso.Html.Property        as P
+import           Miso.Lens                 ( Lens, (.=), (^.), lens )
+import           Miso.Router               ( RoutingError, toURI, uriPath )
+import qualified Miso.Property             as MP
+import           Miso.String               ( isSuffixOf )
+import           Miso.Subscription.History ( getURI, pushURI )
+import           Miso.Types                ( CSS ( Sheet ) )
 
 import           Common.Metadata
 import           Common.Pages ( Page(..), allPages, pageImage )
 import           Common.SvgImages
 import qualified Components.Backgrounds as CB
-import qualified Components.Counter as CC
 import qualified Components.Home as CH
 import qualified Components.Insults as CI
 import qualified Components.Spells as CS
@@ -38,7 +37,6 @@ import           Model.MailboxMessage
 -----------------------------------------------------------------------------
 data Action
   = SetPage Page
-  | SetCounter CC.Model
   | SetBackgrounds [Background]
   | SetBackgroundFilter MisoString
   | SetSpells [Spell]
@@ -55,7 +53,6 @@ data Action
 -----------------------------------------------------------------------------
 data Model = Model
   { _page :: Page
-  , _cval :: CC.Model
   , _err :: Maybe MisoString
   , _backgrounds :: [Background]
   , _backgroundFilter :: MisoString
@@ -64,9 +61,6 @@ data Model = Model
   , _insults :: [MisoString]
   , _currentInsult :: MisoString
   } deriving (Show, Eq)
-
-cval :: Lens Model CC.Model
-cval = lens _cval $ \m x -> m { _cval = x }
 
 page :: Lens Model Page
 page = lens _page $ \m x -> m { _page = x }
@@ -94,8 +88,7 @@ currentInsult = lens _currentInsult $ \m x -> m { _currentInsult = x }
 
 initModel :: Model
 initModel = Model
-  { _cval = CC.initModel
-  , _page = Home
+  { _page = Home
   , _err  = Nothing
   , _backgrounds = []
   , _backgroundFilter = ""
@@ -108,7 +101,6 @@ initModel = Model
 updateModel :: Action -> Effect parent props Model Action
 updateModel = \case
   SetPage p             -> page .= p
-  SetCounter x          -> cval .= x
   SetBackgrounds x      -> backgrounds .= x
   SetBackgroundFilter s -> backgroundFilter .= s
   SetSpells x           -> spells .= x
@@ -119,8 +111,7 @@ updateModel = \case
   NavigateTo p          -> uriSetter p
   ToggleDarkMode        -> io_ $ newEvent ("basecoat:theme" :: MisoString) >>= dispatchEvent
   ToggleSidebar         -> io_ $ newEvent ("basecoat:sidebar" :: MisoString) >>= dispatchEvent
-  Subscribe             -> subscribe counterTopic SetCounter (DisplayError "counterTopic")
-                        >> subscribe backgroundsTopic SetBackgrounds (DisplayError "backgroundsTopic")
+  Subscribe             -> subscribe backgroundsTopic SetBackgrounds (DisplayError "backgroundsTopic")
                         >> subscribe backgroundFilterTopic SetBackgroundFilter (DisplayError "backgroundsFilterTopic")
                         >> subscribe spellsTopic SetSpells (DisplayError "spellsTopic")
                         >> subscribe spellFilterTopic SetSpellFilter (DisplayError "spellFilterTopic")
@@ -168,7 +159,6 @@ viewModel _ m = H.body_ []
         [ H.section_ []
           ( case m ^. page of
             Home        -> [ "home"    +> CH.home ]
-            Counter     -> [ "counter" +> (CC.counter (m ^. cval))]
             Backgrounds -> [ "books"   +> CB.backgroundsComponent (m ^. backgrounds) (m ^. backgroundFilter)]
             Insults     -> [ "insults" +> CI.insultsComponent (m ^. insults) (m ^. currentInsult)]
             Spells      -> [ "spells"  +> CS.spellsComponent (m ^. spells) (m ^. spellFilter)]
@@ -217,16 +207,6 @@ topSection =
       , P.href_ githubRepo
       ]
       [ githubImage ]
-    -- , H.a_
-    --   [ P.data_ "align" "end"
-    --   , P.data_ "side" "bottom"
-    --   , P.data_ "tooltip" "Discord server"
-    --   , P.rel_ "noopener noreferrer"
-    --   , P.target_ "_blank"
-    --   , P.class_ "btn-icon size-8"
-    --   , P.href_ "https://discord.gg/QVDtfYNSxq"
-    --   ]
-      -- [ discordImage ]
     , H.button_
       [ P.class_ "btn-icon-outline size-8"
       , P.data_ "side" "bottom"
@@ -273,46 +253,42 @@ asideView _ =
         , H.ul_ [] (map mkSideOption allPages)
         ]
       ]
-      , H.footer_ []
-        [ H.div_ [ P.class_ "popover ", P.id_ "popover-925347" ]
-          [ H.button_
-            [ P.data_ "keep-mobile-sidebar-open" ""
-            , P.class_ "btn-ghost p-2 h-12 w-full flex items-center justify-start"
-            , P.aria_ "controls" "popover-925347-popover"
-            , P.aria_ "expanded" "false"
-            , P.type_ "button"
-            , P.id_ "popover-925347-trigger"
+    , H.footer_ []
+      [ H.div_ [ P.class_ "popover ", P.id_ "popover-925347" ]
+        [ H.button_
+          [ P.data_ "keep-mobile-sidebar-open" ""
+          , P.class_ "btn-ghost p-2 h-12 w-full flex items-center justify-start"
+          , P.aria_ "controls" "popover-925347-popover"
+          , P.aria_ "expanded" "false"
+          , P.type_ "button"
+          , P.id_ "popover-925347-trigger"
+          ]
+          [ H.img_ [ P.class_ "rounded-lg shrink-0 size-8", P.src_ authorImage ]
+          , H.div_ [ P.class_ "grid flex-1 text-left text-sm leading-tight" ]
+            [ H.span_ [ P.class_ "truncate font-medium" ] [ text authorName ]
             ]
-            [ H.img_ [ P.class_ "rounded-lg shrink-0 size-8", P.src_ "https://github.com/dmjio.png" ]
-            , H.div_ [ P.class_ "grid flex-1 text-left text-sm leading-tight" ]
-              [ H.span_ [ P.class_ "truncate font-medium" ] [ text authorName ]
-              , H.span_ [ P.class_ "truncate text-xs"] [ text githubProfile ]
-              ]
-            , upDownChevrons
-            ]
-          , H.div_
-            [ P.class_ "w-[271px] md:w-[239px]"
-            , P.data_ "side" "top"
-            , P.aria_ "hidden" "true"
-            , P.data_ "popover" ""
-            , P.id_ "popover-925347-popover"
-            ]
-            [ H.div_ [ P.class_ "grid gap-4" ]
-              [ H.header_ [ P.class_ "grid gap-1.5" ]
-                [ H.h2_ [ P.class_ "font-semibold" ] [ text (appIcon <> " " <> appTitle) ]
-                , H.p_ [ P.class_ "text-muted-foreground text-sm" ]
-                  [ " Hi, I'm "
-                  , H.a_ [ P.target_ "_blank", P.href_ githubProfile, P.class_ "underline underline-offset-4" ] [ text githubUser ]
-                  , ", and I'm using "
-                  , H.a_ [ P.target_ "_blank", P.href_ "https://github.com/haskell-miso/miso-ui", P.class_ "underline underline-offset-4" ] [ "miso.ui" ]
-                  , " to build "
-                  , H.a_ [ P.target_ "_blank", P.href_ githubPages, P.class_ "underline underline-offset-4" ] [ text appTitle ]
-                  , ". If you find it useful, please consider sponsoring "
-                  , H.a_ [ P.target_ "_blank", P.href_ githubProfile, P.class_ "underline underline-offset-4" ] [ text githubUser ]
-                  ]
-                ]
-              , H.footer_ [ P.class_ "grid gap-2" ]
-                [ H.a_ [ P.target_ "_blank", P.class_ "btn-sm", P.href_ githubRepo ] [ "Read the code" ]
+          , upDownChevrons
+          ]
+        , H.div_
+          [ P.class_ "w-[271px] md:w-[239px]"
+          , P.data_ "side" "top"
+          , P.aria_ "hidden" "true"
+          , P.data_ "popover" ""
+          , P.id_ "popover-925347-popover"
+          ]
+          [ H.div_ [ P.class_ "grid gap-4" ]
+            [ H.header_ [ P.class_ "grid gap-1.5" ]
+              [ H.h2_ [ P.class_ "font-semibold" ] [ text (appIcon <> " " <> appTitle) ]
+              , H.p_ [ P.class_ "text-muted-foreground text-sm" ]
+                [ " Hi, I'm "
+                , H.a_ [ P.target_ "_blank", P.href_ githubProfile, P.class_ "underline underline-offset-4" ] [ text githubUser ]
+                , ", and I'm using "
+                , H.a_ [ P.target_ "_blank", P.href_ misoUrl, P.class_ "underline underline-offset-4" ] [ "Miso" ]
+                , ", and "
+                , H.a_ [ P.target_ "_blank", P.href_ misoUiUrl, P.class_ "underline underline-offset-4" ] [ "Miso UI" ]
+                , " to build a "
+                , H.a_ [ P.target_ "_blank", P.href_ githubRepo, P.class_ "underline underline-offset-4" ] [ text appTitle ]
+                , "."
                 ]
               ]
             ]
@@ -320,6 +296,7 @@ asideView _ =
         ]
       ]
     ]
+  ]
 
 mkSideOption :: Page -> View model Action
 mkSideOption p = H.li_ [ P.class_ "pointer" ] [ H.a_ [ E.onClick (NavigateTo p) ] [ pageImage p, H.span_ [] [ text (ms (show p)) ] ] ]

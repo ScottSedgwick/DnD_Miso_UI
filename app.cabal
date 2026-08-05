@@ -36,7 +36,6 @@ executable app
                   , Common.SvgImages
                   , Common.Structure
                   , Components.Backgrounds
-                  , Components.Counter
                   , Components.Home
                   , Components.Insults
                   , Components.Main
