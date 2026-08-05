@@ -2,11 +2,14 @@ module Components.Home
   ( home
   ) where
 
+import           Data.Maybe         ( mapMaybe )
 import           Miso
-import qualified Miso.CSS as CSS
-import           Miso.CSS (StyleSheet)
-import           Miso.Html.Element as H
+import qualified Miso.CSS           as CSS
+import           Miso.CSS           (StyleSheet)
+import           Miso.Html.Element  as H
 import           Miso.Html.Property as P
+
+import Common.Pages ( allPages, pageDescription )
 -----------------------------------------------------------------------------
 data Action = Noop
 -----------------------------------------------------------------------------
@@ -22,11 +25,7 @@ viewModel :: props -> Model -> View Model Action
 viewModel _ _ =
   H.div_ [ P.class_ "home-main" ]
   [ H.h1_ [] [ text "Welcome to Scott's D&D App!" ]
-  , H.ul_ []
-    [ H.li_ [] [ text "The Backgrounds page allows you to see and read all the available backgrounds for characters." ]
-    , H.li_ [] [ text "The Insults page randomly generates insults (greate for Vicious Mockery)." ]
-    , H.li_ [] [ text "The Spells page allows you to see and read all the available spells." ]
-    ]
+  , H.ul_ [] ( map mkComponentDescription (mapMaybe pageDescription allPages) )
   , H.br_ []
   , H.br_ []
   , H.hr_ []
@@ -49,6 +48,9 @@ viewModel _ _ =
     [ H.li_ [] (map mkAttribution attributions)
     ]
   ]
+
+mkComponentDescription :: MisoString -> View Model Action
+mkComponentDescription s = H.li_ [] [ text s ]
 
 mkAttribution :: (MisoString, MisoString, MisoString, MisoString, MisoString) -> View Model Action
 mkAttribution (uri, description, whereused, contributor, name) =
