@@ -44,10 +44,12 @@ executable app
                   , Components.Home
                   , Components.Insults
                   , Components.Main
+                  , Components.Poisons
                   , Components.Spells
                   , Model.BackgroundModel
                   , Model.InsultsModel
                   , Model.MailboxMessage
+                  , Model.PoisonModel
                   , Model.SpellsModel
   build-depends:    base < 5
                   , containers

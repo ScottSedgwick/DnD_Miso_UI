@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE InstanceSigs #-}
 module Model.SpellsModel where
 
 import           Data.Default       ( Default, def )
@@ -80,7 +78,7 @@ instance FromJSON Spell where
     duration_    <- o .:? "duration" .!= ""
     description_ <- o .:? "description" .!= []
     lists_       <- o .:? "lists" .!= []
-    pure $ Spell 
+    pure $ Spell
       { _title = title_
       , _source = source_
       , _level = level_
@@ -94,8 +92,8 @@ instance FromJSON Spell where
       }
 
 instance ToJSON Spell where
-  toJSON s = 
-    object 
+  toJSON s =
+    object
     [ "title" .= (_title s)
     , "source" .= (_source s)
     , "level" .= (_level s)
@@ -131,7 +129,7 @@ instance FromJSON SpellFilter where
     level_  <- o .:? "level"
     school_ <- o .:? "school" .!= ""
     list_   <- o .:? "list" .!= ""
-    pure $ SpellFilter 
+    pure $ SpellFilter
       { _flt_title = title_
       , _flt_level = level_
       , _flt_school = school_
@@ -139,8 +137,8 @@ instance FromJSON SpellFilter where
       }
 
 instance ToJSON SpellFilter where
-  toJSON s = 
-    object 
+  toJSON s =
+    object
     [ "title" .= (_flt_title s)
     , "level" .= (_flt_level s)
     , "school" .= (_flt_school s)

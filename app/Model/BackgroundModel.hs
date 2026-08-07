@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE InstanceSigs #-}
 module Model.BackgroundModel where
 
 import           Miso               ( MisoString )
@@ -23,7 +21,7 @@ instance FromJSON BackgroundProficiency where
     l <- o .:? "languages" .!= []
     pure $ BackgroundProficiency { _skills = s, _tools = t, _languages = l }
 instance ToJSON BackgroundProficiency where
-  toJSON b = 
+  toJSON b =
     object [ "skills" .= (_skills b)
            , "tools" .= (_tools b)
            , "toolanguagesls" .= (_languages b)
@@ -40,7 +38,7 @@ languages = lens _languages $ \m x -> m { _languages = x }
 
 data BackgroundFeature = BackgroundFeature
   { _featureTitle :: MisoString
-  , _featureDescription :: [Structure]    
+  , _featureDescription :: [Structure]
   } deriving (Show, Eq)
 
 instance FromJSON BackgroundFeature where
@@ -50,7 +48,7 @@ instance FromJSON BackgroundFeature where
     d <- o .: "description"
     pure $ BackgroundFeature { _featureTitle = t, _featureDescription = d }
 instance ToJSON BackgroundFeature where
-  toJSON b = 
+  toJSON b =
     object [ "title" .= (_featureTitle b)
            , "description" .= (_featureDescription b)
     ]
@@ -77,7 +75,7 @@ instance FromJSON BackgroundTraits where
     f <- o .: "flaws"
     pure $ BackgroundTraits { _personality = p, _ideals = i, _bonds = b, _flaws = f }
 instance ToJSON BackgroundTraits where
-  toJSON b = 
+  toJSON b =
     object [ "personality" .= (_personality b)
            , "ideals" .= (_ideals b)
            , "bonds" .= (_bonds b)
@@ -121,7 +119,7 @@ instance FromJSON Background where
     r <- o .:? "traits"
     pure $ Background { _title = t, _description = d, _source = s, _sourceurl = u, _proficiencies = p, _equipment = e, _features = f, _suggested = g, _traits = r }
 instance ToJSON Background where
-  toJSON b = 
+  toJSON b =
     object [ "title" .= (_title b)
            , "description" .= (_description b)
            , "source" .= (_source b)

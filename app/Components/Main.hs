@@ -23,8 +23,10 @@ import           Common.SvgImages
 import qualified Components.Backgrounds as CB
 import qualified Components.Home as CH
 import qualified Components.Insults as CI
+import qualified Components.Poisons as CP
 import qualified Components.Spells as CS
 import           Model.BackgroundModel ( Background )
+import           Model.PoisonModel ( Poison )
 import           Model.SpellsModel ( Spell, SpellFilter )
 import           Model.MailboxMessage
 
@@ -53,6 +55,8 @@ data Model = Model
   , _spells :: [Spell]
   , _spellFilter :: SpellFilter
   , _insults :: [MisoString]
+  , _poisons :: [Poison]
+  , _poisonsFilter :: MisoString
   , _currentInsult :: MisoString
   } deriving (Show, Eq)
 
@@ -77,6 +81,12 @@ spellFilter = lens _spellFilter $ \m x -> m { _spellFilter = x }
 insults :: Lens Model [MisoString]
 insults = lens _insults $ \m x -> m { _insults = x }
 
+poisons :: Lens Model [Poison]
+poisons = lens _poisons $ \m x -> m { _poisons = x }
+
+poisonsFilter :: Lens Model MisoString
+poisonsFilter = lens _poisonsFilter $ \m x -> m { _poisonsFilter = x }
+
 currentInsult :: Lens Model MisoString
 currentInsult = lens _currentInsult $ \m x -> m { _currentInsult = x }
 
@@ -89,6 +99,8 @@ initModel = Model
   , _spells = []
   , _spellFilter = def
   , _insults = []
+  , _poisons = []
+  , _poisonsFilter = ""
   , _currentInsult = ""
   }
 -----------------------------------------------------------------------------
@@ -155,6 +167,7 @@ viewModel _ m = H.body_ []
             Home        -> [ "home"    +> CH.home ]
             Backgrounds -> [ "books"   +> CB.backgroundsComponent (m ^. backgrounds) (m ^. backgroundFilter)]
             Insults     -> [ "insults" +> CI.insultsComponent (m ^. insults) (m ^. currentInsult)]
+            Poisons     -> [ "poisons" +> CP.poisonsComponent (m ^. poisons) (m ^. poisonsFilter)]
             Spells      -> [ "spells"  +> CS.spellsComponent (m ^. spells) (m ^. spellFilter)]
           )
         ]
