@@ -65,6 +65,7 @@ attributions =
   [ ("https://iconscout.com/icons/spellbook", "Spellbook", "Spells", "https://iconscout.com/contributors/thebeststarticon", "thebeststarticon")
   , ("https://iconscout.com/icons/swearing", "Swearing", "Insults", "https://iconscout.com/contributors/surang", "Surangkana Jomjunyong")
   , ("https://iconscout.com/icons/teddy-bear", "Teddy Bear", "Backgrounds", "https://iconscout.com/contributors/icon-click", "Vector Place")
+  , ("https://staging.svgrepo.com/svg/413573/poison", "Poison Bottle", "Poisons", "https://staging.svgrepo.com/author/Shannon%20E.%20Thomas/", "Shannon E. Thomas")
   ]
 -----------------------------------------------------------------------------
 home :: Component parent props Model Action

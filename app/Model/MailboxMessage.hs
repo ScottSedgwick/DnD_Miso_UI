@@ -1,9 +1,9 @@
-{-# LANGUAGE OverloadedStrings #-}
 module Model.MailboxMessage where
 
 import Miso                  ( MisoString )
 import Miso.PubSub           ( Topic, topic )
 import Model.BackgroundModel ( Background )
+import Model.PoisonModel     ( Poison )
 import Model.SpellsModel     ( Spell, SpellFilter )
 
 counterTopic :: Topic Integer
@@ -26,3 +26,9 @@ insultsTopic = topic "insults"
 
 currentInsultTopic :: Topic MisoString
 currentInsultTopic = topic "currentInsult"
+
+poisonsTopic :: Topic [Poison]
+poisonsTopic = topic "poisons"
+
+poisonFilterTopic :: Topic MisoString
+poisonFilterTopic = topic "poisonFilter"

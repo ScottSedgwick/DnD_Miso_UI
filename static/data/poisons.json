@@ -1,0 +1,680 @@
+[
+  {
+    "title": "Spiders Touch",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 1,
+    "description": [
+      { "p": [ { "t": "Spider's Touch is a simple, yet potent poison. It's mainly used to coat weapons like arrows or daggers to get in that extra damage." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "10." } ],
+          [ { "b": "Time to Create: "}, { "t": "1 hour / 5 uses." } ],
+          [ { "b": "Components: "}, { "t": "A live spider and a human hair." } ],
+          [ { "b": "Price: "}, { "t": "3 sp for 5 uses." } ],
+          [ { "b": "Effect: "}, { "t": "Deals 2d4 damage. If the target succeeds their CON save, deals no damage."} ],
+          [ { "b": "Duration: "}, { "t": "1 round."} ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Happy Drops",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 1,
+    "description": [
+      { "p": [ { "t": "Happy Drops is mostly used to pison food or drinks. It does not aim to kill the individual but it makes them disoriented and susceptible to suggestions." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "10." } ],
+          [ { "b": "Time to Create: "}, { "t": "1 hour / 2 uses." } ],
+          [ { "b": "Components: "}, { "t": "A drop of perfume, honey, and opium." } ],
+          [ { "b": "Price: "}, { "t": "1 gp for 2 uses." } ],
+          [ { "b": "Effect: "}, { "t": "The target makes " }, { "i": "Insight"}, { "t": " checks vs "}, { "i": "Deception"}, { "t": " and " }, { "i": "Persuasion" }, { "t": " checks with "}, { "i": "Disadvantage"}, { "t": " for the duration."} ],
+          [ { "b": "Duration: "}, { "t": "1 minute, at the end of the " }, { "i": "Duration" }, { "t": " the target must make an " }, { "i": "Intelligence" }, { "t": " check to realise that they were poisoned. DC equals that of the "}, {"i": "Poisoner's Kit."} ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Hanged Man's Luck",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 1,
+    "description": [
+      { "p": [ { "t": "This is used to paralyze a target for a short duration. Can coat weapons or be ingested." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "12." } ],
+          [ { "b": "Time to Create: "}, { "t": "1 hour / use." } ],
+          [ { "b": "Components: "}, { "t": "Stinger of a hornet, ash, lavender." } ],
+          [ { "b": "Price: "}, { "t": "1 gp and 5 sp for 1 use." } ],
+          [ { "b": "Effect: "}, { "t": "The target is "}, {"i": "Paralyzed"}, {"t":". They have to succeed on a Constitution saving throw at the end of their turn to break the effect."} ],
+          [ { "b": "Duration: "}, { "t": "2 rounds."} ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Brawler's Punch",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 1,
+    "description": [
+      { "p": [ { "t": "This makes a humanoid move faster and hit stronger but the humanoid suffers disorientation for the duration and may be damaged." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "11." } ],
+          [ { "b": "Time to Create: "}, { "t": "1 hour / 2 uses." } ],
+          [ { "b": "Components: "}, { "t": "Drop of sweat, snake's blood." } ],
+          [ { "b": "Price: "}, { "t": "2 sp for 2 uses." } ],
+          [ { "b": "Effect: "}, { "t": "The target can choose to fail their CON saving throw for the initial contact. The target makes their attacks with"},
+            { "i": "Advantage" },
+            { "t": " but they take 1d6 " },
+            { "i": "Poison" },
+            { "t": " damage at the start of their turns. In addition, any " },
+            { "i": "Perception" },
+            { "t": " checks they make are made with " },
+            { "i": "Disadvantage. " },
+            { "t": "At the end of each turn, the target makes a CON saving throw to resist the effect." }
+          ],
+          [ { "b": "Duration: "}, { "t": "5 rounds."} ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Starry Nights",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 1,
+    "description": [
+      { "p": [ { "t": "Starry Nights is used to make a target fall asleep. It is mainly taken by ingestion, but it may have some minor effects when coating a weapon." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "10." } ],
+          [ { "b": "Time to Create: "}, { "t": "1 hour / 8 uses." } ],
+          [ { "b": "Components: "}, { "t": "A tear, a few specks of sand, milk." } ],
+          [ { "b": "Price: "}, { "t": "1 gp for 8 uses." } ],
+          [ { "b": "Duration: "}, { "t": "Depends on the administration method."} ],
+          [ { "b": "Effect: "}, { "t": "Starry Nights has a different effect depending on 3 things. On whether the target is asleep, awake or if the target is poisoned from a weapon."} ]
+        ]
+      },
+      { "p": [
+        { "b": "While Asleep: " },
+        { "t": "The target makes their saving throw with "},
+        { "i": "Disadvantage" },
+        { "t": ". The target " },
+        { "i": "cannot" },
+        { "t": " wake up for another 8 hours unless they take damage." }
+      ]},
+      { "p": [
+        { "b": "While Awake: " },
+        { "t": "Roll 10d6. If the amount you rolled is greater than the target's current hit points, they fall asleep for 1 hour. They awake if they take damage." }
+      ]},
+      { "p": [
+        { "b": "From a weapon: " },
+        { "t": "Roll 5d6. If the amount you rolled is greater than the target's current hit points, they fall asleep for 10 minutes. They awake if they take damage." }
+      ]}
+    ]
+  },
+  {
+    "title": "Dizzy Disease",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 1,
+    "description": [
+      { "p": [ { "t": "This poison aims to " }, { "i": "heavily" }, { "t": " disorient a target. It is mainly used to coat a weapon."} ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "8." } ],
+          [ { "b": "Time to Create: "}, { "t": "1 hour / 3 uses." } ],
+          [ { "b": "Components: "}, { "t": "Ammonia, sugar, a tea leaf." } ],
+          [ { "b": "Price: "}, { "t": "9 sp / 3 uses." } ],
+          [ { "b": "Effect: "}, { "t": "Whenever a target rolls a d20, they do so with "}, {"i": "Disadvantage"}, {"t": ". They can attempt to save again at the end of their turn."} ],
+          [ { "b": "Duration: "}, { "t": "1 minute."} ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Justice",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 2,
+    "description": [
+      { "p": [ { "t": "An ironic name for a poison that can make a target completely lose their sight for a while. The strength of this poison lies in the fact that it can be " }, {"i": "inhaled."} ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "10." } ],
+          [ { "b": "Time to Create: "}, { "t": "1 hour / 2 uses." } ],
+          [ { "b": "Components: "}, { "t": "Bat's eye, acid." } ],
+          [ { "b": "Price: "}, { "t": "3 gp / 2 uses." } ],
+          [ { "b": "Effect: "}, { "t": "The target is "}, {"i": "Blinded"}, {"t": " for the "}, {"i": "Duration."} ],
+          [ { "b": "Duration: "}, { "t": "3 rounds."} ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Wicked Sick",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 2,
+    "description": [
+      { "p": [ { "t": "A poison that takes its time to actually have any effect. That makes it hard to trace back since the effects it produces are very similar to common diseases." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "12." } ],
+          [ { "b": "Time to Create: "}, { "t": "1 hour / 1 use." } ],
+          [ { "b": "Components: "}, { "t": "Rat's blood, spider's legs." } ],
+          [ { "b": "Price: "}, { "t": "30 gp / 1 use." } ],
+          [ { "b": "Effect: "}, { "t": "While creating this poison, you get to choose after how many hours the effects will start to show. You can choose between 1 hour, 1 day and 1 week. The target, after the designated time, will become extremely nauseous, sometimes coughing up blood. The target takes 3d6 "},
+            { "i": "Poison" }, {"t": " damage. They can attempt to resist the poison at the end of their turn. If they do manage to resist, they won't suffer any more damage but the target will be sick in bed for 1d4 days."}
+          ],
+          [ { "b": "Duration: "}, { "t": "1 minute."} ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Widow's Kiss",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 2,
+    "description": [
+      { "p": [ { "t": "This poison can only be used to coat small, sharp weapons like daggers and arrows." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "8." } ],
+          [ { "b": "Time to Create: "}, { "t": "1 hour/10 uses." } ],
+          [ { "b": "Components: "}, { "t": "A deathbell leaf, frog saliva, a thorn from a rose." } ],
+          [ { "b": "Price: "}, { "t": "4 gp/10 uses." } ],
+          [ { "b": "Duration: "}, { "t": "1 minute."} ],
+          [ { "b": "Effect: "}, { "t": "The target takes 1d6 poison damage and are considered."},
+            { "i": "Infected" },
+            { "t": ". If they resist the effect, they take half damage and are not considered "},
+            { "i": "Infected" },
+            { "t": ". They cannot save from this effect after failing, but once they save they cannot be affected again for 24 hours."}
+          ]
+        ]
+      },
+      { "p": [
+        { "b": "Infected:" },
+        { "t": " If the target has already been hit by a "},
+        { "i": "Widow's Kiss" },
+        { "t": "the damage increases by 1d6. For example, if the target is " },
+        { "i": "Infected" },
+        { "t": " and has been successfully hit by 3 Widow's Kisses, the 3rd attack will deal 3d6 extra damage. The maximum damage is 5d6. A creature is considered " },
+        { "i": "Infected" },
+        { "t": "for 1 minute." }
+      ]}
+    ]
+  },
+  {
+    "title": "Good Times",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 2,
+    "description": [
+      { "p": [ { "t": "This poison is a hallucinogenic. The target suffers from visions for the " }, {"i": "Duration"}, {"t": ". It can be ingested or coat a weapon."} ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "14." } ],
+          [ { "b": "Time to Create: "}, { "t": "1 hour/2 uses." } ],
+          [ { "b": "Components: "}, { "t": "Goblin's tongue, elven blood." } ],
+          [ { "b": "Price: "}, { "t": "20 gp/2 uses." } ],
+          [ { "b": "Effect: "}, { "t": "You can choose one of the 2 following hallucinations for the target to suffer. You have to decide when creating the poison. Since you create 2 uses, you can decide to have one of each. Taking damage while in any of the states will allow the target to make a saving throw again."} ],
+          [ { "b": "Duration: "}, { "t": "10 minutes."} ]
+        ]
+      },
+      { "p": [
+        {"b": "Nightmares: "},
+        {"t": "The targets suffers horrible visions rendering them unable to discern reality from illusion. They view their allies as horrible monsters and their enemies are invisible to their eyes (unless they have "},
+        {"i": "Blindsight"},
+        {"t": ", then they view them as monsters too). Their reaction depends on the humanoid that was poisoned. A "},
+        {"i": "Paladin"},
+        {"t": " for example, might attack. A weak individual may run away as far as they can."}
+      ]},
+      { "p": [
+        {"b": "Dreams: "},
+        {"t": "The target enters a state of bliss. They view everyone as extremely friendly. Hazardous environments may appear as swimming pools or beds. Their enemies have "},
+        {"i": "Advantage"},
+        {"t": " on any checks involving "},
+        {"i": "Charisma"},
+        {"t": " and the target has "},
+        {"i": "Disadvantage"},
+        {"t": " on any checks to resist "},
+        {"i": "Persuasion"},
+        {"t": " or "},
+        {"i": "Deception"}
+      ]}
+    ]
+  },
+  {
+    "title": "Third Eye",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 2,
+    "description": [
+      { "p": [ { "t": "This poison allows the target to see what they normally can't, but some of their bodily functions are stopped. It can only be ingested." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "12." } ],
+          [ { "b": "Time to Create: "}, { "t": "1 hour/1 use." } ],
+          [ { "b": "Components: "}, { "t": "Blood from a creature with Blindsight or Darkvision, salty water, sulfur." } ],
+          [ { "b": "Price: "}, { "t": "5 gp/1 use if Darkvision, 15 gp/1 use if Blindsight." } ],
+          [ { "b": "Effect: "}, { "t": "Depending on what creature's blood you used while creating the poison, this poison allows the target to have 60 ft. "},
+            { "i": "Blindsight"},
+            { "t": " or 60 ft "},
+            { "i": "Darkvision."},
+            { "t": " They cannot move on their own for the "},
+            { "i": "Duration"},
+            { "t": " and they are considered "},
+            { "i": "Deaf."},
+            { "t": " The target may attempt to resist the poison if they want, at the end of their turn."}
+          ],
+          [ { "b": "Duration: "}, { "t": "10 minutes."} ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Devil's Face",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 2,
+    "description": [
+      { "p": [ { "t": "This poison alters slightly the appearance of a creature as well as their voice. They might never return to normal unless " }, {"i":"Lesser Restoration"}, {"t": " or similar magic is used on them."} ] },
+      { "ul":
+        [
+          [ { "t": "Creation DC: 10." } ],
+          [ { "t": "Time to Create: 1 hour/3 uses." } ],
+          [ { "t": "Components: Pinch of soil from desecrated ground, poweder, wine." } ],
+          [ { "t": "Price: 3 gp/3 uses." } ],
+          [ { "t": "Effect: The target's eyes become pitch black, their teeth become sharp, they grow tiny horns on their forehead and their voice becomes deep. They grow hair on their cheeks, their back and their hands, resembling a devilish creature. They get "},
+            { "i": "Advantage"},
+            { "t": " on "},
+            { "i": "Intimidation"},
+            { "t": " checks. If someone tries to discern they are not actually an evil creature, they have "},
+            { "i": "Disadvantage"},
+            { "t": " on their roll."}
+          ],
+          [ { "t": "Duration: 5 hours. At the end of the 5 hours, they make a new Constitution saving throw with a DC of 5. If they fail this, they cannot return to their former selves. The effect becomes permanent unless magic is used to fix them."} ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Vampire's Fate",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 3,
+    "description": [
+      { "p": [ { "t": "Vampire's Fate makes the target extremely vulnerable to" }, {"i": "Running Water"}, {"t": "and"}, {"i": "Sunlight."} ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "},
+            { "t": "14." }
+          ],
+          [ { "b": "Time to Create: "},
+            { "t": "8 hours/2 uses." }
+          ],
+          [ { "b": "Components: "},
+            { "t": "Part of a Vampire's skin, a drop of blood or a hair from the target." }
+          ],
+          [ { "b": "Price: "},
+            { "t": "100 gp/2 uses." }
+          ],
+          [ { "b": "Effect: "},
+            { "t": "While the target is in direct contact with ."},
+            { "i": "Sunlight" },
+            { "t": " they suffer 20 radiant damage per round. While the target is standing in "},
+            { "i": "Running Water" },
+            { "t": " they take 20 acid damage per round. The effect takes place 10 minutes after it enters their system. The target can retake their saving throw at the end of their turn."}
+          ],
+          [ { "b": "Duration: "},
+            { "t": "1 hour."}
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Dead Speech",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 3,
+    "description": [
+      { "p": [ { "t": "While under the effects of this poison the target has trouble communicating anything to anyone. The poison is ingested." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "},
+            { "t": "12." }
+          ],
+          [ { "b": "Time to Create: "},
+            { "t": "1 hour/1 use." }
+          ],
+          [ { "b": "Components: "},
+            { "t": "Ash from a dead body, water, one tulip." }
+          ],
+          [ { "b": "Price: "},
+            { "t": "45 gp/1 use." }
+          ],
+          [ { "b": "Effect: "},
+            { "t": "The target cannot communicate in any way with anyone around them. They cannot talk, they cannot speak telepathically, they cannot write down any words, they cannot nod or follow simple instructions to confirm or deny things. They can still hear and understand languages thet they already know. They also can't cast spells that have Verbal components."}
+          ],
+          [ { "b": "Duration: "},
+            { "t": "2 hours."}
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Empty Mind",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 3,
+    "description": [
+      { "p": [ { "t": "This poison messes with the memories of a creature. The poison can be ingested or inhaled." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "},
+            { "t": "15." }
+          ],
+          [ { "b": "Time to Create: "},
+            { "t": "8 hours/2 doses." }
+          ],
+          [ { "b": "Components: "},
+            { "t": "Piece of wood from a cherry tree, ale, a blank piece of paper, fire." }
+          ],
+          [ { "b": "Price: "},
+            { "t": "200 gp/2 uses." }
+          ],
+          [ { "b": "Effect: "},
+            { "t": "The target forgets anything that transpired in the last hour. After the end of the"},
+            { "i": "Duration" },
+            { "t": "the memories return to them." }
+          ],
+          [ { "b": "Duration: "},
+            { "t": "2 days."}
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Demon's Screech",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 3,
+    "description": [
+      { "p": [ { "t": "This poison is used to coat any sharp object. The target is heavily wounded when the poison takes effect." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "},
+            { "t": "14." }
+          ],
+          [ { "b": "Time to Create: "},
+            { "t": "1 hour/10 uses." }
+          ],
+          [ { "b": "Components: "},
+            { "t": "Demon's blood, sulfur, mercury." }
+          ],
+          [ { "b": "Price: "},
+            { "t": "50 gp/10 uses." }
+          ],
+          [ { "b": "Effect: "},
+            { "t": "The target suffers 2d10 poison damage and 2d10 fire damage. On a save, they take half damage. The target must make a Wisdom saving throw or become"},
+            { "i": "Frightened" },
+            { "t": "They can repeat the saving throw at the start of their next turn."}
+          ],
+          [ { "b": "Duration: "},
+            { "t": "1 minute."}
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Mad Dog's Teeth",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 3,
+    "description": [
+      { "p": [ { "t": "This poison is used to make the target" }, {"i": "extremely"}, {"t": "hostile towards anyone around them, friend or foe. This poison can be ingested, inhaled, or it can coat small weapons."} ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "},
+            { "t": "15." }
+          ],
+          [ { "b": "Time to Create: "},
+            { "t": "1 hour/4 uses." }
+          ],
+          [ { "b": "Components: "},
+            { "t": "A dog's tooth, sweat or blood from a Barbarian." }
+          ],
+          [ { "b": "Price: "},
+            { "t": "120 gp/4 uses." }
+          ],
+          [ { "b": "Effect: "},
+            { "t": "The effects take place 1 round after the poison is in the system. The target has"},
+            { "i": "Advantage"},
+            { "t": "on their attack rolls and their ranged spell attacks. The only target they"},
+            { "i": "can"},
+            { "t": "attack is the target closest to them. The target cannot discern allies from foes in this state. They add their proficiency bonus to their damage rolls. Then the"},
+            { "i": "Duration"},
+            { "t": "ends, they are"},
+            { "i": "Paralyzed"},
+            { "t": "for 1 round and suffer 4d6 poison damage."}
+          ],
+          [ { "b": "Duration: "},
+            { "t": "4 rounds."}
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Sins of the Father",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 3,
+    "description": [
+      { "p": [ { "t": "This poison makes the target want to inflict pain to themselves. It can only be ingested." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "},
+            { "t": "12." }
+          ],
+          [ { "b": "Time to Create: "},
+            { "t": "1 hour/1 use." }
+          ],
+          [ { "b": "Components: "},
+            { "t": "Blood from a suicide victim, one flower from a graveyard." }
+          ],
+          [ { "b": "Price: "},
+            { "t": "200 gp/1 use." }
+          ],
+          [ { "b": "Effect: "},
+            { "t": "The effects take place 10 minutes after the poison is in the system. The target must use their round in order to inflict damage on themselves. The target can choose how they deal the damage. The effect ends if they are rendered unconscious, if someone else deals damage on them, or after the"},
+            { "i": "Duration."}
+          ],
+          [ { "b": "Duration: "},
+            { "t": "1 minute."}
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Widow's Kiss Mk 2",
+    "source": "30 Poisons for a Poisoner's Kit",
+    "level": 3,
+    "description": [
+      { "p": [ { "t": "This poison can only be used to coat small, sharp weapons like daggers and arrows." } ] },
+      { "ul":
+        [
+          [ { "b": "Creation DC: "}, { "t": "12." } ],
+          [ { "b": "Time to Create: "}, { "t": "2 hour/10 uses." } ],
+          [ { "b": "Components: "}, { "t": "A deathbell leaf, Grung saliva, a thorn from a rose." } ],
+          [ { "b": "Price: "}, { "t": "40 gp/10 uses." } ],
+          [ { "b": "Duration: "}, { "t": "1 minute."} ],
+          [ { "b": "Effect: "}, { "t": "The target takes 1d6 poison damage and are considered."},
+            { "i": "Infected." },
+            { "t": "There is not save against this effect."}
+          ]
+        ]
+      },
+      { "p": [
+        { "b": "Infected:" },
+        { "t": " If the target has already been hit by a "},
+        { "i": "Widow's Kiss" },
+        { "t": "the damage increases by 1d6. For example, if the target is " },
+        { "i": "Infected" },
+        { "t": " and has been successfully hit by 3 Widow's Kisses, the 3rd attack will deal 3d6 extra damage. The maximum damage is 5d6. A creature is considered " },
+        { "i": "Infected" },
+        { "t": "for 1 minute." }
+      ]}
+    ]
+  },
+  {
+    "title": "Assassions Blood",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (Ingested), 150 gp" } ] },
+      { "p": [ { "t": "A creature subjected to this poison must make a DC 10 Constitution saving throw. On a failed save, it takes 6 (1d12) poison damage and is poisoned for 24 hours. On a successful save, the creature takes half damage and isn't poisoned." } ] }
+    ]
+  },
+  {
+    "title": "Burnt Othur Fumes",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (inhaled), 500 gp" } ] },
+      { "p": [ { "t": "A creature subjected to this poison must succeed on a DC 13 Constitution saving throw or take 10 (3d6) poison damage, and must repeat the saving throw at the start of each of its turns. On each successive failed save, the character takes 3 (1d6) poison damage. After three successful saves, the poison ends." } ] }
+    ]
+  },
+  {
+    "title": "Carrion Crawler Mucus",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (contact), 200gp" } ] },
+      { "p": [ { "t": "This poison must be harvested from a dead or incapacitated carrion crawler. A creature subjected to this poison must succeed on a DC 13 Constitution saving throw or be poisoned for 1 minute. The poisoned creature is paralyzed. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success." } ] }
+    ]
+  },
+  {
+    "title": "Drow Poison",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (injury), 200 gp" } ] },
+      { "p": [ { "t": "This poison is typically made only by the drow, and only in a place far removed from sunlight. A creature subjected to this poison must succeed on a DC 13 Constitution saving throw or be poisoned for 1 hour. If the saving throw fails by 5 or more, the creature is also unconscious while poisoned in this way. The creature wakes up if it takes damage or if another creature takes an action to shake it awake." } ] }
+    ]
+  },
+  {
+    "title": "Essence of Ether",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (inhaled), 300 gp" } ] },
+      { "p": [ { "t": "A creature subjected to this poison must succeed on a DC 15 Constitution saving throw or become poisoned for 8 hours. The poisoned creature is unconscious. The creature wakes up if it takes damage or if another creature takes an action to shake it awake." } ] }
+    ]
+  },
+  {
+    "title": "Malice",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (inhaled), 250 gp" } ] },
+      { "p": [ { "t": "A creature subjected to this poison must succeed on a DC 15 Constitution saving throw or become poisoned for 1 hour. The poisoned creature is blinded." } ] }
+    ]
+  },
+  {
+    "title": "Midnight Tears",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (ingested), 1,500 gp" } ] },
+      { "p": [ { "t": "A creature that ingests this poison suffers no effect until the stroke of midnight. If the poison has not been neutralized before then, the creature must succeed on a DC 17 Constitution saving throw, taking 31 (9d6) poison damage on a failed save, or half as much damage on a successful one." } ] }
+    ]
+  },
+  {
+    "title": "Oil of Taggit",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (contact), 400 gp" } ] },
+      { "p": [ { "t": "A creature subjected to this poison must succeed on a DC 13 Constitution saving throw or become poisoned for 24 hours. The poisoned creature is unconscious. The creature wakes up if it takes damage." } ] }
+    ]
+  },
+  {
+    "title": "Pale Tincture",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (ingested), 250 gp" } ] },
+      { "p": [ { "t": "A creature subjected to this poison must succeed on a DC 16 Constitution saving throw or take 3 (1d6) poison damage and become poisoned. The poisoned creature must repeat the saving throw every 24 hours, taking 3 (1d6) poison damage on a failed save. Until this poison ends, the damage the poison deals can't be healed by any means. After seven successful saving throws, the effect ends and the creature can heal normally" } ] }
+    ]
+  },
+  {
+    "title": "Purple Worm Poison",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (injury), 2,000 gp" } ] },
+      { "p": [ { "t": "This poison must be harvested from a dead or incapacitated purple worm. A creature subjected to this poison must make a DC 19 Constitution saving throw, taking 42 (12d6) poison damage on a failed save, or half as much damage on a successful one." } ] }
+    ]
+  },
+  {
+    "title": "Serpent Venom",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (injury), 200 gp" } ] },
+      { "p": [ { "t": "This poison must be harvested from a dead or incapacitated giant poisonous snake. A creature subjected to this poison must succeed on a DC 11 Constitution saving throw, taking 10 (3d6) poison damage on a failed save, or half as much damage on a successful one." } ] }
+    ]
+  },
+  {
+    "title": "Torpor",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (ingested), 600 gp" } ] },
+      { "p": [ { "t": "A creature subjected to this poison must succeed on a DC 15 Constitution saving throw or become poisoned for 4d6 hours. The poisoned creature is incapacitated." } ] }
+    ]
+  },
+  {
+    "title": "Truth Serum",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (ingested), 150 gp" } ] },
+      { "p": [ { "t": "A creature subjected to this poison must succeed on a DC 11 Constitution saving throw or become poisoned for 1 hour. The poisoned creature can't knowingly speak a lie, as if under the effect of a zone of truth spell." } ] }
+    ]
+  },
+  {
+    "title": "Wyvern Poison",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "Poison (injury), 1,200 gp" } ] },
+      { "p": [ { "t": "This poison must be harvested from a dead or incapacitated wyvern. A creature subjected to this poison must make a DC 15 Constitution saving throw, taking 24 (7d6) poison damage on a failed save, or half as much damage on a successful one." } ] }
+    ]
+  },
+  {
+    "title": "Grung: Green",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "t": "Movement speed becomes zero; the creature cannot move except to climb or make standing jumps (flying creatures cannot take actions or reactions unless they land)." } ] }
+    ]
+  },
+  {
+    "title": "Grung: Blue",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "t": "The poisoned creature must shout loudly or make a loud noise at the start and end of its turn." } ] }
+    ]
+  },
+  {
+    "title": "Grung: Purple",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "t": "The creature feels a desperate need to soak in liquid or mud, and cannot move or take actions except to reach a body of liquid or mud." } ] }
+    ]
+  },
+  {
+    "title": "Grung: Red",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "t": "The poisoned creature must use its action to eat if any food is within reach." } ] }
+    ]
+  },
+  {
+    "title": "Grung: Orange",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "t": "The poisoned creature becomes frightened of its allies." } ] }
+    ]
+  },
+  {
+    "title": "Grung: Gold",
+    "source": "Dungeon Master's Guide",
+    "description": [
+      { "p": [ { "i": "The poisoned creature is charmed by the grung and gains the ability to speak Grung." } ] },
+      { "p": [ { "t": "" } ] }
+    ]
+  }
+]
