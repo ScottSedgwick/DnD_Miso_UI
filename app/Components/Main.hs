@@ -21,11 +21,13 @@ import           Common.Metadata
 import           Common.Pages ( Page(..), allPages, pageImage )
 import           Common.SvgImages
 import qualified Components.Backgrounds as CB
+import qualified Components.Feats as CF
 import qualified Components.Home as CH
 import qualified Components.Insults as CI
 import qualified Components.Poisons as CP
 import qualified Components.Spells as CS
 import           Model.BackgroundModel ( Background )
+import           Model.FeatsModel ( Feat )
 import           Model.PoisonModel ( Poison )
 import           Model.SpellsModel ( Spell, SpellFilter )
 import           Model.MailboxMessage
@@ -35,6 +37,8 @@ data Action
   = SetPage Page
   | SetBackgrounds [Background]
   | SetBackgroundFilter MisoString
+  | SetFeats [Feat]
+  | SetFeatsFilter MisoString
   | SetSpells [Spell]
   | SetSpellFilter SpellFilter
   | SetInsults [MisoString]
@@ -58,6 +62,8 @@ data Model = Model
   , _poisons :: [Poison]
   , _poisonsFilter :: MisoString
   , _currentInsult :: MisoString
+  , _feats :: [Feat]
+  , _featsFilter :: MisoString
   } deriving (Show, Eq)
 
 page :: Lens Model Page
@@ -87,6 +93,12 @@ poisons = lens _poisons $ \m x -> m { _poisons = x }
 poisonsFilter :: Lens Model MisoString
 poisonsFilter = lens _poisonsFilter $ \m x -> m { _poisonsFilter = x }
 
+feats :: Lens Model [Feat]
+feats = lens _feats $ \m x -> m { _feats = x }
+
+featsFilter :: Lens Model MisoString
+featsFilter = lens _featsFilter $ \m x -> m { _featsFilter = x }
+
 currentInsult :: Lens Model MisoString
 currentInsult = lens _currentInsult $ \m x -> m { _currentInsult = x }
 
@@ -102,6 +114,8 @@ initModel = Model
   , _poisons = []
   , _poisonsFilter = ""
   , _currentInsult = ""
+  , _feats = []
+  , _featsFilter = ""
   }
 -----------------------------------------------------------------------------
 updateModel :: Action -> Effect parent props Model Action
@@ -109,6 +123,8 @@ updateModel = \case
   SetPage p             -> page .= p
   SetBackgrounds x      -> backgrounds .= x
   SetBackgroundFilter s -> backgroundFilter .= s
+  SetFeats x            -> feats .= x
+  SetFeatsFilter s      -> featsFilter .= s
   SetSpells x           -> spells .= x
   SetSpellFilter s      -> spellFilter .= s
   SetInsults x          -> insults .= x
@@ -119,6 +135,8 @@ updateModel = \case
   ToggleSidebar         -> io_ $ newEvent ("basecoat:sidebar" :: MisoString) >>= dispatchEvent
   Subscribe             -> subscribe backgroundsTopic SetBackgrounds (DisplayError "backgroundsTopic")
                         >> subscribe backgroundFilterTopic SetBackgroundFilter (DisplayError "backgroundsFilterTopic")
+                        >> subscribe featsTopic SetFeats (DisplayError "featsTopic")
+                        >> subscribe featsFilterTopic SetFeatsFilter (DisplayError "featsFilterTopic")
                         >> subscribe spellsTopic SetSpells (DisplayError "spellsTopic")
                         >> subscribe spellFilterTopic SetSpellFilter (DisplayError "spellFilterTopic")
                         >> subscribe insultsTopic SetInsults (DisplayError "insultsTopic")
@@ -166,6 +184,7 @@ viewModel _ m = H.body_ []
           ( case m ^. page of
             Home        -> [ "home"    +> CH.home ]
             Backgrounds -> [ "books"   +> CB.backgroundsComponent (m ^. backgrounds) (m ^. backgroundFilter)]
+            Feats       -> [ "feats"   +> CF.featsComponent (m ^. feats) (m ^. featsFilter)]
             Insults     -> [ "insults" +> CI.insultsComponent (m ^. insults) (m ^. currentInsult)]
             Poisons     -> [ "poisons" +> CP.poisonsComponent (m ^. poisons) (m ^. poisonsFilter)]
             Spells      -> [ "spells"  +> CS.spellsComponent (m ^. spells) (m ^. spellFilter)]

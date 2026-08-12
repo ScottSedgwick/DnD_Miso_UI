@@ -41,12 +41,14 @@ executable app
                   , Common.SvgImages
                   , Common.Structure
                   , Components.Backgrounds
+                  , Components.Feats
                   , Components.Home
                   , Components.Insults
                   , Components.Main
                   , Components.Poisons
                   , Components.Spells
                   , Model.BackgroundModel
+                  , Model.FeatsModel
                   , Model.InsultsModel
                   , Model.MailboxMessage
                   , Model.PoisonModel

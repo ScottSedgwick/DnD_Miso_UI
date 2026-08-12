@@ -58,7 +58,7 @@ updateModel GetPoisons       = getText "./data/poisons.json" [] SetPoisons Error
 updateModel (SetPoisons r)   = poisons .= (eitherDecode (body r)) >> issue PostPoisons
 updateModel PostPoisons      = get >>= \m -> either (issue . ErrorUpdate) (io_ . publish poisonsTopic) (m ^. poisons)
 updateModel (ErrorHandler r) = maybe (issue $ ErrorUpdate "") (issue . ErrorUpdate) (errorMessage r)
-updateModel (ErrorUpdate s)  = mailParent s
+updateModel (ErrorUpdate s)  = mailParent s >> io_ (print $ "Error: " <> s)
 updateModel (UpdateFilter s) = filterTitle .= (fromMisoString s) >> issue PostFilter
 updateModel PostFilter       = get >>= \m -> io_ $ publish poisonFilterTopic (m ^. filterTitle)
 updateModel (SetPage s)      = selecteddata .= Just s
