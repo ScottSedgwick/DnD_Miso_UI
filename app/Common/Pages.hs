@@ -11,6 +11,7 @@ import           Common.SvgImages
 data Page
   = Home
   | Backgrounds
+  | Feats
   | Insults
   | Poisons
   | Spells
@@ -37,6 +38,7 @@ allPages = [minBound .. maxBound]
 pageImage :: Page -> View model action
 pageImage Home = homeImage
 pageImage Backgrounds = backgroundIcon
+pageImage Feats = featsIcon
 pageImage Insults = insultIcon
 pageImage Poisons = poisonIcon
 pageImage Spells = spellIcon
@@ -44,6 +46,7 @@ pageImage Spells = spellIcon
 pageDescription :: Page -> Maybe MisoString
 pageDescription Home        = Nothing
 pageDescription Backgrounds = Just "The Backgrounds page allows you to see and read all the available backgrounds for characters."
+pageDescription Feats       = Just "The Feats page allows you to see all the Feats available for characters."
 pageDescription Insults     = Just "The Insults page randomly generates insults (great for Vicious Mockery)."
 pageDescription Poisons     = Just "The Poisons page lists known poisons and their effects."
 pageDescription Spells      = Just "The Spells page allows you to see and read all the available spells."
