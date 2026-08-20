@@ -3,7 +3,7 @@ module Model.MailboxMessage where
 import Miso                  ( MisoString )
 import Miso.PubSub           ( Topic, topic )
 import Model.BackgroundModel ( Background )
-import Model.FeatsModel      ( Feat )
+import Model.FeatsModel      ( FeatsModel )
 import Model.PoisonModel     ( Poison )
 import Model.SpellsModel     ( Spell, SpellFilter )
 
@@ -34,8 +34,5 @@ poisonsTopic = topic "poisons"
 poisonFilterTopic :: Topic MisoString
 poisonFilterTopic = topic "poisonFilter"
 
-featsFilterTopic :: Topic MisoString
-featsFilterTopic = topic "featsFilterTopic"
-
-featsTopic :: Topic [Feat]
-featsTopic = topic "featsTopic"
+featsModelTopic :: Topic FeatsModel
+featsModelTopic = topic "featsModelTopic"
