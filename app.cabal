@@ -35,6 +35,7 @@ executable app
   import:           options, warnings
   main-is:          Main.hs
   other-modules:    Common.Accordion
+                  , Common.Attribution
                   , Common.Banner
                   , Common.Metadata
                   , Common.Pages

@@ -6,6 +6,7 @@ import           Miso         ( MisoString, View, fromMisoString, ms )
 import           Miso.Router  ( Router, RoutingError(..), URI(..), route, toURI )
 import           Text.Read    ( readMaybe )
 
+import           Common.Attribution
 import           Common.SvgImages
 
 data Page
@@ -50,3 +51,26 @@ pageDescription Feats       = Just "The Feats page allows you to see all the Fea
 pageDescription Insults     = Just "The Insults page randomly generates insults (great for Vicious Mockery)."
 pageDescription Poisons     = Just "The Poisons page lists known poisons and their effects."
 pageDescription Spells      = Just "The Spells page allows you to see and read all the available spells."
+
+pageAttribution :: Page -> Maybe Attribution
+pageAttribution Home        = Nothing
+pageAttribution Backgrounds = Just $ Attribution { imageTitle = "Teddy Bear"
+                                                 , imageUri = "https://iconscout.com/icons/teddy-bear"
+                                                 , authorName = "Vector Place"
+                                                 , authorUri = "https://iconscout.com/contributors/icon-click" }
+pageAttribution Feats       = Just $ Attribution { imageTitle = "Golden Medal"
+                                                 , imageUri = "https://www.svgrepo.com/svg/304719/golden-medal"
+                                                 , authorName = "SVG Repo"
+                                                 , authorUri = "https://www.svgrepo.com/" }
+pageAttribution Insults     = Just $ Attribution { imageTitle = "Swearing"
+                                                 , imageUri = "https://iconscout.com/icons/swearing"
+                                                 , authorName = "Surangkana Jomjunyong"
+                                                 , authorUri = "https://iconscout.com/contributors/surang" }
+pageAttribution Poisons     = Just $ Attribution { imageTitle = "Poison Bottle"
+                                                 , imageUri = "https://staging.svgrepo.com/svg/413573/poison"
+                                                 , authorName = "Shannon E. Thomas"
+                                                 , authorUri = "https://staging.svgrepo.com/author/Shannon%20E.%20Thomas/" }
+pageAttribution Spells      = Just $ Attribution { imageTitle = "Spellbook"
+                                                 , imageUri = "https://iconscout.com/icons/spellbook"
+                                                 , authorName = "thebeststarticon"
+                                                 , authorUri = "https://iconscout.com/contributors/thebeststarticon" }

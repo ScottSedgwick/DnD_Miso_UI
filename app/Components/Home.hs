@@ -9,7 +9,8 @@ import           Miso.CSS           (StyleSheet)
 import           Miso.Html.Element  as H
 import           Miso.Html.Property as P
 
-import Common.Pages ( allPages, pageDescription )
+import Common.Attribution
+import Common.Pages ( Page, allPages, pageAttribution, pageDescription )
 -----------------------------------------------------------------------------
 data Action = Noop
 -----------------------------------------------------------------------------
@@ -45,29 +46,24 @@ viewModel _ _ =
   , H.hr_ []
   , H.h3_ [] [ "Attributions: " ]
   , H.ul_ []
-    [ H.li_ [] (map mkAttribution attributions)
+    [ H.li_ [] (mapMaybe mkAttribution allPages)
     ]
   ]
 
 mkComponentDescription :: MisoString -> View Model Action
 mkComponentDescription s = H.li_ [] [ text s ]
 
-mkAttribution :: (MisoString, MisoString, MisoString, MisoString, MisoString) -> View Model Action
-mkAttribution (uri, description, whereused, contributor, name) =
-  H.li_ []
-  [ H.a_ [ P.href_ uri, P.target_ "_blank"] [ text description ]
-  , text (" icon (used in " <> whereused <> ") by ")
-  , H.a_ [ P.href_ contributor, P.target_ "_blank"] [ text name ]
-  ]
+mkAttribution :: Page -> Maybe (View Model Action)
+mkAttribution p =
+  case (pageAttribution p) of
+    Nothing -> Nothing
+    Just attr -> Just $
+      H.li_ []
+      [ H.a_ [ P.href_ (imageUri attr), P.target_ "_blank"] [ text (imageTitle attr) ]
+      , text (" icon (used in " <> (ms $ show p) <> ") by ")
+      , H.a_ [ P.href_ (authorUri attr), P.target_ "_blank"] [ text (authorName attr) ]
+      ]
 
-attributions :: [(MisoString, MisoString, MisoString, MisoString, MisoString)]
-attributions =
-  [ ("https://iconscout.com/icons/teddy-bear", "Teddy Bear", "Backgrounds", "https://iconscout.com/contributors/icon-click", "Vector Place")
-  , ("https://www.svgrepo.com/svg/304719/golden-medal", "Golden Medal", "Feats", "https://www.svgrepo.com/", "SVG Repo")
-  , ("https://iconscout.com/icons/swearing", "Swearing", "Insults", "https://iconscout.com/contributors/surang", "Surangkana Jomjunyong")
-  , ("https://staging.svgrepo.com/svg/413573/poison", "Poison Bottle", "Poisons", "https://staging.svgrepo.com/author/Shannon%20E.%20Thomas/", "Shannon E. Thomas")
-  , ("https://iconscout.com/icons/spellbook", "Spellbook", "Spells", "https://iconscout.com/contributors/thebeststarticon", "thebeststarticon")
-  ]
 -----------------------------------------------------------------------------
 home :: Component parent props Model Action
 home = (vcomp initModel updateModel viewModel)
