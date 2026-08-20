@@ -18,7 +18,7 @@ authorName :: MisoString
 authorName = "Scott Sedgwick"
 
 authorImage :: MisoString
-authorImage = "https://github.com/dmjio.png"
+authorImage = "/assets/author-image.png"
 
 githubRepo :: MisoString
 githubRepo = "https://github.com/ScottSedgwick/DnD_Miso_UI"
