@@ -37,23 +37,22 @@ executable app
   other-modules:    Common.Accordion
                   , Common.Attribution
                   , Common.Banner
+                  , Common.DndComponent
                   , Common.Metadata
                   , Common.Pages
                   , Common.SvgImages
                   , Common.Structure
                   , Components.Backgrounds
+                  , Components.Backgrounds.Model
                   , Components.Feats
+                  , Components.Feats.Model
                   , Components.Home
                   , Components.Insults
                   , Components.Main
                   , Components.Poisons
+                  , Components.Poisons.Model
                   , Components.Spells
-                  , Model.BackgroundModel
-                  , Model.FeatsModel
-                  , Model.InsultsModel
-                  , Model.MailboxMessage
-                  , Model.PoisonModel
-                  , Model.SpellsModel
+                  , Components.Spells.Model
   build-depends:    base < 5
                   , containers
                   , data-default

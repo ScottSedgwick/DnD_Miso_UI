@@ -1,5 +1,8 @@
 module Components.Poisons
   ( poisonsComponent
+  , poisonsTopic
+  , poisonFilterTopic
+  , module Components.Poisons.Model
   ) where
 
 import           Data.Default          ( Default, def )
@@ -11,14 +14,14 @@ import qualified Miso.Html.Event       as E
 import qualified Miso.Html.Property    as P
 import           Miso.Lens             ( Lens, (.=), (^.), lens )
 import           Miso.JSON             ( eitherDecode )
+import           Miso.PubSub           ( Topic, topic )
 import           Miso.String           ( isInfixOf, toLower )
-import           Common.Accordion     ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
+import           Common.Accordion      ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
 
 import           Common.Banner         ( banner )
 import           Common.Pages          ( Page(..) )
 import           Common.Structure      ( renderStructure )
-import           Model.PoisonModel     ( Poison(..), description, level, title )
-import           Model.MailboxMessage  ( poisonFilterTopic, poisonsTopic )
+import           Components.Poisons.Model     ( Poison(..), description, level, title )
 
 data Action
   = GetPoisons
@@ -35,6 +38,12 @@ data Model = Model
   , _poisons :: Either MisoString [Poison]
   , _selecteddata :: Maybe String
   } deriving (Show, Eq, Generic)
+
+poisonsTopic :: Topic [Poison]
+poisonsTopic = topic "poisons"
+
+poisonFilterTopic :: Topic MisoString
+poisonFilterTopic = topic "poisonFilter"
 
 instance Default Model where
   def :: Model

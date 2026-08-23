@@ -1,4 +1,4 @@
-module Model.PoisonModel where
+module Components.Poisons.Model where
 
 import           Miso               ( MisoString )
 import           Miso.Lens          ( Lens, lens )

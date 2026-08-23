@@ -1,4 +1,8 @@
-module Components.Insults where
+module Components.Insults
+  ( insultsComponent
+  , insultsTopic
+  , currentInsultTopic
+  ) where
 
 import           Data.Default        ( Default, def )
 import           Miso                ( Component (mount), Effect, MisoString, View, fromMisoString, get, io, io_, issue, mailParent, publish, vcomp )
@@ -8,7 +12,7 @@ import qualified Miso.Html.Event      as E
 import qualified Miso.Html.Property   as P
 import           Miso.JSON            ( FromJSON, Parser, Value, (.:?), (.!=), eitherDecode, parseJSON, withObject )
 import           Miso.Lens            (Lens, (.=), (^.), lens)
-import           Model.MailboxMessage ( insultsTopic, currentInsultTopic )
+import           Miso.PubSub          ( Topic, topic )
 import           System.Random        ( randomRIO )
 
 import           Common.Banner        ( banner )
@@ -35,6 +39,12 @@ data Model = Model
   { _insults :: Either MisoString [MisoString]
   , _currentInsult :: MisoString
   } deriving (Show, Eq)
+
+insultsTopic :: Topic [MisoString]
+insultsTopic = topic "insults"
+
+currentInsultTopic :: Topic MisoString
+currentInsultTopic = topic "currentInsult"
 
 insults :: Lens Model (Either MisoString [MisoString])
 insults = lens _insults $ \m x -> m { _insults = x }

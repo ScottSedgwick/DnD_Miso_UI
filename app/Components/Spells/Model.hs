@@ -1,8 +1,8 @@
-module Model.SpellsModel where
+module Components.Spells.Model where
 
 import           Data.Default       ( Default, def )
 import           Miso               ( MisoString )
-import           Miso.JSON          ( FromJSON, Parser, ToJSON, Value, (.:?), (.!=), (.=), object, parseJSON, toJSON, withObject )
+import           Miso.JSON          ( FromJSON, Parser, ToJSON, Value, (.:), (.:?), (.!=), (.=), object, parseJSON, toJSON, withObject )
 import           Miso.Lens          ( Lens, lens )
 
 import           Common.Structure   ( Structure )
@@ -117,7 +117,7 @@ instance Default SpellFilter where
   def :: SpellFilter
   def = SpellFilter
     { _flt_title = ""
-    , _flt_level = Nothing
+    , _flt_level = def
     , _flt_school = ""
     , _flt_list = ""
     }
@@ -156,3 +156,33 @@ flt_school = lens _flt_school $ \m x -> m { _flt_school = x }
 
 flt_list :: Lens SpellFilter  MisoString
 flt_list = lens _flt_list $ \m x -> m { _flt_list = x }
+
+data SpellsModel = SpellsModel
+  { _spells :: Either MisoString [Spell]
+  , _filter :: SpellFilter
+  } deriving (Show, Eq)
+
+spellFilter :: Lens SpellsModel SpellFilter
+spellFilter = lens _filter $ \m x -> m { _filter = x}
+
+spells :: Lens SpellsModel (Either MisoString [Spell])
+spells = lens _spells $ \m x -> m { _spells = x}
+
+instance FromJSON SpellsModel where
+  parseJSON = withObject "SpellsModel" $ \o -> do
+    fs <- o .:? "spells"
+    fe <- o .:? "spellsError"
+    let f = case fs of
+              Just x -> Right x
+              Nothing -> case fe of
+                            Just y -> Left y
+                            Nothing -> Left "Unknown error"
+    ft <- o .: "filter"
+    pure $ SpellsModel { _spells = f, _filter = ft }
+instance ToJSON SpellsModel where
+  toJSON m = case (_spells m) of
+                Right fs -> object [ "spells" .= fs, "filter" .= (_filter m) ]
+                Left fe  -> object [ "spellsError" .= fe, "filter" .= (_filter m) ]
+
+instance Default SpellsModel where
+    def = SpellsModel { _spells = Right [], _filter = def }

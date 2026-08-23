@@ -1,5 +1,6 @@
 module Common.Pages where
 
+import           Data.Default ( Default, def )
 import qualified Data.Map     as M
 import           GHC.Generics ( Generic )
 import           Miso         ( MisoString, View, fromMisoString, ms )
@@ -17,6 +18,9 @@ data Page
   | Poisons
   | Spells
   deriving stock (Show, Eq, Enum, Bounded, Generic, Read)
+
+instance Default Page where
+  def = Home
 
 instance Router Page where
   toURI :: Page -> URI

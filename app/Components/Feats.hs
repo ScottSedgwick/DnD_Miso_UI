@@ -1,22 +1,24 @@
 module Components.Feats
   ( featsComponent
+  , subtopic
+  , module Components.Feats.Model
   ) where
 
-import           Miso                  ( Component (mount), Effect, MisoString, View, fromMisoString, get, io_, issue, mailParent, publish, text, vcomp )
-import           Miso.Fetch            ( Response(body, errorMessage), getText )
-import qualified Miso.Html             as H
-import qualified Miso.Html.Event       as E
-import qualified Miso.Html.Property    as P
-import           Miso.Lens             ( Lens, (.=), (^.), lens )
-import           Miso.JSON             ( eitherDecode )
-import           Miso.String           ( isInfixOf, toLower )
-import           Common.Accordion     ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
+import           Miso                   ( Component (mount), Effect, MisoString, View, fromMisoString, get, io_, issue, mailParent, publish, text, vcomp )
+import           Miso.Fetch             ( Response(body, errorMessage), getText )
+import qualified Miso.Html              as H
+import qualified Miso.Html.Event        as E
+import qualified Miso.Html.Property     as P
+import           Miso.Lens              ( Lens, (.=), (^.), lens )
+import           Miso.JSON              ( eitherDecode )
+import           Miso.String            ( isInfixOf, toLower )
+import           Common.Accordion       ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
 
-import           Common.Banner         ( banner )
-import           Common.Pages          ( Page(..) )
-import           Common.Structure      ( renderStructure )
-import           Model.FeatsModel      ( Feat, FeatsModel(..), description, prerequisite, name, source )
-import           Model.MailboxMessage  ( featsModelTopic )
+import           Common.Banner          ( banner )
+import           Common.DndComponent    ( subtopic )
+import           Common.Pages           ( Page(..) )
+import           Common.Structure       ( renderStructure )
+import           Components.Feats.Model ( Feat, FeatsModel(..), description, prerequisite, name, source )
 
 data Action
   = GetFeats
@@ -35,7 +37,7 @@ feats = lens _feats $ \m x -> m { _feats = x}
 updateModel :: Action -> Effect a props FeatsModel Action
 updateModel GetFeats         = getText "./data/feats.json" [] SetFeats ErrorHandler
 updateModel (SetFeats r)     = feats .= (eitherDecode (body r)) >> issue PostFeatsModel
-updateModel PostFeatsModel   = get >>= (io_ . publish featsModelTopic)
+updateModel PostFeatsModel   = get >>= (io_ . publish subtopic)
 updateModel (ErrorHandler r) = (issue . ErrorUpdate) (maybe "" id (errorMessage r))
 updateModel (ErrorUpdate s)  = mailParent s >> io_ (print $ "Error: " <> s)
 updateModel (UpdateFilter s) = filterTitle .= (fromMisoString s) >> issue PostFeatsModel >> io_ (print s)
@@ -88,6 +90,5 @@ descriptionView p =
 featsComponent :: FeatsModel -> Component parent props FeatsModel Action
 featsComponent xs =
   case (_feats xs) of
-    Right [] -> (vcomp xs updateModel viewModel) { mount = Just GetFeats }
-    Left _ -> (vcomp xs updateModel viewModel) { mount = Just GetFeats }
-    _ -> vcomp xs updateModel viewModel
+    Right (_:_) -> vcomp xs updateModel viewModel
+    _ -> (vcomp xs updateModel viewModel) { mount = Just GetFeats }

@@ -1,7 +1,7 @@
 {-# LANGUAGE MultilineStrings   #-}
 module Components.Main ( app ) where
 
-import           Data.Default              ( def )
+import           Data.Default              ( Default, def )
 import           Miso                      ( Component, Effect, MisoString, View, (+>), io_, mount, ms, routerSub, styles, subs, subscribe, text, vcomp )
 import qualified Miso.CSS                  as CSS
 import           Miso.CSS                  ( StyleSheet )
@@ -26,22 +26,18 @@ import qualified Components.Home as CH
 import qualified Components.Insults as CI
 import qualified Components.Poisons as CP
 import qualified Components.Spells as CS
-import           Model.BackgroundModel ( Background )
-import           Model.FeatsModel ( FeatsModel )
-import           Model.PoisonModel ( Poison )
-import           Model.SpellsModel ( Spell, SpellFilter )
-import           Model.MailboxMessage
 
 -----------------------------------------------------------------------------
 data Action
   = SetPage Page
-  | SetBackgrounds [Background]
+  | SetBackgrounds [CB.Background]
   | SetBackgroundFilter MisoString
-  | SetFeatsModel FeatsModel
-  | SetSpells [Spell]
-  | SetSpellFilter SpellFilter
+  | SetFeatsModel CF.FeatsModel
+  | SetSpellsModel CS.SpellsModel
   | SetInsults [MisoString]
   | SetCurrentInsult MisoString
+  | SetPoisons [CP.Poison]
+  | SetPoisonsFilter MisoString
   | DisplayError MisoString MisoString
   | NavigateTo Page
   | ToggleDarkMode
@@ -53,16 +49,29 @@ data Action
 data Model = Model
   { _page :: Page
   , _err :: Maybe MisoString
-  , _backgrounds :: [Background]
+  , _backgrounds :: [CB.Background]
   , _backgroundFilter :: MisoString
-  , _spells :: [Spell]
-  , _spellFilter :: SpellFilter
+  , _spellsModel :: CS.SpellsModel
   , _insults :: [MisoString]
-  , _poisons :: [Poison]
+  , _poisons :: [CP.Poison]
   , _poisonsFilter :: MisoString
   , _currentInsult :: MisoString
-  , _featsModel :: FeatsModel
+  , _featsModel :: CF.FeatsModel
   } deriving (Show, Eq)
+
+instance Default Model where
+  def = Model
+    { _page = def
+    , _err = def
+    , _backgrounds = def
+    , _backgroundFilter = ""
+    , _spellsModel = def
+    , _insults = def
+    , _currentInsult = ""
+    , _poisons = def
+    , _poisonsFilter = ""
+    , _featsModel = def
+    }
 
 page :: Lens Model Page
 page = lens _page $ \m x -> m { _page = x }
@@ -70,47 +79,30 @@ page = lens _page $ \m x -> m { _page = x }
 err :: Lens Model (Maybe MisoString)
 err = lens _err $ \m x -> m { _err = x }
 
-backgrounds :: Lens Model [Background]
+backgrounds :: Lens Model [CB.Background]
 backgrounds = lens _backgrounds $ \m x -> m { _backgrounds = x }
 
 backgroundFilter :: Lens Model MisoString
 backgroundFilter = lens _backgroundFilter $ \m x -> m { _backgroundFilter = x }
 
-spells :: Lens Model [Spell]
-spells = lens _spells $ \m x -> m { _spells = x }
-
-spellFilter :: Lens Model SpellFilter
-spellFilter = lens _spellFilter $ \m x -> m { _spellFilter = x }
+spellsModel :: Lens Model CS.SpellsModel
+spellsModel = lens _spellsModel $ \m x -> m { _spellsModel = x }
 
 insults :: Lens Model [MisoString]
 insults = lens _insults $ \m x -> m { _insults = x }
 
-poisons :: Lens Model [Poison]
+poisons :: Lens Model [CP.Poison]
 poisons = lens _poisons $ \m x -> m { _poisons = x }
 
 poisonsFilter :: Lens Model MisoString
 poisonsFilter = lens _poisonsFilter $ \m x -> m { _poisonsFilter = x }
 
-featsModel :: Lens Model FeatsModel
+featsModel :: Lens Model CF.FeatsModel
 featsModel = lens _featsModel $ \m x -> m { _featsModel = x }
 
 currentInsult :: Lens Model MisoString
 currentInsult = lens _currentInsult $ \m x -> m { _currentInsult = x }
 
-initModel :: Model
-initModel = Model
-  { _page = Home
-  , _err  = Nothing
-  , _backgrounds = []
-  , _backgroundFilter = ""
-  , _spells = []
-  , _spellFilter = def
-  , _insults = []
-  , _poisons = []
-  , _poisonsFilter = ""
-  , _currentInsult = ""
-  , _featsModel = def
-  }
 -----------------------------------------------------------------------------
 updateModel :: Action -> Effect parent props Model Action
 updateModel = \case
@@ -118,21 +110,23 @@ updateModel = \case
   SetBackgrounds x      -> backgrounds .= x
   SetBackgroundFilter s -> backgroundFilter .= s
   SetFeatsModel x       -> featsModel .= x
-  SetSpells x           -> spells .= x
-  SetSpellFilter s      -> spellFilter .= s
+  SetSpellsModel x      -> spellsModel .= x
   SetInsults x          -> insults .= x
   SetCurrentInsult s    -> currentInsult .= s
+  SetPoisons p          -> poisons .= p
+  SetPoisonsFilter pf   -> poisonsFilter .= pf
   DisplayError c e      -> err .= Just (c <> ": " <> e)
   NavigateTo p          -> uriSetter p
   ToggleDarkMode        -> io_ $ newEvent ("basecoat:theme" :: MisoString) >>= dispatchEvent
   ToggleSidebar         -> io_ $ newEvent ("basecoat:sidebar" :: MisoString) >>= dispatchEvent
-  Subscribe             -> subscribe backgroundsTopic SetBackgrounds (DisplayError "backgroundsTopic")
-                        >> subscribe backgroundFilterTopic SetBackgroundFilter (DisplayError "backgroundsFilterTopic")
-                        >> subscribe featsModelTopic SetFeatsModel (DisplayError "featsModelTopic")
-                        >> subscribe spellsTopic SetSpells (DisplayError "spellsTopic")
-                        >> subscribe spellFilterTopic SetSpellFilter (DisplayError "spellFilterTopic")
-                        >> subscribe insultsTopic SetInsults (DisplayError "insultsTopic")
-                        >> subscribe currentInsultTopic SetCurrentInsult (DisplayError "currentInsultTopic")
+  Subscribe             -> subscribe CB.backgroundsTopic SetBackgrounds (DisplayError "backgroundsTopic")
+                        >> subscribe CB.backgroundFilterTopic SetBackgroundFilter (DisplayError "backgroundsFilterTopic")
+                        >> subscribe CF.subtopic SetFeatsModel (DisplayError "featsModelTopic")
+                        >> subscribe CS.spellsModelTopic SetSpellsModel (DisplayError "spellsModelTopic")
+                        >> subscribe CI.insultsTopic SetInsults (DisplayError "insultsTopic")
+                        >> subscribe CI.currentInsultTopic SetCurrentInsult (DisplayError "currentInsultTopic")
+                        >> subscribe CP.poisonsTopic SetPoisons (DisplayError "poisonsTopic")
+                        >> subscribe CP.poisonFilterTopic SetPoisonsFilter (DisplayError "poisonFilterTopic")
   ChangeTheme theme     -> io_ $ changeTheme theme
 
 changeTheme :: MisoString -> IO ()
@@ -179,7 +173,7 @@ viewModel _ m = H.body_ []
             Feats       -> [ "feats"   +> CF.featsComponent (m ^. featsModel)]
             Insults     -> [ "insults" +> CI.insultsComponent (m ^. insults) (m ^. currentInsult)]
             Poisons     -> [ "poisons" +> CP.poisonsComponent (m ^. poisons) (m ^. poisonsFilter)]
-            Spells      -> [ "spells"  +> CS.spellsComponent (m ^. spells) (m ^. spellFilter)]
+            Spells      -> [ "spells"  +> CS.spellsComponent (m ^. spellsModel)]
           )
         ]
       ]
@@ -321,7 +315,7 @@ mkSideOption p = H.li_ [ P.class_ "pointer" ] [ H.a_ [ E.onClick (NavigateTo p) 
 
 -----------------------------------------------------------------------------
 app :: Component parent props Model Action
-app = (vcomp initModel updateModel viewModel)
+app = (vcomp def updateModel viewModel)
     { styles = [ Sheet maincss ]
     , subs = [ routerSub uriHandler ]
     , mount = Just Subscribe

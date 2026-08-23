@@ -1,63 +1,47 @@
 module Components.Spells
   ( spellsComponent
+  , spellsModelTopic
+  , module Components.Spells.Model
   ) where
 
-import           Data.Default         ( Default, def )
-import           GHC.Generics         ( Generic )
-import           Miso                 ( Component (mount), Effect, MisoString, View, io_, issue, mailParent, ms, publish, text, vcomp )
-import qualified Miso.CSS             as MC
-import           Miso.Fetch           ( Response(body, errorMessage), getText )
-import qualified Miso.Html            as H
-import qualified Miso.Html.Event      as E
-import qualified Miso.Html.Property   as P
-import           Miso.Lens            ( Lens, (.=), (^.), lens )
-import           Miso.JSON            ( eitherDecode )
-import           Miso.String          ( intercalate, isInfixOf, toLower )
+import           Data.Default            ( def )
+import           Miso                    ( Component (mount), Effect, MisoString, View, get, io_, issue, mailParent, ms, publish, text, vcomp )
+import qualified Miso.CSS                as MC
+import           Miso.Fetch              ( Response(body, errorMessage), getText )
+import qualified Miso.Html               as H
+import qualified Miso.Html.Event         as E
+import qualified Miso.Html.Property      as P
+import           Miso.Lens               ( (.=), (^.) )
+import           Miso.JSON               ( eitherDecode )
+import           Miso.PubSub             ( Topic, topic )
+import           Miso.String             ( intercalate, isInfixOf, toLower )
 
-import           Common.Accordion    ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
+import           Common.Accordion        ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
 
-import           Common.Banner        ( banner )
-import           Common.Pages         ( Page(..) )
-import           Common.Structure     ( renderStructure )
-import           Model.SpellsModel    ( Spell(..), title, source, level, school, castingTime, range, components, duration, description, lists,
-                                        SpellFilter(..), flt_title, flt_school, flt_list, flt_level )
-import           Model.MailboxMessage ( spellsTopic, spellFilterTopic )
+import           Common.Banner           ( banner )
+import           Common.Pages            ( Page(..) )
+import           Common.Structure        ( renderStructure )
+import           Components.Spells.Model ( SpellsModel(..), Spell(..), title, source, level, school, castingTime, range, components, duration, description, lists,
+                                           SpellFilter(..), flt_title, flt_school, flt_list, flt_level, spells, spellFilter )
 
 data Action
   = GetSpells
   | SetSpells (Response MisoString)
-  | PostSpells (Either MisoString [Spell])
-  | PostFilter SpellFilter
+  | PostSpellsModel
   | ErrorHandler (Response MisoString)
   | UpdateFilter SpellFilter
 
-data Model = Model
-  { _spellFilter :: SpellFilter
-  , _spells :: Either MisoString [Spell]
-  } deriving (Show, Eq, Generic)
+spellsModelTopic :: Topic SpellsModel
+spellsModelTopic = topic "spellsModel"
 
-instance Default Model where
-  def :: Model
-  def = Model
-        { _spellFilter = def
-        , _spells = Right []
-        }
-
-spellFilter :: Lens Model SpellFilter
-spellFilter = lens _spellFilter $ \m x -> m { _spellFilter = x}
-
-spells :: Lens Model (Either MisoString [Spell])
-spells = lens _spells $ \m x -> m { _spells = x}
-
-updateModel :: Action -> Effect props a Model Action
+updateModel :: Action -> Effect props a SpellsModel Action
 updateModel GetSpells        = getText "./data/spells.json" [] SetSpells ErrorHandler
-updateModel (SetSpells r)    = let xs = eitherDecode (body r) in spells .= xs >> issue (PostSpells xs)
-updateModel (PostSpells xs)  = either (const $ pure ()) (io_ . publish spellsTopic) xs
+updateModel (SetSpells r)    = spells .= (eitherDecode (body r)) >> issue PostSpellsModel
+updateModel PostSpellsModel  = get >>= (io_ . publish spellsModelTopic)
 updateModel (ErrorHandler r) = maybe (pure ()) mailParent (errorMessage r)
-updateModel (UpdateFilter s) = spellFilter .= s >> issue (PostFilter s) >> io_ (print s)
-updateModel (PostFilter s)   = io_ $ publish spellFilterTopic s
+updateModel (UpdateFilter s) = spellFilter .= s >> issue PostSpellsModel >> io_ (print s)
 
-viewModel :: props -> Model -> View Model Action
+viewModel :: props -> SpellsModel -> View SpellsModel Action
 viewModel _ m =
   H.div_ [ P.class_ "h-screen flex flex-col"]
   [ banner Spells
@@ -65,7 +49,7 @@ viewModel _ m =
   , H.div_ [ P.class_ "overflow-y-auto flex-1"] (map spellsView (filteredSpells m))
   ]
 
-filterView :: Model -> View Model Action
+filterView :: SpellsModel -> View SpellsModel Action
 filterView m =
   H.div_ [ P.class_ "sticky top-0 z-10 bg-white border-b gap-3 p-4", MC.style_ [ MC.width "100%" ] ]
   [ H.table_ [ MC.style_ [ MC.width "100%" ] ]
@@ -93,7 +77,7 @@ filterView m =
     ]
   ]
 
-mkOption :: MisoString -> MisoString -> View Model Action
+mkOption :: MisoString -> MisoString -> View SpellsModel Action
 mkOption caption value = H.option_ [ P.value_ value ] [ text caption ]
 
 allSchools :: [MisoString]
@@ -141,7 +125,7 @@ strToLevel "8" = (Just 8)
 strToLevel "9" = (Just 9)
 strToLevel _ = Nothing
 
-filteredSpells :: Model -> [Spell]
+filteredSpells :: SpellsModel -> [Spell]
 filteredSpells m =
   case (m ^. spells) of
     Left err -> [errBg err]
@@ -158,7 +142,7 @@ spellFilterTest f s = titleOk && schoolOk && listOk && levelOk
 errBg :: MisoString -> Spell
 errBg s = def { _title = s }
 
-spellsView :: Spell -> View Model Action
+spellsView :: Spell -> View SpellsModel Action
 spellsView s =
   accordion_ []
   [ accordionSection_ [ P.class_ "border-b" ]
@@ -174,7 +158,7 @@ spellsView s =
     ]
   ]
 
-headerView :: Spell -> View Model Action
+headerView :: Spell -> View SpellsModel Action
 headerView s =
   H.div_ [ MC.style_ [ MC.width "100%", MC.marginLeft "5px" ] ]
   [ H.table_ [ MC.style_ [ MC.width "100%" ] ]
@@ -187,7 +171,7 @@ headerView s =
     ]
   ]
 
-sourceView :: Spell -> [View Model Action]
+sourceView :: Spell -> [View SpellsModel Action]
 sourceView s =
   [ H.table_ [ MC.style_ [ MC.width "100%" ] ]
     [ H.tr_ [ MC.style_ [ MC.width "100%" ] ]
@@ -202,13 +186,11 @@ sourceView s =
   , H.hr_ []
   ]
 
-descriptionView :: Spell -> [View Model Action]
+descriptionView :: Spell -> [View SpellsModel Action]
 descriptionView s = map renderStructure (s ^. description)
 
-spellsComponent :: [Spell] -> SpellFilter -> Component props parent Model Action
-spellsComponent xs filt =
-  if xs == []
-    then
-      (vcomp def updateModel viewModel) { mount = Just GetSpells }
-    else
-      (vcomp (def { _spells = Right xs, _spellFilter = filt }) updateModel viewModel)
+spellsComponent :: SpellsModel -> Component props parent SpellsModel Action
+spellsComponent xs =
+  case (_spells xs) of
+    Right(_:_) -> vcomp xs updateModel viewModel
+    _ -> (vcomp xs updateModel viewModel) { mount = Just GetSpells }

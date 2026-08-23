@@ -1,5 +1,8 @@
 module Components.Backgrounds
   ( backgroundsComponent
+  , backgroundsTopic
+  , backgroundFilterTopic
+  , module Components.Backgrounds.Model
   ) where
 
 import           Data.Default          ( Default, def )
@@ -11,15 +14,15 @@ import qualified Miso.Html.Event       as E
 import qualified Miso.Html.Property    as P
 import           Miso.Lens             ( Lens, (.=), (^.), lens )
 import           Miso.JSON             ( eitherDecode )
+import           Miso.PubSub           ( Topic, topic )
 import           Miso.String           ( intercalate, isInfixOf, toLower )
 import           Common.Accordion     ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
 
 import           Common.Banner         ( banner )
 import           Common.Pages          ( Page(..) )
 import           Common.Structure      ( Inline(..), renderStructure, rollTable )
-import           Model.BackgroundModel ( Background(..), BackgroundTraits(..), BackgroundFeature(..), bonds, description, equipment, features, featureDescription, featureTitle, flaws,
+import           Components.Backgrounds.Model ( Background(..), BackgroundTraits(..), BackgroundFeature(..), bonds, description, equipment, features, featureDescription, featureTitle, flaws,
                                          ideals, languages, personality, proficiencies, skills, source, sourceurl, suggested, title, tools, traits)
-import           Model.MailboxMessage  ( backgroundFilterTopic, backgroundsTopic )
 
 data Action
   = GetBackgrounds
@@ -30,6 +33,12 @@ data Action
   | ErrorUpdate MisoString
   | UpdateFilter MisoString
   | SetPage String
+
+backgroundsTopic :: Topic [Background]
+backgroundsTopic = topic "backgrounds"
+
+backgroundFilterTopic :: Topic MisoString
+backgroundFilterTopic = topic "backgroundFilter"
 
 data Model = Model
   { _filterTitle :: MisoString

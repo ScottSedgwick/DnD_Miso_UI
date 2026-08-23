@@ -1,12 +1,18 @@
-module Model.FeatsModel where
+module Components.Feats.Model
+  ( FeatsModel (..)
+  , Feat
+  , name, source, prerequisite, description
+  ) where
 
-import           Data.Default       ( Default, def )
-import           Miso               ( MisoString )
-import           Miso.Lens          ( Lens, lens )
-import           Miso.JSON          ( FromJSON, Parser, ToJSON, (.:), (.:?), (.=), object, parseJSON, toJSON, withObject )
-import           Miso.JSON.Types    ( Value )
+import           Data.Default        ( Default, def )
+import           Miso                ( MisoString )
+import           Miso.Lens           ( Lens, lens )
+import           Miso.JSON           ( FromJSON, Parser, ToJSON, (.:), (.:?), (.=), object, parseJSON, toJSON, withObject )
+import           Miso.JSON.Types     ( Value )
+import           Miso.PubSub         ( topic )
 
-import           Common.Structure   ( Structure )
+import           Common.DndComponent ( DndComponent, subtopic )
+import           Common.Structure    ( Structure )
 
 data Feat = Feat
   { _name :: MisoString
@@ -14,6 +20,9 @@ data Feat = Feat
   , _prerequisite :: Maybe MisoString
   , _description :: [Structure]
   } deriving (Show, Eq)
+
+instance DndComponent FeatsModel where
+  subtopic = topic "featsModelTopic"
 
 instance FromJSON Feat where
   parseJSON :: Value -> Parser Feat

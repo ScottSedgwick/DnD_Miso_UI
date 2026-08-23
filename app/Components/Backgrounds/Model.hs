@@ -1,4 +1,4 @@
-module Model.BackgroundModel where
+module Components.Backgrounds.Model where
 
 import           Miso               ( MisoString )
 import           Miso.Lens          ( Lens, lens )
