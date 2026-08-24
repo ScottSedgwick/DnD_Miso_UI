@@ -1,79 +1,45 @@
 module Components.Backgrounds
   ( backgroundsComponent
-  , backgroundsTopic
-  , backgroundFilterTopic
   , module Components.Backgrounds.Model
   ) where
 
-import           Data.Default          ( Default, def )
-import           GHC.Generics          ( Generic )
+import           Data.Default          ( def )
 import           Miso                  ( Component (mount), Effect, MisoString, View, fromMisoString, get, io_, issue, mailParent, ms, publish, text, vcomp )
 import           Miso.Fetch            ( Response(body, errorMessage), getText )
 import qualified Miso.Html             as H
 import qualified Miso.Html.Event       as E
 import qualified Miso.Html.Property    as P
-import           Miso.Lens             ( Lens, (.=), (^.), lens )
+import           Miso.Lens             ( (.=), (^.) )
 import           Miso.JSON             ( eitherDecode )
-import           Miso.PubSub           ( Topic, topic )
 import           Miso.String           ( intercalate, isInfixOf, toLower )
-import           Common.Accordion     ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
+import           Common.Accordion      ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
 
 import           Common.Banner         ( banner )
 import           Common.Pages          ( Page(..) )
 import           Common.Structure      ( Inline(..), renderStructure, rollTable )
-import           Components.Backgrounds.Model ( Background(..), BackgroundTraits(..), BackgroundFeature(..), bonds, description, equipment, features, featureDescription, featureTitle, flaws,
-                                         ideals, languages, personality, proficiencies, skills, source, sourceurl, suggested, title, tools, traits)
+import           Components.Backgrounds.Model ( BackgroundsModel(..), filterTitle, backgrounds, backgroundsModelTopic,
+                                                Background(..), title, description, source, sourceurl, proficiencies, equipment, features, suggested, traits,
+                                                BackgroundTraits(..), personality, ideals, bonds, flaws,
+                                                BackgroundFeature(..), featureDescription, featureTitle,
+                                                BackgroundProficiency(..), languages, skills, tools)
 
 data Action
   = GetBackgrounds
   | SetBackgrounds (Response MisoString)
   | PostBackgrounds
-  | PostFilter
   | ErrorHandler (Response MisoString)
   | ErrorUpdate MisoString
   | UpdateFilter MisoString
-  | SetPage String
 
-backgroundsTopic :: Topic [Background]
-backgroundsTopic = topic "backgrounds"
-
-backgroundFilterTopic :: Topic MisoString
-backgroundFilterTopic = topic "backgroundFilter"
-
-data Model = Model
-  { _filterTitle :: MisoString
-  , _backgrounds :: Either MisoString [Background]
-  , _selecteddata :: Maybe String
-  } deriving (Show, Eq, Generic)
-
-instance Default Model where
-  def :: Model
-  def = Model
-        { _filterTitle = ""
-        , _backgrounds = Right []
-        , _selecteddata = Nothing
-        }
-
-filterTitle :: Lens Model MisoString
-filterTitle = lens _filterTitle $ \m x -> m { _filterTitle = x}
-
-backgrounds :: Lens Model (Either MisoString [Background])
-backgrounds = lens _backgrounds $ \m x -> m { _backgrounds = x}
-
-selecteddata :: Lens Model (Maybe String)
-selecteddata = lens _selecteddata $ \m x -> m { _selecteddata = x}
-
-updateModel :: Action -> Effect a props Model Action
+updateModel :: Action -> Effect a props BackgroundsModel Action
 updateModel GetBackgrounds       = getText "./data/backgrounds.json" [] SetBackgrounds ErrorHandler
 updateModel (SetBackgrounds r)   = backgrounds .= (eitherDecode (body r)) >> issue PostBackgrounds
-updateModel PostBackgrounds      = get >>= \m -> either (issue . ErrorUpdate) (io_ . publish backgroundsTopic) (m ^. backgrounds)
+updateModel PostBackgrounds      = get >>= (io_ . publish backgroundsModelTopic)
 updateModel (ErrorHandler r)     = maybe (issue $ ErrorUpdate "") (issue . ErrorUpdate) (errorMessage r)
 updateModel (ErrorUpdate s)      = mailParent s
-updateModel (UpdateFilter s)     = filterTitle .= (fromMisoString s) >> issue PostFilter
-updateModel PostFilter           = get >>= \m -> io_ $ publish backgroundFilterTopic (m ^. filterTitle)
-updateModel (SetPage s)          = selecteddata .= Just s
+updateModel (UpdateFilter s)     = filterTitle .= (fromMisoString s) >> issue PostBackgrounds
 
-viewModel :: props -> Model -> View Model Action
+viewModel :: props -> BackgroundsModel -> View BackgroundsModel Action
 viewModel _ m =
   H.div_ [ P.class_ "h-screen flex flex-col" ]
   [ banner Backgrounds
@@ -81,13 +47,13 @@ viewModel _ m =
   , H.div_ [ P.class_ "overflow-y-auto flex-1" ] (map backgroundView (filteredBackgrounds m))
   ]
 
-filterView :: Model -> View Model Action
+filterView :: BackgroundsModel -> View BackgroundsModel Action
 filterView m =
   H.div_ [ P.class_ "sticky top-0 z-10 bg-white border-b gap-3 p-4" ]
   [ H.input_ [ P.placeholder_ "Filter", P.class_ "input", P.type_ "text", P.value_ (m ^. filterTitle), E.onInput UpdateFilter ]
   ]
 
-filteredBackgrounds :: Model -> [Background]
+filteredBackgrounds :: BackgroundsModel -> [Background]
 filteredBackgrounds m =
   case (m ^. backgrounds) of
     Left err -> [errBg err]
@@ -106,7 +72,7 @@ errBg s = Background
   , _traits = Nothing
   }
 
-backgroundView :: Background -> View Model Action
+backgroundView :: Background -> View BackgroundsModel Action
 backgroundView b =
   accordion_ []
   [ accordionSection_ [ P.class_ "border-b" ]
@@ -129,10 +95,10 @@ backgroundView b =
     ]
   ]
 
-descriptionView :: Background -> [View Model Action]
+descriptionView :: Background -> [View BackgroundsModel Action]
 descriptionView b = map (\d -> H.p_ [ P.class_ "description" ] [ text ( ms d ) ]) (b ^. description)
 
-sourceView :: Background -> [View Model Action]
+sourceView :: Background -> [View BackgroundsModel Action]
 sourceView b =
   [ H.p_ []
     [ H.strong_ [] [ text "Source: " ]
@@ -141,7 +107,7 @@ sourceView b =
     ]
   ]
 
-proficienciesView :: Background -> [View Model Action]
+proficienciesView :: Background -> [View BackgroundsModel Action]
 proficienciesView b =
   case ( b ^. proficiencies ) of
     Nothing -> equipmentView (b ^. equipment)
@@ -154,7 +120,7 @@ proficienciesView b =
         )
       ]
 
-equipmentView :: [MisoString] -> [ View Model Action ]
+equipmentView :: [MisoString] -> [ View BackgroundsModel Action ]
 equipmentView [] = []
 equipmentView xs =
   [ H.br_ []
@@ -163,20 +129,20 @@ equipmentView xs =
   , H.hr_ []
   ]
 
-featuresView :: [BackgroundFeature] -> [View Model Action]
+featuresView :: [BackgroundFeature] -> [View BackgroundsModel Action]
 featuresView [] = []
 featuresView xs = ( H.h4_ [ P.class_ "h-4" ] [ text "Features" ] ) : (concatMap featureView xs)
 
-featureView :: BackgroundFeature -> [View Model Action]
+featureView :: BackgroundFeature -> [View BackgroundsModel Action]
 featureView f = ( H.h6_ [ P.class_ "h-6" ] [ text (ms $ f ^. featureTitle) ] ) : (map renderStructure (f ^. featureDescription))
 
-suggestedView :: [MisoString] -> [View Model Action]
+suggestedView :: [MisoString] -> [View BackgroundsModel Action]
 suggestedView [] = []
 suggestedView xs = ( H.h4_ [ P.class_ "h-4" ] [ text "Suggested Characteristics"] ) : map f xs
   where
     f x = H.p_ [] [ text x ]
 
-traitsView :: Maybe BackgroundTraits -> [View Model Action]
+traitsView :: Maybe BackgroundTraits -> [View BackgroundsModel Action]
 traitsView Nothing = []
 traitsView (Just t) =
   [ H.div_ [ P.class_ "grid" ]
@@ -187,7 +153,7 @@ traitsView (Just t) =
     ]
   ]
 
-traitTable :: MisoString -> [MisoString] -> View Model Action
+traitTable :: MisoString -> [MisoString] -> View BackgroundsModel Action
 traitTable _ [] = H.div_ [] []
 traitTable tableName xs =
   H.div_ [ P.class_ "s6" ]
@@ -195,10 +161,8 @@ traitTable tableName xs =
   , rollTable tableName (map (\x -> [T x]) xs)
   ]
 
-backgroundsComponent :: [Background] -> MisoString -> Component parent props Model Action
-backgroundsComponent xs filt =
-  if xs == []
-    then
-      (vcomp def updateModel viewModel) { mount = Just GetBackgrounds }
-    else
-      (vcomp (def { _backgrounds = Right xs, _filterTitle = filt }) updateModel viewModel)
+backgroundsComponent :: BackgroundsModel -> Component parent props BackgroundsModel Action
+backgroundsComponent xs =
+  case (xs ^. backgrounds) of
+    Right (_:_) -> (vcomp xs updateModel viewModel)
+    _ -> (vcomp def updateModel viewModel) { mount = Just GetBackgrounds }

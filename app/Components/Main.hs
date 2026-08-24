@@ -30,15 +30,14 @@ import qualified Components.Spells as CS
 -----------------------------------------------------------------------------
 data Action
   = SetPage Page
-  | SetBackgrounds [CB.Background]
-  | SetBackgroundFilter MisoString
+  | SetBackgrounds CB.BackgroundsModel
   | SetFeatsModel CF.FeatsModel
   | SetSpellsModel CS.SpellsModel
-  | SetInsults [MisoString]
-  | SetCurrentInsult MisoString
+  | SetInsults CI.InsultsModel
   | SetPoisons [CP.Poison]
   | SetPoisonsFilter MisoString
   | DisplayError MisoString MisoString
+
   | NavigateTo Page
   | ToggleDarkMode
   | ToggleSidebar
@@ -49,10 +48,9 @@ data Action
 data Model = Model
   { _page :: Page
   , _err :: Maybe MisoString
-  , _backgrounds :: [CB.Background]
-  , _backgroundFilter :: MisoString
+  , _backgrounds :: CB.BackgroundsModel
   , _spellsModel :: CS.SpellsModel
-  , _insults :: [MisoString]
+  , _insults :: CI.InsultsModel
   , _poisons :: [CP.Poison]
   , _poisonsFilter :: MisoString
   , _currentInsult :: MisoString
@@ -64,7 +62,6 @@ instance Default Model where
     { _page = def
     , _err = def
     , _backgrounds = def
-    , _backgroundFilter = ""
     , _spellsModel = def
     , _insults = def
     , _currentInsult = ""
@@ -79,16 +76,13 @@ page = lens _page $ \m x -> m { _page = x }
 err :: Lens Model (Maybe MisoString)
 err = lens _err $ \m x -> m { _err = x }
 
-backgrounds :: Lens Model [CB.Background]
-backgrounds = lens _backgrounds $ \m x -> m { _backgrounds = x }
-
-backgroundFilter :: Lens Model MisoString
-backgroundFilter = lens _backgroundFilter $ \m x -> m { _backgroundFilter = x }
+backgroundsModel :: Lens Model CB.BackgroundsModel
+backgroundsModel = lens _backgrounds $ \m x -> m { _backgrounds = x }
 
 spellsModel :: Lens Model CS.SpellsModel
 spellsModel = lens _spellsModel $ \m x -> m { _spellsModel = x }
 
-insults :: Lens Model [MisoString]
+insults :: Lens Model CI.InsultsModel
 insults = lens _insults $ \m x -> m { _insults = x }
 
 poisons :: Lens Model [CP.Poison]
@@ -100,31 +94,24 @@ poisonsFilter = lens _poisonsFilter $ \m x -> m { _poisonsFilter = x }
 featsModel :: Lens Model CF.FeatsModel
 featsModel = lens _featsModel $ \m x -> m { _featsModel = x }
 
-currentInsult :: Lens Model MisoString
-currentInsult = lens _currentInsult $ \m x -> m { _currentInsult = x }
-
 -----------------------------------------------------------------------------
 updateModel :: Action -> Effect parent props Model Action
 updateModel = \case
   SetPage p             -> page .= p
-  SetBackgrounds x      -> backgrounds .= x
-  SetBackgroundFilter s -> backgroundFilter .= s
+  SetBackgrounds x      -> backgroundsModel .= x
   SetFeatsModel x       -> featsModel .= x
   SetSpellsModel x      -> spellsModel .= x
   SetInsults x          -> insults .= x
-  SetCurrentInsult s    -> currentInsult .= s
   SetPoisons p          -> poisons .= p
   SetPoisonsFilter pf   -> poisonsFilter .= pf
   DisplayError c e      -> err .= Just (c <> ": " <> e)
   NavigateTo p          -> uriSetter p
   ToggleDarkMode        -> io_ $ newEvent ("basecoat:theme" :: MisoString) >>= dispatchEvent
   ToggleSidebar         -> io_ $ newEvent ("basecoat:sidebar" :: MisoString) >>= dispatchEvent
-  Subscribe             -> subscribe CB.backgroundsTopic SetBackgrounds (DisplayError "backgroundsTopic")
-                        >> subscribe CB.backgroundFilterTopic SetBackgroundFilter (DisplayError "backgroundsFilterTopic")
+  Subscribe             -> subscribe CB.backgroundsModelTopic SetBackgrounds (DisplayError "backgroundsModelTopic")
                         >> subscribe CF.subtopic SetFeatsModel (DisplayError "featsModelTopic")
                         >> subscribe CS.spellsModelTopic SetSpellsModel (DisplayError "spellsModelTopic")
                         >> subscribe CI.insultsTopic SetInsults (DisplayError "insultsTopic")
-                        >> subscribe CI.currentInsultTopic SetCurrentInsult (DisplayError "currentInsultTopic")
                         >> subscribe CP.poisonsTopic SetPoisons (DisplayError "poisonsTopic")
                         >> subscribe CP.poisonFilterTopic SetPoisonsFilter (DisplayError "poisonFilterTopic")
   ChangeTheme theme     -> io_ $ changeTheme theme
@@ -169,9 +156,9 @@ viewModel _ m = H.body_ []
         [ H.section_ []
           ( case m ^. page of
             Home        -> [ "home"    +> CH.home ]
-            Backgrounds -> [ "books"   +> CB.backgroundsComponent (m ^. backgrounds) (m ^. backgroundFilter)]
+            Backgrounds -> [ "books"   +> CB.backgroundsComponent (m ^. backgroundsModel)]
             Feats       -> [ "feats"   +> CF.featsComponent (m ^. featsModel)]
-            Insults     -> [ "insults" +> CI.insultsComponent (m ^. insults) (m ^. currentInsult)]
+            Insults     -> [ "insults" +> CI.insultsComponent (m ^. insults)]
             Poisons     -> [ "poisons" +> CP.poisonsComponent (m ^. poisons) (m ^. poisonsFilter)]
             Spells      -> [ "spells"  +> CS.spellsComponent (m ^. spellsModel)]
           )

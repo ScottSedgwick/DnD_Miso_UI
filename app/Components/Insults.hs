@@ -1,7 +1,7 @@
 module Components.Insults
-  ( insultsComponent
+  ( InsultsModel(..)
+  , insultsComponent
   , insultsTopic
-  , currentInsultTopic
   ) where
 
 import           Data.Default        ( Default, def )
@@ -10,7 +10,8 @@ import           Miso.Fetch          ( Response(body, errorMessage), getText )
 import qualified Miso.Html            as H
 import qualified Miso.Html.Event      as E
 import qualified Miso.Html.Property   as P
-import           Miso.JSON            ( FromJSON, Parser, Value, (.:?), (.!=), eitherDecode, parseJSON, withObject )
+import           Miso.JSON            ( FromJSON, ToJSON, Parser, Value, (.:), (.:?), (.!=), eitherDecode, object, parseJSON, toJSON, withObject )
+import qualified Miso.JSON            as J
 import           Miso.Lens            (Lens, (.=), (^.), lens)
 import           Miso.PubSub          ( Topic, topic )
 import           System.Random        ( randomRIO )
@@ -29,43 +30,60 @@ instance FromJSON InsultsJson where
 data Action
   = GetInsults
   | SetInsults (Response MisoString)
-  | PostInsults (Either MisoString [MisoString])
-  | PostCurrentInsult MisoString
+  | PostInsults
   | ErrorHandler (Response MisoString)
   | GetNewInsult
   | SetNewInsult MisoString
 
-data Model = Model
+data InsultsModel = InsultsModel
   { _insults :: Either MisoString [MisoString]
   , _currentInsult :: MisoString
   } deriving (Show, Eq)
+instance FromJSON InsultsModel where
+  parseJSON =
+    withObject "InsultsModel" $ \o -> do
+      ci <- o .: "currentInsult"
+      ms <- o .:? "insults"
+      case ms of
+        Just x -> pure $ InsultsModel { _currentInsult = ci, _insults = Right x }
+        Nothing -> do
+          be <- o .:? "insultsError"
+          case be of
+            Just e -> pure $ InsultsModel { _currentInsult = ci, _insults = Left e }
+            Nothing -> pure $ InsultsModel { _currentInsult = ci, _insults = Right [] }
+instance ToJSON InsultsModel where
+  toJSON b =
+    case (_insults b) of
+      Right bs -> object [ "currentInsult" J..= (_currentInsult b)
+                         , "insults" J..= bs
+                         ]
+      Left e -> object [ "currentInsult" J..= (_currentInsult b)
+                       , "insultsError" J..= e
+                       ]
 
-insultsTopic :: Topic [MisoString]
+
+insultsTopic :: Topic InsultsModel
 insultsTopic = topic "insults"
 
-currentInsultTopic :: Topic MisoString
-currentInsultTopic = topic "currentInsult"
-
-insults :: Lens Model (Either MisoString [MisoString])
+insults :: Lens InsultsModel (Either MisoString [MisoString])
 insults = lens _insults $ \m x -> m { _insults = x }
 
-currentInsult :: Lens Model MisoString
+currentInsult :: Lens InsultsModel MisoString
 currentInsult = lens _currentInsult $ \m x -> m { _currentInsult = x }
 
-instance Default Model where
-  def :: Model
-  def = Model
+instance Default InsultsModel where
+  def :: InsultsModel
+  def = InsultsModel
       { _insults = Right []
       , _currentInsult = ""
       }
 
-updateModel :: Action -> Effect a props Model Action
+updateModel :: Action -> Effect a props InsultsModel Action
 updateModel GetInsults            = getText "./data/insults.json" [] SetInsults ErrorHandler
-updateModel (SetInsults r)        = let x = parseInsultResponse r in insults .= x >> issue (PostInsults x)
-updateModel (PostInsults x)       = either (const $ pure ()) (io_ . publish insultsTopic) x >> issue GetNewInsult
-updateModel (PostCurrentInsult s) = io_ $ publish currentInsultTopic s
+updateModel (SetInsults r)        = let x = parseInsultResponse r in insults .= x >> issue PostInsults
+updateModel PostInsults           = get >>= (io_ . publish insultsTopic)
 updateModel (ErrorHandler r)      = maybe (pure ()) mailParent (errorMessage r)
-updateModel (SetNewInsult s)      = currentInsult .= s >> issue (PostCurrentInsult s) >> io_ (print s)
+updateModel (SetNewInsult s)      = currentInsult .= s >> issue PostInsults >> io_ (print s)
 updateModel GetNewInsult          = get >>= \m -> io $ do
   putStrLn "Getting New insult"
   case (m ^. insults) of
@@ -87,7 +105,7 @@ pickRandom ins = do
   i <- randomRIO (0, length ins - 1)
   pure $ ins !! i
 
-viewModel :: props -> Model -> View Model Action
+viewModel :: props -> InsultsModel -> View InsultsModel Action
 viewModel _ m =
   H.div_ [ P.class_ "h-screen flex flex-col"]
   [ banner Insults
@@ -96,10 +114,8 @@ viewModel _ m =
     ]
   ]
 
-insultsComponent :: [MisoString] -> MisoString -> Component parent props Model Action
-insultsComponent ins curr =
-  if ins == []
-    then
-      (vcomp def updateModel viewModel) { mount = Just GetInsults }
-    else
-      (vcomp (def { _insults = Right ins, _currentInsult = curr }) updateModel viewModel)
+insultsComponent :: InsultsModel -> Component parent props InsultsModel Action
+insultsComponent x =
+  case (_insults x) of
+    Right (_:_) -> (vcomp x updateModel viewModel)
+    _ -> (vcomp x updateModel viewModel) { mount = Just GetInsults }

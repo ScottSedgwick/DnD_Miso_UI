@@ -1,9 +1,11 @@
 module Components.Backgrounds.Model where
 
+import           Data.Default       ( Default, def )
 import           Miso               ( MisoString )
 import           Miso.Lens          ( Lens, lens )
 import           Miso.JSON          ( FromJSON, Parser, ToJSON, (.:), (.:?), (.!=), (.=), object, parseJSON, toJSON, withObject )
 import           Miso.JSON.Types    ( Value )
+import           Miso.PubSub        ( Topic, topic )
 
 import           Common.Structure   ( Structure )
 
@@ -157,3 +159,49 @@ suggested = lens _suggested $ \m x -> m { _suggested = x }
 
 traits :: Lens Background (Maybe BackgroundTraits)
 traits = lens _traits $ \m x -> m { _traits = x }
+
+
+data BackgroundsModel = BackgroundsModel
+  { _filterTitle :: MisoString
+  , _backgrounds :: Either MisoString [Background]
+  } deriving (Show, Eq)
+
+instance FromJSON BackgroundsModel where
+  parseJSON :: Value -> Parser BackgroundsModel
+  parseJSON =
+    withObject "BackgroundsModel" $ \o -> do
+      t <- o .: "filterTitle"
+      bs <- o .:? "backgrounds"
+      case bs of
+        Just b -> pure $ BackgroundsModel { _filterTitle = t, _backgrounds = Right b }
+        Nothing -> do
+          be <- o .:? "backgroundsError"
+          case be of
+            Just e -> pure $ BackgroundsModel { _filterTitle = t, _backgrounds = Left e }
+            Nothing -> pure $ BackgroundsModel { _filterTitle = t, _backgrounds = Right [] }
+
+instance ToJSON BackgroundsModel where
+  toJSON b =
+    case (_backgrounds b) of
+      Right bs -> object [ "filterTitle" .= (_filterTitle b)
+                        , "backgrounds" .= bs
+                        ]
+      Left e -> object [ "filterTitle" .= (_filterTitle b)
+                       , "backgroundsError" .= e
+                       ]
+
+backgroundsModelTopic :: Topic BackgroundsModel
+backgroundsModelTopic = topic "backgroundsModel"
+
+instance Default BackgroundsModel where
+  def :: BackgroundsModel
+  def = BackgroundsModel
+        { _filterTitle = ""
+        , _backgrounds = Right []
+        }
+
+filterTitle :: Lens BackgroundsModel MisoString
+filterTitle = lens _filterTitle $ \m x -> m { _filterTitle = x}
+
+backgrounds :: Lens BackgroundsModel (Either MisoString [Background])
+backgrounds = lens _backgrounds $ \m x -> m { _backgrounds = x}
