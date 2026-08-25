@@ -4012,5 +4012,57 @@
         ]
       }
     ]
+  },
+  {
+    "name": "Stance Mastery",
+    "source": "Ethan's Homebrew",
+    "description": [
+      {
+        "p": [
+          {
+            "t": "You are a master of various combat stances, each representing a different aspect of your training. You can seamlessly flow between these stances, adapting to the ebb and flow of battle with grace and precision."
+          }
+        ]
+      },
+      {
+        "p": [
+          {
+            "t": "You gain access to a set of combat stances. You can adopt a stance as a bonus action on your turn, and you can then freely switch between stances during the remainder of your turn as if it were an object interaction. You can maintain a stance constantly, however if you wish to change your stance outside of the turn you used a bonus action, you will need to use another bonus action to do so."
+          }
+        ]
+      },
+      {
+        "tb": [
+          [ [ { "b": "No" } ], [ { "b": "Stance" } ], [ { "b": "Bonus" } ], [ { "b": "Description " } ] ],
+          [ [ { "t": "1" } ], [ { "t": "Defensive" } ], [ { "t": "+1 to AC" } ], [ {"t": "This stance emphasizes defense and precision, allowing the character to deflect attacks with ease."}]],
+          [ [ { "t": "2" } ], [ { "t": "Offensive" } ], [ { "t": "+1d4 to damage rolls" } ], [ {"t": "This aggressive stance focuses on maximizing striking power, delivering powerful blows to overwhelm opponents."}]],
+          [ [ { "t": "3" } ], [ { "t": "Mobile"    } ], [ { "t": "+10 feet movement speed" } ], [ {"t": "A swift and nimble stance that enhances the character’s mobility, making it easier to navigate the battlefield."}]],
+          [ [ { "t": "4" } ], [ { "t": "Precision" } ], [ { "t": "Add WIS modifier to attack rolls" } ], [ {"t": "By attuning to their inner senses, the character gains heightened accuracy in their strikes."}]],
+          [ [ { "t": "5" } ], [ { "t": "Counter"   } ], [ { "t": "Opportunity attacks against you have disadvantage" } ], [ {"t": "This stance is all about turning an opponent’s attack against them, creating openings for counterattacks."}]]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Revised Grappler",
+    "source": "Ethan's Homebrew",
+    "prerequisite": "STR 13 or higher",
+    "description": [
+      {
+        "p": [
+          {
+            "t": "You’ve developed the skills necessary to hold your own in close-quarters grappling. You gain the following benefits:"
+          }
+        ]
+      },
+      {
+        "ul": [
+          [ { "t": "You have advantage on attack rolls against a creature you are grappling." } ],
+          [ { "t": "You can use your action to try to pin a creature grappled by you. To do so, make another grapple check. If you succeed, you and the creature are both restrained until the grapple ends." } ],
+          [ { "t": "You can use your reaction to attempt to grapple a creature that has just escaped your grasp." } ],
+          [ { "t": "You can choose to succeed a failed grapple attempt (1/day)." } ]
+        ]
+      }
+    ]
   }
 ]
