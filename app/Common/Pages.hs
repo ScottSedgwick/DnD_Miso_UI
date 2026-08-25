@@ -4,11 +4,12 @@ import           Data.Default ( Default, def )
 import qualified Data.Map     as M
 import           GHC.Generics ( Generic )
 import           Miso         ( MisoString, View, fromMisoString, ms )
+import qualified Miso.Html.Element as H
+import qualified Miso.Html.Property as P
 import           Miso.Router  ( Router, RoutingError(..), URI(..), route, toURI )
 import           Text.Read    ( readMaybe )
 
 import           Common.Attribution
-import           Common.SvgImages
 
 data Page
   = Home
@@ -41,12 +42,12 @@ allPages :: [Page]
 allPages = [minBound .. maxBound]
 
 pageImage :: Page -> View model action
-pageImage Home = homeImage
-pageImage Backgrounds = backgroundIcon
-pageImage Feats = featsIcon
-pageImage Insults = insultIcon
-pageImage Poisons = poisonIcon
-pageImage Spells = spellIcon
+pageImage Home = H.img_ [ P.src_ "assets/home-icon.png", P.width_ "25", P.height_ "60"]
+pageImage Backgrounds = H.img_ [ P.src_ "assets/backgrounds-icon.png", P.width_ "25", P.height_ "60"]
+pageImage Feats = H.img_ [ P.src_ "assets/feat-icon.png", P.width_ "25", P.height_ "60"]
+pageImage Insults = H.img_ [ P.src_ "assets/insult-icon.png", P.width_ "25", P.height_ "60"]
+pageImage Poisons = H.img_ [ P.src_ "assets/poison-icon.png", P.width_ "25", P.height_ "60"]
+pageImage Spells = H.img_ [ P.src_ "assets/spells-icon.png", P.width_ "25", P.height_ "60"]
 
 pageDescription :: Page -> Maybe MisoString
 pageDescription Home        = Nothing
@@ -57,24 +58,27 @@ pageDescription Poisons     = Just "The Poisons page lists known poisons and the
 pageDescription Spells      = Just "The Spells page allows you to see and read all the available spells."
 
 pageAttribution :: Page -> Maybe Attribution
-pageAttribution Home        = Nothing
-pageAttribution Backgrounds = Just $ Attribution { imageTitle = "Teddy Bear"
-                                                 , imageUri = "https://iconscout.com/icons/teddy-bear"
-                                                 , authorName = "Vector Place"
-                                                 , authorUri = "https://iconscout.com/contributors/icon-click" }
-pageAttribution Feats       = Just $ Attribution { imageTitle = "Golden Medal"
-                                                 , imageUri = "https://www.svgrepo.com/svg/304719/golden-medal"
-                                                 , authorName = "SVG Repo"
-                                                 , authorUri = "https://www.svgrepo.com/" }
-pageAttribution Insults     = Just $ Attribution { imageTitle = "Swearing"
-                                                 , imageUri = "https://iconscout.com/icons/swearing"
-                                                 , authorName = "Surangkana Jomjunyong"
-                                                 , authorUri = "https://iconscout.com/contributors/surang" }
-pageAttribution Poisons     = Just $ Attribution { imageTitle = "Poison Bottle"
-                                                 , imageUri = "https://staging.svgrepo.com/svg/413573/poison"
-                                                 , authorName = "Shannon E. Thomas"
-                                                 , authorUri = "https://staging.svgrepo.com/author/Shannon%20E.%20Thomas/" }
-pageAttribution Spells      = Just $ Attribution { imageTitle = "Spellbook"
-                                                 , imageUri = "https://iconscout.com/icons/spellbook"
-                                                 , authorName = "thebeststarticon"
-                                                 , authorUri = "https://iconscout.com/contributors/thebeststarticon" }
+pageAttribution Home        = Just $ Attribution { imageTitle = "House tree home Icon"
+                                                 , imageUri = "https://icon-icons.com/"
+                                                 , authorName = "Vincent Le Moign"
+                                                 , authorUri = "https://icon-icons.com/authors/514-vincent-le-moign" }
+pageAttribution Backgrounds = Just $ Attribution { imageTitle = "Teddy bear Icon"
+                                                 , imageUri = "https://icon-icons.com/"
+                                                 , authorName = "Stefania Servidio"
+                                                 , authorUri = "https://icon-icons.com/authors/265-stefania-servidio" }
+pageAttribution Feats       = Just $ Attribution { imageTitle = "Champion army reward achievement Icon"
+                                                 , imageUri = "https://icon-icons.com/"
+                                                 , authorName = "Muhamad Taupik"
+                                                 , authorUri = "https://icon-icons.com/authors/1279-muhamad-taupik" }
+pageAttribution Insults     = Just $ Attribution { imageTitle = "Obscene gesture"
+                                                 , imageUri = "https://icons8.com/icons/set/insult"
+                                                 , authorName = "Icons 8"
+                                                 , authorUri = "https://icons8.com/" }
+pageAttribution Poisons     = Just $ Attribution { imageTitle = "Toxic skull danger poison Icon"
+                                                 , imageUri = "https://icon-icons.com/"
+                                                 , authorName = "Satawat Anukul"
+                                                 , authorUri = "https://icon-icons.com/authors/1312-satawat-anukul" }
+pageAttribution Spells      = Just $ Attribution { imageTitle = "Spell Book Icon"
+                                                 , imageUri = "https://icon-icons.com/"
+                                                 , authorName = "Chanut is Industries"
+                                                 , authorUri = "https://icon-icons.com/authors/283-chanut-is-industries" }
