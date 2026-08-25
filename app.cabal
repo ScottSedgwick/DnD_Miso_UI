@@ -38,6 +38,7 @@ executable app
                   , Common.Attribution
                   , Common.Banner
                   , Common.DndComponent
+                  , Common.Eithers
                   , Common.Metadata
                   , Common.Pages
                   , Common.SvgImages

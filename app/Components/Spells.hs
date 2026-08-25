@@ -19,6 +19,7 @@ import           Miso.String             ( intercalate, isInfixOf, toLower )
 import           Common.Accordion        ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
 
 import           Common.Banner           ( banner )
+import           Common.Eithers          ( hasData )
 import           Common.Pages            ( Page(..) )
 import           Common.Structure        ( renderStructure )
 import           Components.Spells.Model ( SpellsModel(..), Spell(..), title, source, level, school, castingTime, range, components, duration, description, lists,
@@ -190,7 +191,4 @@ descriptionView :: Spell -> [View SpellsModel Action]
 descriptionView s = map renderStructure (s ^. description)
 
 spellsComponent :: SpellsModel -> Component props parent SpellsModel Action
-spellsComponent xs =
-  case (_spells xs) of
-    Right(_:_) -> vcomp xs updateModel viewModel
-    _ -> (vcomp xs updateModel viewModel) { mount = Just GetSpells }
+spellsComponent x = (vcomp x updateModel viewModel) { mount = if ( hasData $ _spells x ) then Nothing else Just GetSpells }

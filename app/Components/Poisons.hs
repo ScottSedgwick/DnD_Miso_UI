@@ -20,9 +20,10 @@ import           Miso.String           ( isInfixOf, toLower )
 import           Common.Accordion      ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
 
 import           Common.Banner         ( banner )
+import           Common.Eithers        ( hasData )
 import           Common.Pages          ( Page(..) )
 import           Common.Structure      ( renderStructure )
-import           Components.Poisons.Model     ( Poison(..), description, level, title )
+import           Components.Poisons.Model ( Poison(..), description, level, title )
 
 data Action
   = GetPoisons
@@ -151,7 +152,4 @@ descriptionView :: Poison -> [View PoisonsModel Action]
 descriptionView p = map renderStructure (p ^. description)
 
 poisonsComponent :: PoisonsModel -> Component parent props PoisonsModel Action
-poisonsComponent xs =
-  case (_poisons xs) of
-    Right (_:_) -> vcomp xs updateModel viewModel
-    _ -> (vcomp xs updateModel viewModel) { mount = Just GetPoisons }
+poisonsComponent x = (vcomp x updateModel viewModel) { mount = if ( hasData $ _poisons x ) then Nothing else Just GetPoisons }

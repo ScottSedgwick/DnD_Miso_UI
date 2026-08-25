@@ -3,7 +3,6 @@ module Components.Backgrounds
   , module Components.Backgrounds.Model
   ) where
 
-import           Data.Default          ( def )
 import           Miso                  ( Component (mount), Effect, MisoString, View, fromMisoString, get, io_, issue, mailParent, ms, publish, text, vcomp )
 import           Miso.Fetch            ( Response(body, errorMessage), getText )
 import qualified Miso.Html             as H
@@ -15,6 +14,7 @@ import           Miso.String           ( intercalate, isInfixOf, toLower )
 import           Common.Accordion      ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
 
 import           Common.Banner         ( banner )
+import           Common.Eithers        ( hasData )
 import           Common.Pages          ( Page(..) )
 import           Common.Structure      ( Inline(..), renderStructure, rollTable )
 import           Components.Backgrounds.Model ( BackgroundsModel(..), filterTitle, backgrounds, backgroundsModelTopic,
@@ -162,7 +162,4 @@ traitTable tableName xs =
   ]
 
 backgroundsComponent :: BackgroundsModel -> Component parent props BackgroundsModel Action
-backgroundsComponent xs =
-  case (xs ^. backgrounds) of
-    Right (_:_) -> (vcomp xs updateModel viewModel)
-    _ -> (vcomp def updateModel viewModel) { mount = Just GetBackgrounds }
+backgroundsComponent x = (vcomp x updateModel viewModel) { mount = if ( hasData $ _backgrounds x ) then Nothing else Just GetBackgrounds }

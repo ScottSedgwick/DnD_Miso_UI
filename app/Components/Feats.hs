@@ -15,6 +15,7 @@ import           Miso.String            ( isInfixOf, toLower )
 import           Common.Accordion       ( accordion_, accordionSection_, accordionHeader_, accordionBody_)
 
 import           Common.Banner          ( banner )
+import           Common.Eithers         ( hasData )
 import           Common.DndComponent    ( subtopic )
 import           Common.Pages           ( Page(..) )
 import           Common.Structure       ( renderStructure )
@@ -88,7 +89,4 @@ descriptionView p =
   <> map renderStructure (p ^. description)
 
 featsComponent :: FeatsModel -> Component parent props FeatsModel Action
-featsComponent xs =
-  case (_feats xs) of
-    Right (_:_) -> vcomp xs updateModel viewModel
-    _ -> (vcomp xs updateModel viewModel) { mount = Just GetFeats }
+featsComponent x = (vcomp x updateModel viewModel) { mount = if ( hasData $ _feats x ) then Nothing else Just GetFeats }

@@ -17,6 +17,7 @@ import           Miso.PubSub          ( Topic, topic )
 import           System.Random        ( randomRIO )
 
 import           Common.Banner        ( banner )
+import           Common.Eithers       ( hasData )
 import           Common.Pages         ( Page(..) )
 
 data InsultsJson = InsultsJson { xs :: [MisoString] } deriving (Show, Eq)
@@ -115,7 +116,4 @@ viewModel _ m =
   ]
 
 insultsComponent :: InsultsModel -> Component parent props InsultsModel Action
-insultsComponent x =
-  case (_insults x) of
-    Right (_:_) -> (vcomp x updateModel viewModel)
-    _ -> (vcomp x updateModel viewModel) { mount = Just GetInsults }
+insultsComponent x = (vcomp x updateModel viewModel) { mount = if ( hasData $ _insults x ) then Nothing else Just GetInsults }
