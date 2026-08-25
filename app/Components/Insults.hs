@@ -80,7 +80,7 @@ instance Default InsultsModel where
 
 updateModel :: Action -> Effect a props InsultsModel Action
 updateModel GetInsults            = getText "./data/insults.json" [] SetInsults ErrorHandler
-updateModel (SetInsults r)        = let x = parseInsultResponse r in insults .= x >> issue PostInsults
+updateModel (SetInsults r)        = let x = parseInsultResponse r in insults .= x >> issue GetNewInsult >> issue PostInsults
 updateModel PostInsults           = get >>= (io_ . publish insultsTopic)
 updateModel (ErrorHandler r)      = maybe (pure ()) mailParent (errorMessage r)
 updateModel (SetNewInsult s)      = currentInsult .= s >> issue PostInsults >> io_ (print s)

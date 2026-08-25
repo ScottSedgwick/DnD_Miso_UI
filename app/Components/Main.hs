@@ -34,8 +34,7 @@ data Action
   | SetFeatsModel CF.FeatsModel
   | SetSpellsModel CS.SpellsModel
   | SetInsults CI.InsultsModel
-  | SetPoisons [CP.Poison]
-  | SetPoisonsFilter MisoString
+  | SetPoisons CP.PoisonsModel
   | DisplayError MisoString MisoString
 
   | NavigateTo Page
@@ -51,9 +50,7 @@ data Model = Model
   , _backgrounds :: CB.BackgroundsModel
   , _spellsModel :: CS.SpellsModel
   , _insults :: CI.InsultsModel
-  , _poisons :: [CP.Poison]
-  , _poisonsFilter :: MisoString
-  , _currentInsult :: MisoString
+  , _poisons :: CP.PoisonsModel
   , _featsModel :: CF.FeatsModel
   } deriving (Show, Eq)
 
@@ -64,9 +61,7 @@ instance Default Model where
     , _backgrounds = def
     , _spellsModel = def
     , _insults = def
-    , _currentInsult = ""
     , _poisons = def
-    , _poisonsFilter = ""
     , _featsModel = def
     }
 
@@ -85,11 +80,8 @@ spellsModel = lens _spellsModel $ \m x -> m { _spellsModel = x }
 insults :: Lens Model CI.InsultsModel
 insults = lens _insults $ \m x -> m { _insults = x }
 
-poisons :: Lens Model [CP.Poison]
+poisons :: Lens Model CP.PoisonsModel
 poisons = lens _poisons $ \m x -> m { _poisons = x }
-
-poisonsFilter :: Lens Model MisoString
-poisonsFilter = lens _poisonsFilter $ \m x -> m { _poisonsFilter = x }
 
 featsModel :: Lens Model CF.FeatsModel
 featsModel = lens _featsModel $ \m x -> m { _featsModel = x }
@@ -103,7 +95,6 @@ updateModel = \case
   SetSpellsModel x      -> spellsModel .= x
   SetInsults x          -> insults .= x
   SetPoisons p          -> poisons .= p
-  SetPoisonsFilter pf   -> poisonsFilter .= pf
   DisplayError c e      -> err .= Just (c <> ": " <> e)
   NavigateTo p          -> uriSetter p
   ToggleDarkMode        -> io_ $ newEvent ("basecoat:theme" :: MisoString) >>= dispatchEvent
@@ -113,7 +104,6 @@ updateModel = \case
                         >> subscribe CS.spellsModelTopic SetSpellsModel (DisplayError "spellsModelTopic")
                         >> subscribe CI.insultsTopic SetInsults (DisplayError "insultsTopic")
                         >> subscribe CP.poisonsTopic SetPoisons (DisplayError "poisonsTopic")
-                        >> subscribe CP.poisonFilterTopic SetPoisonsFilter (DisplayError "poisonFilterTopic")
   ChangeTheme theme     -> io_ $ changeTheme theme
 
 changeTheme :: MisoString -> IO ()
@@ -159,7 +149,7 @@ viewModel _ m = H.body_ []
             Backgrounds -> [ "books"   +> CB.backgroundsComponent (m ^. backgroundsModel)]
             Feats       -> [ "feats"   +> CF.featsComponent (m ^. featsModel)]
             Insults     -> [ "insults" +> CI.insultsComponent (m ^. insults)]
-            Poisons     -> [ "poisons" +> CP.poisonsComponent (m ^. poisons) (m ^. poisonsFilter)]
+            Poisons     -> [ "poisons" +> CP.poisonsComponent (m ^. poisons)]
             Spells      -> [ "spells"  +> CS.spellsComponent (m ^. spellsModel)]
           )
         ]
