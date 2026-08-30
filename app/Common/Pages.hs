@@ -16,6 +16,7 @@ data Page
   | Backgrounds
   | Feats
   | Insults
+  | MagicItems
   | Poisons
   | Spells
   deriving stock (Show, Eq, Enum, Bounded, Generic, Read)
@@ -46,6 +47,7 @@ pageImage Home = H.img_ [ P.src_ "assets/home-icon.png", P.width_ "25", P.height
 pageImage Backgrounds = H.img_ [ P.src_ "assets/backgrounds-icon.png", P.width_ "25", P.height_ "60"]
 pageImage Feats = H.img_ [ P.src_ "assets/feat-icon.png", P.width_ "25", P.height_ "60"]
 pageImage Insults = H.img_ [ P.src_ "assets/insult-icon.png", P.width_ "25", P.height_ "60"]
+pageImage MagicItems = H.img_ [ P.src_ "assets/magic-items.png", P.width_ "25", P.height_ "60"]
 pageImage Poisons = H.img_ [ P.src_ "assets/poison-icon.png", P.width_ "25", P.height_ "60"]
 pageImage Spells = H.img_ [ P.src_ "assets/spells-icon.png", P.width_ "25", P.height_ "60"]
 
@@ -54,6 +56,7 @@ pageDescription Home        = Nothing
 pageDescription Backgrounds = Just "The Backgrounds page allows you to see and read all the available backgrounds for characters."
 pageDescription Feats       = Just "The Feats page allows you to see all the Feats available for characters."
 pageDescription Insults     = Just "The Insults page randomly generates insults (great for Vicious Mockery)."
+pageDescription MagicItems  = Just "The Magic Items page lists magic items in the game."
 pageDescription Poisons     = Just "The Poisons page lists known poisons and their effects."
 pageDescription Spells      = Just "The Spells page allows you to see and read all the available spells."
 
@@ -74,6 +77,10 @@ pageAttribution Insults     = Just $ Attribution { imageTitle = "Obscene gesture
                                                  , imageUri = "https://icons8.com/icons/set/insult"
                                                  , authorName = "Icons 8"
                                                  , authorUri = "https://icons8.com/" }
+pageAttribution MagicItems  = Just $ Attribution { imageTitle = "Magic ball"
+                                                 , imageUri = "https://icon-icons.com/"
+                                                 , authorName = "Vincent Le Moign"
+                                                 , authorUri = "https://icon-icons.com/authors/514-vincent-le-moign" }
 pageAttribution Poisons     = Just $ Attribution { imageTitle = "Toxic skull danger poison Icon"
                                                  , imageUri = "https://icon-icons.com/"
                                                  , authorName = "Satawat Anukul"

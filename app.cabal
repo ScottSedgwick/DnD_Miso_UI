@@ -29,6 +29,7 @@ common options
                       , DerivingStrategies
                       , InstanceSigs
                       , LambdaCase
+                      , MultilineStrings
                       , OverloadedStrings
 
 executable app
@@ -50,6 +51,8 @@ executable app
                   , Components.Home
                   , Components.Insults
                   , Components.Main
+                  , Components.MagicItems
+                  , Components.MagicItems.Model
                   , Components.Poisons
                   , Components.Poisons.Model
                   , Components.Spells
