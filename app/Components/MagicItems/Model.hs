@@ -12,6 +12,7 @@ data Rarity = RarityCommon
             | RarityVeryRare
             | RarityLegendary
             | RarityArtifact
+            | RarityUnique
             | RarityUnknown MisoString
             deriving (Show, Eq)
 instance FromJSON Rarity where
@@ -22,6 +23,7 @@ instance FromJSON Rarity where
   parseJSON (String "veryrare")  = pure RarityVeryRare
   parseJSON (String "legendary") = pure RarityLegendary
   parseJSON (String "artifact")  = pure RarityArtifact
+  parseJSON (String "unique")    = pure RarityUnique
   parseJSON (String s)           = pure $ RarityUnknown s
   parseJSON x                    = error $ "What is this?" <> show x
 instance ToJSON Rarity where
@@ -31,6 +33,7 @@ instance ToJSON Rarity where
   toJSON RarityVeryRare = (String "veryrare")
   toJSON RarityLegendary = (String "legendary")
   toJSON RarityArtifact = (String "artifact")
+  toJSON RarityUnique = (String "unique")
   toJSON (RarityUnknown s) = (String s)
 
 data ItemType = ItemTypeArmour (Maybe MisoString)
@@ -98,13 +101,17 @@ instance ToJSON Attunement where
   toJSON (Attune (Just s)) = object [ "attune" J..= True, "detail" J..= s ]
 
 data SourceBook
-  = SourceBaldursGateDescentIntoAvernus
+  = SourceAcquisitionsIncorporated
+  | SourceBaldursGateDescentIntoAvernus
   | SourceBigbyPresentsGloryOfTheGiants
   | SourceBookOfManyThings
   | SourceCandlekeepMysteries
   | SourceCriticalRoleCallOfNetherdeep
   | SourceCurseOfStrahd
+  | SourceDivineContention
   | SourceDMG
+  | SourceDragonlanceShadowOfTheDragonQueen
+  | SourceDungeonsAndDragonsHonorAmongThieves
   | SourceEberronRisingFromTheLastWar
   | SourceExplorersGuideToWildemount
   | SourceFizbansTreasuryOfDragons
@@ -112,7 +119,11 @@ data SourceBook
   | SourceGuildmastersGuideToRavnica
   | SourceIcewindDaleRimeOfTheFrostmaiden
   | SourceInfernalMachineRebuild
+  | SourceJourneysThroughTheRadiantCitadel
+  | SourceKeysFromTheGoldenVault
   | SourceLostLaboratoryOfKwalish
+  | SourceLostMineOfPhandelver
+  | SourceMonstrousCompendium2
   | SourceMythicOdysseysOfTheros
   | SourceOutOfTheAbyss
   | SourcePhandelverAndBelowTheShatteredObelisk
@@ -125,10 +136,12 @@ data SourceBook
   | SourceStrixhavenCurriculumOfChaos
   | SourceTalesFromTheYawningPortal
   | SourceTashasCauldronOfEverything
+  | SourceTheRiseOfTiamat
   | SourceTheWildBeyondTheWitchlight
   | SourceTombOfAnnihilation
   | SourceTyrannyOfDragons
   | SourceVanRichtensGuideToRavenloft
+  | SourceVecnaEyeOfRuin
   | SourceVolosGuideToMonsters
   | SourceWaterdeepDragonHeist
   | SourceWaterdeepDungeonOfTheMadMage
@@ -138,13 +151,17 @@ data SourceBook
   deriving (Show, Eq)
 instance FromJSON SourceBook where
   parseJSON :: Value -> Parser SourceBook
+  parseJSON (String "AcquisitionsIncorporated") = pure $ SourceAcquisitionsIncorporated
   parseJSON (String "BaldursGateDescentIntoAvernus") = pure $ SourceBaldursGateDescentIntoAvernus
   parseJSON (String "BigbyPresentsGloryOfTheGiants") = pure $ SourceBigbyPresentsGloryOfTheGiants
   parseJSON (String "BookOfManyThings") = pure $ SourceBookOfManyThings
   parseJSON (String "CandlekeepMysteries") = pure $ SourceCandlekeepMysteries
   parseJSON (String "CriticalRoleCallOfNetherdeep") = pure $ SourceCriticalRoleCallOfNetherdeep
   parseJSON (String "CurseOfStrahd") = pure $ SourceCurseOfStrahd
+  parseJSON (String "DivineContention") = pure $ SourceDivineContention
   parseJSON (String "DMG") = pure $ SourceDMG
+  parseJSON (String "DragonlanceShadowOfTheDragonQueen") = pure SourceDragonlanceShadowOfTheDragonQueen
+  parseJSON (String "DungeonsAndDragonsHonorAmongThieves") = pure SourceDungeonsAndDragonsHonorAmongThieves
   parseJSON (String "EberronRisingFromTheLastWar") = pure $ SourceEberronRisingFromTheLastWar
   parseJSON (String "ExplorersGuideToWildemount") = pure $ SourceExplorersGuideToWildemount
   parseJSON (String "FizbansTreasuryOfDragons") = pure $ SourceFizbansTreasuryOfDragons
@@ -152,7 +169,11 @@ instance FromJSON SourceBook where
   parseJSON (String "GuildmastersGuideToRavnica") = pure $ SourceGuildmastersGuideToRavnica
   parseJSON (String "IcewindDaleRimeOfTheFrostmaiden") = pure $ SourceIcewindDaleRimeOfTheFrostmaiden
   parseJSON (String "InfernalMachineRebuild") = pure $ SourceInfernalMachineRebuild
+  parseJSON (String "JourneysThroughTheRadiantCitadel") = pure $ SourceJourneysThroughTheRadiantCitadel
+  parseJSON (String "KeysFromTheGoldenVault") = pure $ SourceKeysFromTheGoldenVault
   parseJSON (String "LostLaboratoryOfKwalish") = pure $ SourceLostLaboratoryOfKwalish
+  parseJSON (String "LostMineOfPhandelver") = pure $ SourceLostMineOfPhandelver
+  parseJSON (String "MonstrousCompendium2") = pure $ SourceMonstrousCompendium2
   parseJSON (String "MythicOdysseysOfTheros") = pure $ SourceMythicOdysseysOfTheros
   parseJSON (String "OutOfTheAbyss") = pure $ SourceOutOfTheAbyss
   parseJSON (String "PhandelverAndBelowTheShatteredObelisk") = pure $ SourcePhandelverAndBelowTheShatteredObelisk
@@ -165,10 +186,12 @@ instance FromJSON SourceBook where
   parseJSON (String "StrixhavenCurriculumOfChaos") = pure $ SourceStrixhavenCurriculumOfChaos
   parseJSON (String "TalesFromTheYawningPortal") = pure $ SourceTalesFromTheYawningPortal
   parseJSON (String "TashasCauldronOfEverything") = pure $ SourceTashasCauldronOfEverything
+  parseJSON (String "TheRiseOfTiamat") = pure $ SourceTheRiseOfTiamat
   parseJSON (String "TheWildBeyondTheWitchlight") = pure $ SourceTheWildBeyondTheWitchlight
   parseJSON (String "TombOfAnnihilation") = pure $ SourceTombOfAnnihilation
   parseJSON (String "TyrannyOfDragons") = pure $ SourceTyrannyOfDragons
   parseJSON (String "VanRichtensGuideToRavenloft") = pure $ SourceVanRichtensGuideToRavenloft
+  parseJSON (String "VecnaEyeOfRuin") = pure $ SourceVecnaEyeOfRuin
   parseJSON (String "VolosGuideToMonsters") = pure $ SourceVolosGuideToMonsters
   parseJSON (String "WaterdeepDragonHeist") = pure $ SourceWaterdeepDragonHeist
   parseJSON (String "WaterdeepDungeonOfTheMadMage") = pure $ SourceWaterdeepDungeonOfTheMadMage
@@ -177,13 +200,17 @@ instance FromJSON SourceBook where
   parseJSON (String s) = pure $ SourceUnknown s
   parseJSON x = error $ "What kind of source book is that?" <> show x
 instance ToJSON SourceBook where
+  toJSON SourceAcquisitionsIncorporated = (String "AcquisitionsIncorporated")
   toJSON SourceBaldursGateDescentIntoAvernus = (String "BaldursGateDescentIntoAvernus")
   toJSON SourceBigbyPresentsGloryOfTheGiants = (String "BigbyPresentsGloryOfTheGiants")
   toJSON SourceBookOfManyThings = (String "BookOfManyThings")
   toJSON SourceCandlekeepMysteries = (String "CandlekeepMysteries")
   toJSON SourceCriticalRoleCallOfNetherdeep = (String "CriticalRoleCallOfNetherdeep")
   toJSON SourceCurseOfStrahd = (String "CurseOfStrahd")
+  toJSON SourceDivineContention = (String "DivineContention")
   toJSON SourceDMG = (String "DMG")
+  toJSON SourceDragonlanceShadowOfTheDragonQueen = (String "DragonlanceShadowOfTheDragonQueen")
+  toJSON SourceDungeonsAndDragonsHonorAmongThieves = (String "DungeonsAndDragonsHonorAmongThieves")
   toJSON SourceEberronRisingFromTheLastWar = (String "EberronRisingFromTheLastWar")
   toJSON SourceExplorersGuideToWildemount = (String "ExplorersGuideToWildemount")
   toJSON SourceFizbansTreasuryOfDragons = (String "FizbansTreasuryOfDragons")
@@ -191,7 +218,11 @@ instance ToJSON SourceBook where
   toJSON SourceGuildmastersGuideToRavnica = (String "GuildmastersGuideToRavnica")
   toJSON SourceIcewindDaleRimeOfTheFrostmaiden = (String "IcewindDaleRimeOfTheFrostmaiden")
   toJSON SourceInfernalMachineRebuild = (String "InfernalMachineRebuild")
+  toJSON SourceJourneysThroughTheRadiantCitadel = (String "JourneysThroughTheRadiantCitadel")
+  toJSON SourceKeysFromTheGoldenVault = (String "KeysFromTheGoldenVault")
   toJSON SourceLostLaboratoryOfKwalish = (String "LostLaboratoryOfKwalish")
+  toJSON SourceLostMineOfPhandelver = (String "LostMineOfPhandelver")
+  toJSON SourceMonstrousCompendium2 = (String "MonstrousCompendium2")
   toJSON SourceMythicOdysseysOfTheros = (String "MythicOdysseysOfTheros")
   toJSON SourceOutOfTheAbyss = (String "OutOfTheAbyss")
   toJSON SourcePhandelverAndBelowTheShatteredObelisk = (String "PhandelverAndBelowTheShatteredObelisk")
@@ -204,10 +235,12 @@ instance ToJSON SourceBook where
   toJSON SourceStrixhavenCurriculumOfChaos = (String "StrixhavenCurriculumOfChaos")
   toJSON SourceTalesFromTheYawningPortal = (String "TalesFromTheYawningPortal")
   toJSON SourceTashasCauldronOfEverything = (String "TashasCauldronOfEverything")
+  toJSON SourceTheRiseOfTiamat = (String "TheRiseOfTiamat")
   toJSON SourceTheWildBeyondTheWitchlight = (String "TheWildBeyondTheWitchlight")
   toJSON SourceTombOfAnnihilation = (String "TombOfAnnihilation")
   toJSON SourceTyrannyOfDragons = (String "TyrannyOfDragons")
   toJSON SourceVanRichtensGuideToRavenloft = (String "VanRichtensGuideToRavenloft")
+  toJSON SourceVecnaEyeOfRuin = (String "VecnaEyeOfRuin")
   toJSON SourceVolosGuideToMonsters = (String "VolosGuideToMonsters")
   toJSON SourceWaterdeepDragonHeist = (String "WaterdeepDragonHeist")
   toJSON SourceWaterdeepDungeonOfTheMadMage = (String "WaterdeepDungeonOfTheMadMage")
