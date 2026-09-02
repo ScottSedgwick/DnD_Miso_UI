@@ -25859,7 +25859,7 @@
           }
         ]
       },
-      { "b": "The Deck of Many More Things" },
+      { "p": [ { "b": "The Deck of Many More Things" } ] },
       {
         "tb": [
           [[{ "t": "d100" }], [{ "t": "Card" }]],
@@ -28870,7 +28870,7 @@
     "url": "https://dnd5e.wikidot.com//wondrous-items:infiltrators-key",
     "rarity": ["legendary"],
     "itemtype": { "type": "item" },
-    "attun}ement": { "attune": true },
+    "attunement": { "attune": true },
     "source": ["ExplorersGuideToWildemount"],
     "description": [
       { "p": [{ "i": "Wondrous item, legendary (requires attunement)" }] },
@@ -30929,7 +30929,7 @@
               "t": "You can cast the following spells from the ring, expending the necessary number of charges: "
             },
             {
-              "a}": "http://dnd5e.wikidot.com/spell:stone-shape",
+              "a": "http://dnd5e.wikidot.com/spell:stone-shape",
               "c": "Stone Shape"
             },
             { "t": " (2 charges), " },
@@ -30942,7 +30942,7 @@
               "a": "http://dnd5e.wikidot.com/spell:wall-of-stone",
               "c": "Wall of Stone"
             },
-            { "t": " (3 charge." }
+            { "t": " (3 charges)." }
           ]
         ]
       },
@@ -32615,7 +32615,7 @@
     "url": "https://dnd5e.wikidot.com//wondrous-items:talisman-of-pure-good",
     "rarity": ["legendary"],
     "itemtype": { "type": "item" },
-    "attunement}": { "attune": true, "detail": "creature of good alignment" },
+    "attunement": { "attune": true, "detail": "creature of good alignment" },
     "source": ["DMG"],
     "description": [
       {
@@ -34283,7 +34283,7 @@
     "title": "Baba Yaga's Mortar and Pestle",
     "url": "https://dnd5e.wikidot.com//wondrous-items:baba-yagas-mortar-and-pestle",
     "rarity": ["artifact"],
-    "itetype": { "type": "item" },
+    "itemtype": { "type": "item" },
     "attunement": { "attune": true },
     "source": ["TashasCauldronOfEverything"],
     "description": [
@@ -34395,7 +34395,7 @@
     "url": "https://dnd5e.wikidot.com//wondrous-items:bigbys-beneficent-bracelet",
     "rarity": ["artifact"],
     "itemtype": { "type": "item" },
-    "attune{ment": { "attune": true },
+    "attunement": { "attune": true },
     "source": ["BigbyPresentsGloryOfTheGiants"],
     "description": [
       { "p": [{ "i": "Wondrous Item, Artifact (Requires Attunement)" }] },
@@ -34479,7 +34479,7 @@
     "title": "Blade of Avernus",
     "url": "https://dnd5e.wikidot.com//wondrous-items:blade-of-avernus",
     "rarity": ["artifact"],
-    "itemtype}": { "type": "weapon", "detail": "longsword" },
+    "itemtype": { "type": "weapon", "detail": "longsword" },
     "attunement": { "attune": true },
     "source": ["BaldursGateDescentIntoAvernus"],
     "description": [
@@ -34546,7 +34546,7 @@
     "title": "Blade of Broken Mirrors",
     "url": "https://dnd5e.wikidot.com//wondrous-items:blade-of-broken-mirrors",
     "rarity": ["artifact"],
-    "itetype": { "type": "weapon", "detail": "dagger" },
+    "itemtype": { "type": "weapon", "detail": "dagger" },
     "attunement": { "attune": true, "detail": "humanoid" },
     "source": ["ExplorersGuideToWildemount"],
     "description": [
@@ -34584,7 +34584,7 @@
       {
         "p": [
           { "b": "Personality." },
-          { "t}": " An insane glabrezu named Ragazuu lives within the " },
+          { "t": " An insane glabrezu named Ragazuu lives within the " },
           { "i": "Blade of Broken Mirrors" },
           {
             "t": ". The weapon yearns to cause chaos. It learns its wielder's principles, then uses those ideals to encourage reckless action. The dagger whispers ideas of revolution."
@@ -34612,17 +34612,13 @@
             { "i": "Blade of Broken Mirrors" },
             {
               "t": ", the blade remembers the creature's appearance. While holding the dagger, you can use an action to change your form to match any humanoid the blade remembers. Your statistics, other than your size, don't change. Any equipment you are wearing or carrying isn't transformed. You can revert to your true appearance as an action. You revert to your true appearance automatically when you die."
-            },
+            }
+          ],
+          [
+            { "t": "When the " },
+            { "i": "Blade of Broken Mirrors" },
             {
-              "ul": [
-                [
-                  { "t": "When the " },
-                  { "i": "Blade of Broken Mirrors" },
-                  {
-                    "t": " attunes to a new wielder, the appearances of humanoids it has killed are wiped from its memory."
-                  }
-                ]
-              ]
+              "t": " attunes to a new wielder, the appearances of humanoids it has killed are wiped from its memory."
             }
           ]
         ]
@@ -34787,7 +34783,7 @@
         "p": [
           { "b": "Halo." },
           {
-            "": " Once you've read and studied the book, you gain a protective halo. This halo sheds bright light in a 10-foot radius and dim light for an additional 10 feet. You can dismiss or manifest the halo as a bonus action. While present, the halo gives you advantage on Charisma (Persuasion) checks made to interact with good creatures and Charisma (Intimidation) checks made to interact with evil creatures. In addition, fiends and undead within the halo's bright light me attack rolls against you with disadvantage."
+            "t": " Once you've read and studied the book, you gain a protective halo. This halo sheds bright light in a 10-foot radius and dim light for an additional 10 feet. You can dismiss or manifest the halo as a bonus action. While present, the halo gives you advantage on Charisma (Persuasion) checks made to interact with good creatures and Charisma (Intimidation) checks made to interact with evil creatures. In addition, fiends and undead within the halo's bright light me attack rolls against you with disadvantage."
           }
         ]
       },
@@ -34920,7 +34916,7 @@
           { "t": " You can reference the " },
           { "i": "Book of Vile Darkness" },
           {
-            "t{": " whenever you make an Intelligence check to recall information about some aspect of evil, such as lore about demons. When you do so, double your proficiency bonus on that check."
+            "t": " whenever you make an Intelligence check to recall information about some aspect of evil, such as lore about demons. When you do so, double your proficiency bonus on that check."
           }
         ]
       },
@@ -35380,7 +35376,7 @@
       {
         "p": [
           {
-            "t": "This artifact destroys wealth to provide light and protection. Wrought from the finest yellow gold, the lantern has four faces, and an unwavering amber flame burns within it. The faces of the lantern are fitted with faceted } gemstone lenses."
+            "t": "This artifact destroys wealth to provide light and protection. Wrought from the finest yellow gold, the lantern has four faces, and an unwavering amber flame burns within it. The faces of the lantern are fitted with faceted gemstone lenses."
           }
         ]
       },
@@ -35408,10 +35404,10 @@
         "p": [
           { "b": "Precious Fuel." },
           {
-            "t": " The lantern burns only one source of fuel: powdered gemstones placed in the lantern's base. The lantern can hold a maximum of 10,000 gp worth of powdered gems, and it contains 9,000 gp of fuel when found. Thereafter it attempts to burn 100 gp of fuel after each year passes, keeping the lantern burning for another year. If no fuel is available, the lantern's flame goes out. You can add more fuel to the lantern as part of a short or long rest. Once added, fuel can't be removed from the lantern' se."
+            "t": " The lantern burns only one source of fuel: powdered gemstones placed in the lantern's base. The lantern can hold a maximum of 10,000 gp worth of powdered gems, and it contains 9,000 gp of fuel when found. Thereafter it attempts to burn 100 gp of fuel after each year passes, keeping the lantern burning for another year. If no fuel is available, the lantern's flame goes out. You can add more fuel to the lantern as part of a short or long rest. Once added, fuel can't be removed from the lantern."
           },
           {
-            "t,": "\nThe lantern's flame can't be extinguished by any means other than running out of fuel. If the lantern's flame goes out, the creature attuned to it immediately dies. One exception to this rule exists (see the \"Destroying the Lantern\" section)."
+            "t": "The lantern's flame can't be extinguished by any means other than running out of fuel. If the lantern's flame goes out, the creature attuned to it immediately dies. One exception to this rule exists (see the 'Destroying the Lantern' section)."
           }
         ]
       },
@@ -35437,7 +35433,7 @@
           }
         ]
       },
-      { "t": "\nLenses" },
+      {"p":[{ "t": "Lenses" }]},
       {
         "tb": [
           [[{ "t": "Lens Color" }], [{ "t": "Spell" }], [{ "t": "Fuel Cost" }]],
@@ -35600,6 +35596,7 @@
     "rarity": ["artifact"],
     "itemtype": { "type": "item" },
     "attunement": { "attune": true, "source": ["TashasCauldronOfEverything"] },
+    "source": ["TashasCauldronOfEverything"],
     "description": [
       { "p": [{ "i": "Wondrous item, artifact (requires attunement)" }] },
       {
@@ -35889,7 +35886,7 @@
   },
   {
     "title": "Eye and Hand of Vecna",
-    "u{rl": "https://dnd5e.wikidot.com//wondrous-items:eye-and-hand-of-vecna",
+    "url": "https://dnd5e.wikidot.com//wondrous-items:eye-and-hand-of-vecna",
     "rarity": ["artifact"],
     "itemtype": { "type": "item" },
     "attunement": { "attune": true },
@@ -36344,7 +36341,7 @@
     "rarity": ["artifact"],
     "itemtype": { "type": "item" },
     "attunement": { "attune": true, "detail": "spellcaster" },
-    "soce": ["TheWildBeyondTheWitchlight"],
+    "source": ["TheWildBeyondTheWitchlight"],
     "description": [
       {
         "p": [
@@ -36806,7 +36803,7 @@
     "url": "https://dnd5e.wikidot.com//wondrous-items:lubas-tarokka-of-souls",
     "rarity": ["artifact"],
     "itemtype": { "type": "item" },
-    "attunement": { "attune}": true },
+    "attunement": { "attune": true },
     "source": ["TashasCauldronOfEverything"],
     "description": [
       { "p": [{ "i": "Wondrous item, artifact (requires attunement)" }] },
@@ -37760,7 +37757,7 @@
         "p": [
           { "b": "Master of Travel." },
           {
-            "{t": " While all six components of the Orrery of the Wanderer are installed, the artifact has 7 charges. While touching the orrery, you can use an action and expend 1 or more charges to cast one of the following spells (save DC 17): "
+            "t": " While all six components of the Orrery of the Wanderer are installed, the artifact has 7 charges. While touching the orrery, you can use an action and expend 1 or more charges to cast one of the following spells (save DC 17): "
           },
           {
             "a": "http://dnd5e.wikidot.com/spell:contact-other-plane",
@@ -38044,7 +38041,7 @@
       {
         "p": [
           {
-            "  t": "A piece of the rod may be temporarily destroyed in this way, but each piece re-forms one year after it has succumbed. A re-formed piece teleports to a random place in the multiverse"
+            "t": "A piece of the rod may be temporarily destroyed in this way, but each piece re-forms one year after it has succumbed. A re-formed piece teleports to a random place in the multiverse"
           }
         ]
       }
@@ -38211,7 +38208,7 @@
     "title": "Silken Spite",
     "url": "https://dnd5e.wikidot.com//wondrous-items:silken-spite",
     "rarity": ["artifact"],
-    "itetype": { "type": "weapon", "detail": "rapier" },
+    "itemtype": { "type": "weapon", "detail": "rapier" },
     "attunement": { "attune": true },
     "source": ["ExplorersGuideToWildemount"],
     "description": [
@@ -38361,7 +38358,7 @@
     ]
   },
   {
-    "t}itle": "Staff of the Forgotten One",
+    "title": "Staff of the Forgotten One",
     "url": "https://dnd5e.wikidot.com//wondrous-items:staff-of-the-forgotten-one",
     "rarity": ["artifact"],
     "itemtype": { "type": "staff" },
@@ -38479,7 +38476,7 @@
     "url": "https://dnd5e.wikidot.com//wondrous-items:stone-of-golorr",
     "rarity": ["artifact"],
     "itemtype": { "type": "item" },
-    "attunement": { "attune}": true },
+    "attunement": { "attune": true },
     "source": ["WaterdeepDragonHeist"],
     "description": [
       { "p": [{ "i": "Wondrous item, artifact (requires attunement)" }] },
@@ -38493,10 +38490,10 @@
         ]
       },
       {
-        "p  ": [
+        "p": [
           { "b": "Random Properties." },
           { "t": " The " },
-          { "i,": "Stone of Golorr" },
+          { "i": "Stone of Golorr" },
           {
             "t": " has the following properties, determined by rolling on the tables in the \"Artifacts\" section in chapter 7 of the "
           },
@@ -38750,7 +38747,7 @@
           { "b": "Destroying the Sword." },
           { "t": " A creature attuned to both the " },
           {
-            "a}": "http://dnd5e.wikidot.com/wondrous-items:eye-and-hand-of-vecna",
+            "a": "http://dnd5e.wikidot.com/wondrous-items:eye-and-hand-of-vecna",
             "c": "Eye of Vecna"
           },
           { "t": " and the " },
@@ -39687,13 +39684,13 @@
         "p": [
           { "b": "Wish." },
           { "t": " The " },
-          { "i,": "Infernal Machine" },
+          { "i": "Infernal Machine" },
           {
             "t": " has the ability to bend the nature of reality, with the proper combination of controls recreating the effect of a "
           },
           { "a": "http://dnd5e.wikidot.com/spell:wish", "c": "Wish" },
           {
-            "}t": " spell (including all side effects). Due to the complex nature of its programming, this feature can be used only once per month."
+            "t": " spell (including all side effects). Due to the complex nature of its programming, this feature can be used only once per month."
           },
           {
             "t": "\nEach time this effect is used, there is a cumulative 10 percent chance of the "
@@ -41394,18 +41391,18 @@
     "itemtype": { "type": "item" },
     "attunement": { "attune": false },
     "source": ["TheRiseOfTiamat"],
-    "descripion": [
+    "description": [
       { "p": [{ "i": "Wondrous item, unique" }] },
       {
         "p": [
-          { "t  ": "The " },
+          { "t": "The " },
           { "i": "Draakhorn" },
           {
             "t": " was a gift from Tiamat in the war between dragons and giants. It was once the horn of her ancient red dragon consort, Ephelomon, that she gave to dragonkind to help them in their war against the giants. The "
           },
           { "i": "Draakhorn" },
           {
-            "{t": " is a signaling device, and it is so large that it requires two Medium creatures (or one Large or larger) to hold it while a third creature sounds it, making the earth resonate to its call. The horn has been blasted with fire into a dark ebony hue and is wrapped in bands of bronze with draconic runes that glow with purple eldritch fire."
+            "t": " is a signaling device, and it is so large that it requires two Medium creatures (or one Large or larger) to hold it while a third creature sounds it, making the earth resonate to its call. The horn has been blasted with fire into a dark ebony hue and is wrapped in bands of bronze with draconic runes that glow with purple eldritch fire."
           }
         ]
       },
@@ -41441,7 +41438,7 @@
     "url": "https://dnd5e.wikidot.com//wondrous-items:gnomengarde-grenade",
     "rarity": ["unique"],
     "itemtype": { "type": "item" },
-    "attunment": { "attune": false },
+    "attunement": { "attune": false },
     "source": ["Wikidot"],
     "description": [
       {
@@ -41694,10 +41691,10 @@
     "url": "https://dnd5e.wikidot.com//wondrous-items:stonkys-ring",
     "rarity": ["unknown rarity"],
     "itemtype": { "type": "ring" },
-    "at}tunement": { "attune": true },
+    "attunement": { "attune": true },
     "source": ["CandlekeepMysteries"],
     "description": [
-      { "p": [{ "i": "Ring}, ??? (requires attunement)" }] },
+      { "p": [{ "i": "Ring, ??? (requires attunement)" }] },
       {
         "p": [
           { "t": "While wearing this ring, you can cast the " },
