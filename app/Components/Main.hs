@@ -1,4 +1,3 @@
-{-# LANGUAGE MultilineStrings   #-}
 module Components.Main ( app ) where
 
 import           Data.Default              ( Default, def )
@@ -24,6 +23,7 @@ import qualified Components.Backgrounds as CB
 import qualified Components.Feats as CF
 import qualified Components.Home as CH
 import qualified Components.Insults as CI
+import qualified Components.MagicItems as CM
 import qualified Components.Poisons as CP
 import qualified Components.Spells as CS
 
@@ -34,6 +34,7 @@ data Action
   | SetFeatsModel CF.FeatsModel
   | SetSpellsModel CS.SpellsModel
   | SetInsults CI.InsultsModel
+  | SetMagicItems CM.MagicItemsModel
   | SetPoisons CP.PoisonsModel
   | DisplayError MisoString MisoString
 
@@ -50,6 +51,7 @@ data Model = Model
   , _backgrounds :: CB.BackgroundsModel
   , _spellsModel :: CS.SpellsModel
   , _insults :: CI.InsultsModel
+  , _magicItems :: CM.MagicItemsModel
   , _poisons :: CP.PoisonsModel
   , _featsModel :: CF.FeatsModel
   } deriving (Show, Eq)
@@ -61,6 +63,7 @@ instance Default Model where
     , _backgrounds = def
     , _spellsModel = def
     , _insults = def
+    , _magicItems = def
     , _poisons = def
     , _featsModel = def
     }
@@ -80,6 +83,9 @@ spellsModel = lens _spellsModel $ \m x -> m { _spellsModel = x }
 insults :: Lens Model CI.InsultsModel
 insults = lens _insults $ \m x -> m { _insults = x }
 
+magicItems :: Lens Model CM.MagicItemsModel
+magicItems = lens _magicItems $ \m x -> m { _magicItems = x }
+
 poisons :: Lens Model CP.PoisonsModel
 poisons = lens _poisons $ \m x -> m { _poisons = x }
 
@@ -94,6 +100,7 @@ updateModel = \case
   SetFeatsModel x       -> featsModel .= x
   SetSpellsModel x      -> spellsModel .= x
   SetInsults x          -> insults .= x
+  SetMagicItems m       -> magicItems .= m
   SetPoisons p          -> poisons .= p
   DisplayError c e      -> err .= Just (c <> ": " <> e)
   NavigateTo p          -> uriSetter p
@@ -104,6 +111,7 @@ updateModel = \case
                         >> subscribe CS.spellsModelTopic SetSpellsModel (DisplayError "spellsModelTopic")
                         >> subscribe CI.insultsTopic SetInsults (DisplayError "insultsTopic")
                         >> subscribe CP.poisonsTopic SetPoisons (DisplayError "poisonsTopic")
+                        >> subscribe CM.magicItemsTopic SetMagicItems (DisplayError "magicItemsTopic")
   ChangeTheme theme     -> io_ $ changeTheme theme
 
 changeTheme :: MisoString -> IO ()
@@ -145,12 +153,13 @@ viewModel _ m = H.body_ []
       [ H.div_ [ P.class_ "body-middle" ]
         [ H.section_ []
           ( case m ^. page of
-            Home        -> [ "home"    +> CH.home ]
-            Backgrounds -> [ "books"   +> CB.backgroundsComponent (m ^. backgroundsModel)]
-            Feats       -> [ "feats"   +> CF.featsComponent (m ^. featsModel)]
-            Insults     -> [ "insults" +> CI.insultsComponent (m ^. insults)]
-            Poisons     -> [ "poisons" +> CP.poisonsComponent (m ^. poisons)]
-            Spells      -> [ "spells"  +> CS.spellsComponent (m ^. spellsModel)]
+            Home        -> [ "home"       +> CH.home ]
+            Backgrounds -> [ "books"      +> CB.backgroundsComponent (m ^. backgroundsModel)]
+            Feats       -> [ "feats"      +> CF.featsComponent (m ^. featsModel)]
+            Insults     -> [ "insults"    +> CI.insultsComponent (m ^. insults)]
+            MagicItems  -> [ "magicItems" +> CM.magicItemsComponent (m ^. magicItems)]
+            Poisons     -> [ "poisons"    +> CP.poisonsComponent (m ^. poisons)]
+            Spells      -> [ "spells"     +> CS.spellsComponent (m ^. spellsModel)]
           )
         ]
       ]
