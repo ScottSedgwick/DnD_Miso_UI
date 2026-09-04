@@ -1,10 +1,12 @@
 module Components.MagicItems.Model where
 
-import           Miso                ( MisoString )
-import           Miso.JSON            ( FromJSON, ToJSON, Parser, Value(..), (.:), (.:?), object, parseJSON, toJSON, withObject )
-import qualified Miso.JSON            as J
+import           Data.Default        ( Default, def )
+import           Miso                ( MisoString, fromMisoString )
+import           Miso.JSON           ( FromJSON, ToJSON, Parser, Value(..), (.:), (.:?), object, parseJSON, toJSON, withObject )
+import qualified Miso.JSON           as J
+import           Miso.Lens            (Lens, lens)
 
-import           Common.Structure     ( Structure )
+import           Common.Structure    ( Structure )
 
 data Rarity = RarityCommon
             | RarityUncommon
@@ -14,7 +16,36 @@ data Rarity = RarityCommon
             | RarityArtifact
             | RarityUnique
             | RarityUnknown MisoString
-            deriving (Show, Eq)
+            deriving (Eq, Ord)
+instance Show Rarity where
+  show RarityCommon      = "Common"
+  show RarityUncommon    = "Uncommon"
+  show RarityRare        = "Rare"
+  show RarityVeryRare    = "VeryRare"
+  show RarityLegendary   = "Legendary"
+  show RarityArtifact    = "Artifact"
+  show RarityUnique      = "Unique"
+  show (RarityUnknown _) = "Unknown"
+instance Enum Rarity where
+  fromEnum RarityCommon      = 0
+  fromEnum RarityUncommon    = 1
+  fromEnum RarityRare        = 2
+  fromEnum RarityVeryRare    = 3
+  fromEnum RarityLegendary   = 4
+  fromEnum RarityArtifact    = 5
+  fromEnum RarityUnique      = 6
+  fromEnum (RarityUnknown _) = 7
+  toEnum 0 = RarityCommon
+  toEnum 1 = RarityUncommon
+  toEnum 2 = RarityRare
+  toEnum 3 = RarityVeryRare
+  toEnum 4 = RarityLegendary
+  toEnum 5 = RarityArtifact
+  toEnum 6 = RarityUnique
+  toEnum _ = (RarityUnknown "Unknown")
+instance Bounded Rarity where
+  minBound = RarityCommon
+  maxBound = (RarityUnknown "Unknown")
 instance FromJSON Rarity where
   parseJSON :: Value -> Parser Rarity
   parseJSON (String "common")    = pure RarityCommon
@@ -46,7 +77,52 @@ data ItemType = ItemTypeArmour (Maybe MisoString)
               | ItemTypeStaff (Maybe MisoString)
               | ItemTypeWand (Maybe MisoString)
               | ItemTypeWeapon (Maybe MisoString)
-              deriving (Show, Eq)
+              deriving (Eq)
+instance Show ItemType where
+  show (ItemTypeArmour (Just s)) = "Armour (" <> fromMisoString s <> ")"
+  show (ItemTypeArmour Nothing) = "Armour"
+  show (ItemTypeItem (Just s)) = "Item (" <> fromMisoString s <> ")"
+  show (ItemTypeItem Nothing) = "Item"
+  show (ItemTypePotion (Just s)) = "Potion (" <> fromMisoString s <> ")"
+  show (ItemTypePotion Nothing) = "Potion"
+  show (ItemTypeRing (Just s)) = "Ring (" <> fromMisoString s <> ")"
+  show (ItemTypeRing Nothing) = "Ring"
+  show (ItemTypeRod (Just s)) = "Rod (" <> fromMisoString s <> ")"
+  show (ItemTypeRod Nothing) = "Rod"
+  show (ItemTypeScroll (Just s)) = "Scroll (" <> fromMisoString s <> ")"
+  show (ItemTypeScroll Nothing) = "Scroll"
+  show (ItemTypeShield (Just s)) = "Shield (" <> fromMisoString s <> ")"
+  show (ItemTypeShield Nothing) = "Shield"
+  show (ItemTypeStaff (Just s)) = "Staff (" <> fromMisoString s <> ")"
+  show (ItemTypeStaff Nothing) = "Staff"
+  show (ItemTypeWand (Just s)) = "Wand (" <> fromMisoString s <> ")"
+  show (ItemTypeWand Nothing) = "Wand"
+  show (ItemTypeWeapon (Just s)) = "Weapon (" <> fromMisoString s <> ")"
+  show (ItemTypeWeapon Nothing) = "Weapon"
+instance Enum ItemType where
+  fromEnum (ItemTypeArmour _) = 0
+  fromEnum (ItemTypeItem _)   = 1
+  fromEnum (ItemTypePotion _) = 2
+  fromEnum (ItemTypeRing _)   = 3
+  fromEnum (ItemTypeRod _)    = 4
+  fromEnum (ItemTypeScroll _) = 5
+  fromEnum (ItemTypeShield _) = 6
+  fromEnum (ItemTypeStaff _)  = 7
+  fromEnum (ItemTypeWand _)   = 8
+  fromEnum (ItemTypeWeapon _) = 9
+  toEnum 0 = ItemTypeArmour Nothing
+  toEnum 1 = ItemTypeItem Nothing
+  toEnum 2 = ItemTypePotion Nothing
+  toEnum 3 = ItemTypeRing Nothing
+  toEnum 4 = ItemTypeRod Nothing
+  toEnum 5 = ItemTypeScroll Nothing
+  toEnum 6 = ItemTypeShield Nothing
+  toEnum 7 = ItemTypeStaff Nothing
+  toEnum 8 = ItemTypeWand Nothing
+  toEnum _ = ItemTypeWeapon Nothing
+instance Bounded ItemType where
+  minBound = ItemTypeArmour Nothing
+  maxBound = ItemTypeWeapon Nothing
 instance FromJSON ItemType where
   parseJSON :: Value -> Parser ItemType
   parseJSON = withObject "ItemType" $ \o -> do
@@ -286,3 +362,84 @@ instance ToJSON MagicItem where
                     , "source" J..= (_source m)
                     , "description" J..= (_description m)
                     ]
+
+data MagicItemFilter = MagicItemFilter
+  { _flt_title :: MisoString
+  , _flt_type :: Maybe ItemType
+  , _flt_rarity :: Maybe Rarity
+  } deriving (Show, Eq)
+
+instance FromJSON MagicItemFilter where
+  parseJSON :: Value -> Parser MagicItemFilter
+  parseJSON = withObject "MagicItemFilter" $ \o -> do
+    t <- o .: "title"
+    y <- o .:? "type"
+    r <- o .:? "rarity"
+    pure $ MagicItemFilter
+      { _flt_title = t
+      , _flt_type = y
+      , _flt_rarity = r
+      }
+instance ToJSON MagicItemFilter where
+  toJSON m = do
+    case (_flt_type m) of
+      Nothing -> case (_flt_rarity m) of
+                  Nothing -> object [ "title" J..= (_flt_title m) ]
+                  Just r  -> object [ "title" J..= (_flt_title m), "rarity" J..= r ]
+      Just y  -> case (_flt_rarity m) of
+                  Nothing -> object [ "title" J..= (_flt_title m), "type" J..= y ]
+                  Just r  -> object [ "title" J..= (_flt_title m), "type" J..= y, "rarity" J..= r ]
+instance Default MagicItemFilter where
+  def = MagicItemFilter
+        { _flt_title = ""
+        , _flt_type = Nothing
+        , _flt_rarity = Nothing
+        }
+
+flt_title :: Lens MagicItemFilter MisoString
+flt_title = lens _flt_title $ \m x -> m { _flt_title = x }
+
+flt_type :: Lens MagicItemFilter (Maybe ItemType)
+flt_type = lens _flt_type $ \m x -> m { _flt_type = x }
+
+flt_rarity :: Lens MagicItemFilter (Maybe Rarity)
+flt_rarity = lens _flt_rarity $ \m x -> m { _flt_rarity = x }
+
+data MagicItemsModel = MagicItemsModel
+  { _magicItems :: Either MisoString [MagicItem]
+  , _itemFilter :: MagicItemFilter
+  } deriving (Show, Eq)
+instance FromJSON MagicItemsModel where
+  parseJSON =
+    withObject "MagicItemsModel" $ \o -> do
+      mi <- o .:? "magicItems"
+      f <- o .: "filter"
+      case mi of
+        Just x -> pure $ MagicItemsModel { _magicItems = Right x, _itemFilter = f }
+        Nothing -> do
+          be <- o .:? "magicItemsError"
+          case be of
+            Just e -> pure $ MagicItemsModel { _magicItems = Left e, _itemFilter = f }
+            Nothing -> pure $ MagicItemsModel { _magicItems = Right [], _itemFilter = f }
+instance ToJSON MagicItemsModel where
+  toJSON b =
+    case (_magicItems b) of
+      Right bs -> object [ "filter" J..= (_itemFilter b)
+                          , "magicItems" J..= bs
+                          ]
+      Left e -> object [ "filter" J..= (_itemFilter b)
+                        , "magicItemsError" J..= e
+                        ]
+
+instance Default MagicItemsModel where
+  def :: MagicItemsModel
+  def = MagicItemsModel
+      { _magicItems = Right []
+      , _itemFilter = def
+      }
+
+magicItems :: Lens MagicItemsModel (Either MisoString [MagicItem])
+magicItems = lens _magicItems $ \m x -> m { _magicItems = x }
+
+itemFilter :: Lens MagicItemsModel MagicItemFilter
+itemFilter = lens _itemFilter $ \m x -> m { _itemFilter = x }
