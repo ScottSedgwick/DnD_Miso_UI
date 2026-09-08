@@ -14,6 +14,7 @@ import           Common.Attribution
 data Page
   = Home
   | Backgrounds
+  | Conditions
   | Feats
   | Insults
   | MagicItems
@@ -45,6 +46,7 @@ allPages = [minBound .. maxBound]
 pageImage :: Page -> View model action
 pageImage Home = H.img_ [ P.src_ "assets/home-icon.png", P.width_ "25", P.height_ "60"]
 pageImage Backgrounds = H.img_ [ P.src_ "assets/backgrounds-icon.png", P.width_ "25", P.height_ "60"]
+pageImage Conditions = H.img_ [ P.src_ "assets/conditions-icon.png", P.width_ "25", P.height_ "60"]
 pageImage Feats = H.img_ [ P.src_ "assets/feat-icon.png", P.width_ "25", P.height_ "60"]
 pageImage Insults = H.img_ [ P.src_ "assets/insult-icon.png", P.width_ "25", P.height_ "60"]
 pageImage MagicItems = H.img_ [ P.src_ "assets/magic-items.png", P.width_ "25", P.height_ "60"]
@@ -54,6 +56,7 @@ pageImage Spells = H.img_ [ P.src_ "assets/spells-icon.png", P.width_ "25", P.he
 pageDescription :: Page -> Maybe MisoString
 pageDescription Home        = Nothing
 pageDescription Backgrounds = Just "The Backgrounds page allows you to see and read all the available backgrounds for characters."
+pageDescription Conditions  = Just "The Conditions page shows you all the conditions that can apply to characters."
 pageDescription Feats       = Just "The Feats page allows you to see all the Feats available for characters."
 pageDescription Insults     = Just "The Insults page randomly generates insults (great for Vicious Mockery)."
 pageDescription MagicItems  = Just "The Magic Items page lists magic items in the game."
@@ -69,6 +72,10 @@ pageAttribution Backgrounds = Just $ Attribution { imageTitle = "Teddy bear Icon
                                                  , imageUri = "https://icon-icons.com/"
                                                  , authorName = "Stefania Servidio"
                                                  , authorUri = "https://icon-icons.com/authors/265-stefania-servidio" }
+pageAttribution Conditions  = Just $ Attribution { imageTitle = "Heartbeat heart rate heart medical Icon"
+                                                 , imageUri = "https://icon-icons.com/"
+                                                 , authorName = "uiconstock"
+                                                 , authorUri = "https://icon-icons.com/authors/6-uiconstock" }
 pageAttribution Feats       = Just $ Attribution { imageTitle = "Champion army reward achievement Icon"
                                                  , imageUri = "https://icon-icons.com/"
                                                  , authorName = "Muhamad Taupik"

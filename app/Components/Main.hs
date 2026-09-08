@@ -20,6 +20,7 @@ import           Common.Metadata
 import           Common.Pages ( Page(..), allPages, pageImage )
 import           Common.SvgImages
 import qualified Components.Backgrounds as CB
+import qualified Components.Conditions as CC
 import qualified Components.Feats as CF
 import qualified Components.Home as CH
 import qualified Components.Insults as CI
@@ -31,6 +32,7 @@ import qualified Components.Spells as CS
 data Action
   = SetPage Page
   | SetBackgrounds CB.BackgroundsModel
+  | SetConditions CC.ConditionsModel
   | SetFeatsModel CF.FeatsModel
   | SetSpellsModel CS.SpellsModel
   | SetInsults CI.InsultsModel
@@ -54,6 +56,7 @@ data Model = Model
   , _magicItems :: CM.MagicItemsModel
   , _poisons :: CP.PoisonsModel
   , _featsModel :: CF.FeatsModel
+  , _conditionsModel :: CC.ConditionsModel
   } deriving (Show, Eq)
 
 instance Default Model where
@@ -66,6 +69,7 @@ instance Default Model where
     , _magicItems = def
     , _poisons = def
     , _featsModel = def
+    , _conditionsModel = def
     }
 
 page :: Lens Model Page
@@ -92,11 +96,15 @@ poisons = lens _poisons $ \m x -> m { _poisons = x }
 featsModel :: Lens Model CF.FeatsModel
 featsModel = lens _featsModel $ \m x -> m { _featsModel = x }
 
+conditionsModel :: Lens Model CC.ConditionsModel
+conditionsModel = lens _conditionsModel $ \m x -> m { _conditionsModel = x }
+
 -----------------------------------------------------------------------------
 updateModel :: Action -> Effect parent props Model Action
 updateModel = \case
   SetPage p             -> page .= p
   SetBackgrounds x      -> backgroundsModel .= x
+  SetConditions x       -> conditionsModel .= x
   SetFeatsModel x       -> featsModel .= x
   SetSpellsModel x      -> spellsModel .= x
   SetInsults x          -> insults .= x
@@ -107,6 +115,7 @@ updateModel = \case
   ToggleDarkMode        -> io_ $ newEvent ("basecoat:theme" :: MisoString) >>= dispatchEvent
   ToggleSidebar         -> io_ $ newEvent ("basecoat:sidebar" :: MisoString) >>= dispatchEvent
   Subscribe             -> subscribe CB.backgroundsModelTopic SetBackgrounds (DisplayError "backgroundsModelTopic")
+                        >> subscribe CC.conditionsTopic SetConditions (DisplayError "conditionsTopic")
                         >> subscribe CF.subtopic SetFeatsModel (DisplayError "featsModelTopic")
                         >> subscribe CS.spellsModelTopic SetSpellsModel (DisplayError "spellsModelTopic")
                         >> subscribe CI.insultsTopic SetInsults (DisplayError "insultsTopic")
@@ -155,6 +164,7 @@ viewModel _ m = H.body_ []
           ( case m ^. page of
             Home        -> [ "home"       +> CH.home ]
             Backgrounds -> [ "books"      +> CB.backgroundsComponent (m ^. backgroundsModel)]
+            Conditions  -> [ "conditions" +> CC.conditionsComponent (m ^. conditionsModel)]
             Feats       -> [ "feats"      +> CF.featsComponent (m ^. featsModel)]
             Insults     -> [ "insults"    +> CI.insultsComponent (m ^. insults)]
             MagicItems  -> [ "magicItems" +> CM.magicItemsComponent (m ^. magicItems)]

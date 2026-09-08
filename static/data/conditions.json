@@ -1,0 +1,173 @@
+[
+  {
+    "title": "Blinded",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "A blinded creature can’t see and automatically fails any ability check that requires sight." } ],
+          [ { "t": "Attack rolls against the creature have advantage, and the creature’s attack rolls have disadvantage." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Frightened",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "A frightened creature has disadvantage on Ability Checks and Attack rolls while the source of their fear is in their line of sight." } ],
+          [ { "t": "The creature can’t willingly move closer to the source of their fear." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Grappled",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "A grappled creature’s speed becomes 0, and it can’t benefit from any bonus to its speed." } ],
+          [ { "t": "The condition ends if the Grappler is incapacitated (see the condition)." } ],
+          [ { "t": "The condition also ends if an Effect removes the grappled creature from the reach of the Grappler or Grappling effect, such as when a creature is hurled away by the Thunderwave spell." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Incapacitated",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "An incapacitated creature can’t take Actions or Reactions." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Invisible",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "An invisible creature is impossible to see without the aid of magic or a special sense. For the purpose of Hiding, the creature is heavily obscured. The creature’s location can be detected by any noise it makes or any tracks it leaves." } ],
+          [ { "t": "Attack rolls agains the creature have disadvantage, and the creature’s attack rolls have advantage." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Paralyzed",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "A paralyzed creature is incapacitated (see the condition) and can’t move or speak." } ],
+          [ { "t": "The creature automatically fails Strength and Dexterity saving throws." } ],
+          [ { "t": "Attack rolls against the creature have advantage." } ],
+          [ { "t": "Any attack that hits the creature is a critical hit if the attacker is within 5 feet." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Paralyzed - Boss creatures and Player Characters",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "Instead of being incapacitated, a paralyzed creature can take its action or bonus action, but not both." } ],
+          [ { "t": "If using its action to attack, a paralyzed creature may make only one attack." } ],
+          [ { "t": "The paralyzed creature cannot move." } ],
+          [ { "t": "The paralyzed creature cannot take reactions." } ],
+          [ { "t": "The creature automatically fails Strength and Dexterity saving throws." } ],
+          [ { "t": "Attack rolls against the creature have advantage." } ],
+          [ { "t": "Any attack that hits the creature is a critical hit if the attacker is within 5 feet." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Poisoned",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "A poisoned creature has disadvantage on attack rolls and ability checks." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Prone",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "A prone creature’s only Movement option is to crawl, unless it stands up and thereby ends the condition." } ],
+          [ { "t": "The creature has disadvantage on attack rolls." } ],
+          [ { "t": "An attack roll against the creature has advantage if the attacker is within 5 feet of the creature. Otherwise, the attack roll has disadvantage." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Restrained",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "A restrained creature’s speed becomes 0, and it can’t benefit from any bonus to its speed." } ],
+          [ { "t": "Attack rolls against the creature have advantage, and the creature’s attack rolls have disadvantage." } ],
+          [ { "t": "The creature has disadvantage on Dexterity saving throws." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Stunned",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "A stunned creature is incapacitated (see the condition), can’t move, and can speak only falteringly." } ],
+          [ { "t": "The creature automatically fails Strength and Dexterity saving throws." } ],
+          [ { "t": "Attack rolls against the creature have advantage." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Stunned - Boss creatures and Player Characters",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "Instead of being incapacitated, a stunned creature can take its action or bonus action, but not both." } ],
+          [ { "t": "If using its action to attack, a stunned creature may make only one attack." } ],
+          [ { "t": "The stunned creature cannot move." } ],
+          [ { "t": "The stunned creature cannot take reactions." } ],
+          [ { "t": "The creature automatically fails Strength and Dexterity saving throws." } ],
+          [ { "t": "Attack rolls against the creature have advantage." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Surprised",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "A surprised creature cannot move or take an action on the first turn of combat." } ],
+          [ { "t": "A surprised creature cannot take a reaction until the first turn ends." } ],
+          [ { "t": "A member of a group can be surprised even if other members aren’t." } ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Unconscious",
+    "description": [
+      { "ul":
+        [
+          [ { "t": "A unconscious creature is incapacitated (see the condition), can’t move or speak, and is unaware of its surroundings." } ],
+          [ { "t": "The creature drops whatever its holding and falls prone." } ],
+          [ { "t": "The creature automatically fails Strength and Dexterity saving throws." } ],
+          [ { "t": "Attack rolls against the creature have advantage." } ],
+          [ { "t": "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature." } ]
+        ]
+      }
+    ]
+  }
+]
