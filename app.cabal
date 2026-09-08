@@ -46,6 +46,8 @@ executable app
                   , Common.Structure
                   , Components.Backgrounds
                   , Components.Backgrounds.Model
+                  , Components.Conditions
+                  , Components.Conditions.Model
                   , Components.Feats
                   , Components.Feats.Model
                   , Components.Home
